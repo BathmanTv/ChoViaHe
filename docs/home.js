@@ -79,7 +79,7 @@
 
     if (window.Lenis && finePointer) {
       lenis = new window.Lenis({
-        lerp: 0.09,        // doux, sans traîne excessive
+        lerp: 0.14,        // retour user: 0.09 trop lent, feel plus direct
         smoothWheel: true,
         wheelMultiplier: 1,
         touchMultiplier: 1
@@ -170,12 +170,12 @@
     var legSaigon = track.querySelector('.track-legend--saigon');
     if (!scooter) return;
 
-    // Distance de translation : de sa position (~gauche) jusqu'à ~85% de la piste,
-    // sans jamais déborder (la piste a overflow:hidden en CSS de toute façon).
+    // Distance de translation. Sens inversé (retour user): le dessin regarde
+    // à gauche, donc le scooter part de la droite et roule vers la gauche
+    // (Hà Nội à droite -> Sài Gòn à gauche).
     function travel() {
       var trackW = track.clientWidth;
       var sW = scooter.offsetWidth;
-      // scooter démarre marge gauche 2% ; on l'amène presque au bout à droite.
       var maxX = trackW - sW - trackW * 0.04;
       return Math.max(0, maxX);
     }
@@ -184,8 +184,8 @@
     if (legHanoi) gsap.set(legHanoi, { opacity: 0 });
     if (legSaigon) gsap.set(legSaigon, { opacity: 0 });
 
-    // état initial du scooter côté gauche
-    gsap.set(scooter, { x: 0, y: 0, rotation: 0, transformOrigin: '50% 100%' });
+    // état initial du scooter côté droit
+    gsap.set(scooter, { x: travel(), y: 0, rotation: 0, transformOrigin: '50% 100%' });
 
     var tl = gsap.timeline({
       scrollTrigger: {
@@ -197,7 +197,7 @@
     });
 
     // translation principale (ease none = suit le doigt/scroll = "on roule")
-    tl.to(scooter, { x: function () { return travel(); }, ease: 'none', duration: 1 }, 0);
+    tl.to(scooter, { x: 0, ease: 'none', duration: 1 }, 0);
 
     // bob vertical sinusoïdal + rotation : petites oscillations sur la course.
     // On les superpose via des keyframes pour l'effet "cahote sur le papier".
@@ -218,9 +218,9 @@
       tl.to(legSaigon, { opacity: 1, ease: 'power2.out', duration: 0.2 }, 0.62);
     }
 
-    // Recalcule la distance si la largeur change (invalidateOnRefresh).
+    // Recalcule la position de départ (droite) si la largeur change.
     ScrollTrigger.addEventListener('refreshInit', function () {
-      gsap.set(scooter, { x: 0 });
+      gsap.set(scooter, { x: travel() });
     });
   }
 
