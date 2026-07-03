@@ -1,303 +1,313 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="no-js">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Chợ Vỉa Hè — Direction Artistique · carnet de voyage v0</title>
-<meta name="description" content="Direction artistique de la refonte du site du restaurant vietnamien Chợ Vỉa Hè (Toulouse). Le site est un carnet de voyage illustré : fond papier, illustrations d'Oriane, et le lieu réel qui surgit par éclats." />
+<title>Chợ Vỉa Hè — Restaurant vietnamien à Toulouse · cuisine de rue</title>
+<meta name="description" content="Chợ Vỉa Hè, restaurant vietnamien à Toulouse (8 rue de Metz). Cuisine de rue vietnamienne authentique — phở, bánh mì, nems, cà phê. Le carnet de voyage d'une famille. Réservez votre table." />
 <meta name="theme-color" content="#F7F2E9" />
+
+<!-- retire .no-js au plus tôt pour éviter tout flash -->
+<script>document.documentElement.classList.remove('no-js');</script>
+
+<!-- SEO / partage -->
+<link rel="canonical" href="https://www.choviahe.fr/" />
+<meta property="og:type" content="restaurant" />
+<meta property="og:title" content="Chợ Vỉa Hè — Cuisine de rue vietnamienne · Toulouse" />
+<meta property="og:description" content="Le carnet de voyage d'une famille. Cuisine de rue vietnamienne à Toulouse — 8 rue de Metz." />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:url" content="https://www.choviahe.fr/" />
+<meta property="og:image" content="https://www.choviahe.fr/assets/photos/28-cho-via-he-septembre25-lowres-28-1600.webp" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Lora:ital,wght@0,400..600;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..600;1,400..500&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Dancing+Script:wght@400;600;700&display=swap&subset=vietnamese,latin" rel="stylesheet" />
 
-<link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./home.css" />
+
+<!-- JSON-LD schema.org Restaurant -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Chợ Vỉa Hè",
+  "description": "Restaurant vietnamien à Toulouse — cuisine de rue authentique. Le carnet de voyage d'une famille.",
+  "url": "https://www.choviahe.fr",
+  "image": "https://www.choviahe.fr/assets/photos/28-cho-via-he-septembre25-lowres-28-1600.webp",
+  "servesCuisine": ["Vietnamese", "Street food"],
+  "priceRange": "€€",
+  "telephone": "+33562858392",
+  "acceptsReservations": "https://bookings.zenchef.com/results?rid=377642",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "8 rue de Metz",
+    "postalCode": "31000",
+    "addressLocality": "Toulouse",
+    "addressCountry": "FR"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 43.6007,
+    "longitude": 1.4442
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "12:00",
+      "closes": "14:30"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "19:00",
+      "closes": "22:30"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/choviahe.toulouse",
+    "https://www.choviahe.fr"
+  ]
+}
+</script>
 </head>
 <body>
 
-<a class="skip-link" href="#test-typo">Aller au test typo</a>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
-<!-- ================= 1. EN-TÊTE CARNET ================= -->
-<header class="carnet-header" id="haut">
+<!-- ================= HEADER FIXE ================= -->
+<header class="site-header" id="haut">
+  <div class="wrap">
+    <a class="wordmark" href="#haut"><span class="viet" lang="vi">Chợ Vỉa Hè</span></a>
+
+    <nav class="main-nav" aria-label="Navigation principale">
+      <ul>
+        <li><a href="#genese" data-ink>L'histoire</a></li>
+        <li><a href="#carte" data-ink>La carte</a></li>
+        <li><a href="#lieu" data-ink>Le lieu</a></li>
+        <li><a href="#contact" data-ink>Contact</a></li>
+        <li><a class="nav-da" href="./da/">Direction artistique</a></li>
+      </ul>
+    </nav>
+
+    <a class="btn-cta btn-cta--sm header-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver</a>
+
+    <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-overlay" data-burger>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<!-- overlay menu mobile -->
+<div class="nav-overlay" id="menu-overlay" hidden>
+  <button class="overlay-close" type="button" aria-label="Fermer le menu" data-close>×</button>
+  <nav aria-label="Menu">
+    <ul>
+      <li><a href="#genese">L'histoire</a></li>
+      <li><a href="#carte">La carte</a></li>
+      <li><a href="#lieu">Le lieu</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="nav-da" href="./da/">Direction artistique</a></li>
+      <li><a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="contenu">
+
+<!-- ================= 2. COUVERTURE ================= -->
+<section class="couverture" aria-labelledby="cover-title">
+  <img class="guirlande-top" src="./assets/illus/guirlande-480.webp" width="480" height="163" alt="" aria-hidden="true" decoding="async"
+       srcset="./assets/illus/guirlande-480.webp 480w, ./assets/illus/guirlande-960.webp 960w" sizes="min(60vw, 420px)" />
+
   <div class="lanternes-pendantes" aria-hidden="true">
     <picture>
-      <source type="image/avif" srcset="./assets/illus/lanternes-480.avif 480w, ./assets/illus/lanternes-960.avif 960w" sizes="(max-width: 600px) 40vw, 240px" />
-      <source type="image/webp" srcset="./assets/illus/lanternes-480.webp 480w, ./assets/illus/lanternes-960.webp 960w" sizes="(max-width: 600px) 40vw, 240px" />
-      <img src="./assets/illus/lanternes-480.webp" width="480" height="900" alt="" decoding="async" />
+      <source type="image/avif" srcset="./assets/illus/lanternes-480.avif 480w, ./assets/illus/lanternes-960.avif 960w" sizes="(max-width: 600px) 26vw, 200px" />
+      <source type="image/webp" srcset="./assets/illus/lanternes-480.webp 480w, ./assets/illus/lanternes-960.webp 960w" sizes="(max-width: 600px) 26vw, 200px" />
+      <img src="./assets/illus/lanternes-480.webp" width="480" height="898" alt="" fetchpriority="high" decoding="async" />
     </picture>
   </div>
 
   <div class="wrap">
-    <p class="kicker">Refonte du site · restaurant vietnamien · Toulouse</p>
-    <h1><span class="viet">Chợ Vỉa Hè</span><br /><span class="sub-title">Direction Artistique</span></h1>
-    <p class="handwritten annotation">carnet de voyage — v0 · juillet 2026</p>
-    <p class="lede">
-      L'idée en une phrase : <strong>le site EST le carnet.</strong> Fond papier calme, illustrations d'Oriane au crayon de couleur au centre, et le lieu réel — jaune vif, néons, marché — qui apparaît <em>par éclats</em>. Cette page matérialise la direction pour validation.
-    </p>
-    <p class="scroll-hint handwritten" aria-hidden="true">↓ fais défiler</p>
-  </div>
-</header>
-
-<main>
-
-<!-- ================= 2. LE TEST TYPO VIETNAMIEN ================= -->
-<section class="section test-typo" id="test-typo" data-reveal>
-  <div class="wrap">
-    <p class="section-num handwritten">pg. 02</p>
-    <h2>Le test typo vietnamien</h2>
-    <p class="section-intro">
-      Section critique. Le vietnamien empile les diacritiques (ợ ộ ữ ơ đ). Beaucoup de polices display ne portent pas le sous-ensemble vietnamien : le glyphe tombe alors sur un <em>fallback</em> visible et moche. Regardez le rendu réel de la phrase test sur chaque police, ici, en vrai.
-    </p>
-    <p class="phrase-ref">Phrase test : <span lang="vi">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</span></p>
-
-    <div class="typo-grid" id="typo-grid">
-      <!-- Les specimens sont rendus, la détection JS ajoute/ajuste les badges -->
-      <article class="specimen" data-font="Fraunces" data-family="'Fraunces', serif" data-role="Titres (display)">
-        <header class="specimen-head">
-          <span class="specimen-name">Fraunces</span>
-          <span class="specimen-role">titres / display</span>
-          <span class="badge badge-warn" data-badge>à vérifier</span>
-        </header>
-        <p class="specimen-line" lang="vi" style="font-family:'Fraunces',serif">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</p>
-      </article>
-
-      <article class="specimen" data-font="Lora" data-family="'Lora', serif" data-role="Titres (display)">
-        <header class="specimen-head">
-          <span class="specimen-name">Lora</span>
-          <span class="specimen-role">titres / display</span>
-          <span class="badge badge-warn" data-badge>à vérifier</span>
-        </header>
-        <p class="specimen-line" lang="vi" style="font-family:'Lora',serif">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</p>
-      </article>
-
-      <article class="specimen" data-font="Caveat" data-family="'Caveat', cursive" data-role="Manuscrit">
-        <header class="specimen-head">
-          <span class="specimen-name">Caveat</span>
-          <span class="specimen-role">manuscrit</span>
-          <span class="badge badge-warn" data-badge>à vérifier</span>
-        </header>
-        <p class="specimen-line specimen-hand" lang="vi" style="font-family:'Caveat',cursive">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</p>
-      </article>
-
-      <article class="specimen" data-font="Dancing Script" data-family="'Dancing Script', cursive" data-role="Manuscrit">
-        <header class="specimen-head">
-          <span class="specimen-name">Dancing Script</span>
-          <span class="specimen-role">manuscrit</span>
-          <span class="badge badge-warn" data-badge>à vérifier</span>
-        </header>
-        <p class="specimen-line specimen-hand" lang="vi" style="font-family:'Dancing Script',cursive">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</p>
-      </article>
-
-      <article class="specimen" data-font="Be Vietnam Pro" data-family="'Be Vietnam Pro', sans-serif" data-role="Corps de texte">
-        <header class="specimen-head">
-          <span class="specimen-name">Be Vietnam Pro</span>
-          <span class="specimen-role">corps</span>
-          <span class="badge badge-warn" data-badge>à vérifier</span>
-        </header>
-        <p class="specimen-line specimen-body" lang="vi" style="font-family:'Be Vietnam Pro',sans-serif">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</p>
-      </article>
-
-      <article class="specimen" data-font="Inter" data-family="'Inter', sans-serif" data-role="Corps de texte">
-        <header class="specimen-head">
-          <span class="specimen-name">Inter</span>
-          <span class="specimen-role">corps</span>
-          <span class="badge badge-warn" data-badge>à vérifier</span>
-        </header>
-        <p class="specimen-line specimen-body" lang="vi" style="font-family:'Inter',sans-serif">Chợ Vỉa Hè — phở bún chả ệ ộ ữ ơ đ Đ</p>
-      </article>
-    </div>
-
-    <aside class="reco">
-      <p class="reco-title handwritten">la reco</p>
-      <ul>
-        <li><strong>Titres :</strong> <span class="tag">Lora</span> ou <span class="tag">Fraunces</span> si son rendu VN passe la relecture. Sinon Lora, qui porte le vietnamien proprement.</li>
-        <li><strong>Manuscrit :</strong> comparer <span class="tag">Caveat</span> et <span class="tag">Dancing Script</span> à l'œil — attention, Caveat n'a <em>pas</em> le sous-ensemble VN officiel.</li>
-        <li><strong>Corps :</strong> <span class="tag">Be Vietnam Pro</span> (conçu pour le vietnamien) vs <span class="tag">Inter</span>. Pour le trilingue à venir, Be Vietnam Pro part favori.</li>
-      </ul>
-      <p class="reco-note">Le badge <span class="badge badge-ok" style="position:static">diacritiques OK</span> est posé automatiquement par une mesure JS (largeur du glyphe <span lang="vi">ợ</span> comparée au fallback). En cas de doute, faites confiance à vos yeux sur le specimen, pas au badge.</p>
-    </aside>
-  </div>
-</section>
-
-<!-- ================= 3. PALETTE ================= -->
-<section class="section palette" id="palette" data-reveal>
-  <div class="wrap">
-    <p class="section-num handwritten">pg. 03</p>
-    <h2>La palette</h2>
-    <p class="section-intro">
-      Des taches d'aquarelle, pas des carrés froids. Trois familles : le papier qui porte tout, les encres d'Oriane, et les éclats du lieu — rares et précieux.
-    </p>
-
-    <div class="palette-group">
-      <h3 class="palette-group-title">Papier & encre <span class="prop">70 %</span></h3>
-      <p class="palette-group-line">La base. Le papier porte 70 % de chaque écran ; on respire dessus, le texte à l'encre par-dessus.</p>
-      <div class="swatches">
-        <figure class="swatch" style="--c:#F7F2E9"><span class="blob"></span><figcaption><b>Papier</b><code>#F7F2E9</code></figcaption></figure>
-        <figure class="swatch" style="--c:#EFE6D6"><span class="blob"></span><figcaption><b>Papier ombré</b><code>#EFE6D6</code></figcaption></figure>
-        <figure class="swatch" style="--c:#1E1A17"><span class="blob"></span><figcaption><b>Encre</b><code>#1E1A17</code></figcaption></figure>
-      </div>
-    </div>
-
-    <div class="palette-group">
-      <h3 class="palette-group-title">Encres d'illustration <span class="prop">25 %</span></h3>
-      <p class="palette-group-line">Les couleurs d'Oriane. Elles vivent dans les dessins et les titres — jamais en aplats plein écran.</p>
-      <div class="swatches">
-        <figure class="swatch" style="--c:#C0264B"><span class="blob"></span><figcaption><b>Framboise · marque</b><code>#C0264B</code></figcaption></figure>
-        <figure class="swatch" style="--c:#E9531F"><span class="blob"></span><figcaption><b>Orange</b><code>#E9531F</code></figcaption></figure>
-        <figure class="swatch" style="--c:#1E6E8C"><span class="blob"></span><figcaption><b>Bleu lanterne</b><code>#1E6E8C</code></figcaption></figure>
-        <figure class="swatch" style="--c:#2E7D32"><span class="blob"></span><figcaption><b>Vert coriandre</b><code>#2E7D32</code></figcaption></figure>
-      </div>
-    </div>
-
-    <div class="palette-group">
-      <h3 class="palette-group-title">Éclats du lieu <span class="prop">5 %</span></h3>
-      <p class="palette-group-line">Rares, donc forts. Le jaune néon = CTA et éclats. Le rouge néon = glow décoratif <em>uniquement</em>, jamais en texte.</p>
-      <div class="swatches">
-        <figure class="swatch" style="--c:#F2B300"><span class="blob"></span><figcaption><b>Jaune néon · CTA</b><code>#F2B300</code></figcaption></figure>
-        <figure class="swatch swatch-glow" style="--c:#E4002B"><span class="blob"></span><figcaption><b>Rouge néon · glow</b><code>#E4002B</code></figcaption></figure>
-      </div>
-    </div>
-
-    <p class="palette-rules">
-      <strong>Règles de contraste (AA) :</strong> texte encre sur jaune — jamais blanc sur jaune. Framboise réservée aux titres, sur papier.
+    <p class="cover-kicker">Cuisine de rue vietnamienne · Toulouse</p>
+    <h1 class="cover-title" id="cover-title"><span class="viet" lang="vi">Chợ Vỉa Hè</span></h1>
+    <p class="cover-sub">Cuisine de rue vietnamienne — Toulouse</p>
+    <p class="cover-annotation handwritten">le carnet de voyage d'une famille</p>
+    <p class="cover-actions">
+      <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a>
+      <a class="ink-link cover-scroll" href="#genese" data-ink>Feuilleter le carnet ↓</a>
     </p>
   </div>
 </section>
 
-<!-- ================= trait de crayon (séparateur animé) ================= -->
+<!-- ================= 3. LA GENÈSE — pg. 02 ================= -->
+<section class="section genese" id="genese" data-reveal aria-labelledby="genese-title">
+  <div class="wrap">
+    <div class="genese-layout">
+      <div>
+        <p class="section-num handwritten">pg. 02</p>
+        <h2 id="genese-title">Tout commence à Toulouse</h2>
+        <!-- COPIE PROVISOIRE à valider client -->
+        <p class="genese-lead">Nous sommes une famille, et le Vietnam coule dans nos veines.</p>
+        <div class="genese-body">
+          <p>Nous avons grandi entre deux cultures, avec le goût des marchés de rue et des recettes transmises de main en main. Un jour, l'envie est devenue évidente&nbsp;: <strong>faire goûter à Toulouse la vraie cuisine de rue vietnamienne</strong>, celle des étals fumants et des bols partagés.</p>
+          <p>Chợ Vỉa Hè, c'est ce carnet de voyage devenu restaurant — nos souvenirs, nos épices, notre table pour vous.</p>
+        </div>
+      </div>
+
+      <figure class="genese-medaillon">
+        <picture>
+          <source type="image/avif" srcset="./assets/photos/44-cho-lowres-44-480.avif 480w, ./assets/photos/44-cho-lowres-44-960.avif 960w" sizes="(max-width: 900px) 90vw, 360px" />
+          <source type="image/webp" srcset="./assets/photos/44-cho-lowres-44-480.webp 480w, ./assets/photos/44-cho-lowres-44-960.webp 960w" sizes="(max-width: 900px) 90vw, 360px" />
+          <img loading="lazy" decoding="async" src="./assets/photos/44-cho-lowres-44-480.webp" width="480" height="320" alt="Salle du restaurant Chợ Vỉa Hè à Toulouse, décor coloré de marché vietnamien." />
+        </picture>
+        <figcaption class="handwritten">notre table, rue de Metz</figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="marginalia marg-cafe" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/cafe-480.webp" width="480" height="743" alt=""
+         srcset="./assets/illus/cafe-480.webp 480w, ./assets/illus/cafe-960.webp 960w" sizes="clamp(70px, 16vw, 130px)" />
+  </div>
+  <div class="marginalia marg-baguette" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/baguette-480.webp" width="480" height="864" alt=""
+         srcset="./assets/illus/baguette-480.webp 480w, ./assets/illus/baguette-960.webp 960w" sizes="clamp(60px, 12vw, 100px)" />
+  </div>
+</section>
+
+<!-- ================= séparateur crayon ================= -->
 <div class="pencil-sep" data-pencil aria-hidden="true">
   <svg viewBox="0 0 1200 40" preserveAspectRatio="none" width="100%" height="40">
     <path d="M4 26 C 120 10, 240 34, 360 22 S 600 8, 720 24 S 960 36, 1080 18 S 1180 24, 1196 20" fill="none" stroke="#C0264B" stroke-width="3.5" stroke-linecap="round"/>
   </svg>
 </div>
 
-<!-- ================= 4. ILLUSTRATIONS SUR PAPIER ================= -->
-<section class="section illustrations" id="illustrations" data-reveal>
+<!-- ================= 4. LES VOYAGES — pg. 03 ================= -->
+<section class="section voyages" id="voyages" data-reveal aria-labelledby="voyages-title">
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 03</p>
+    <h2 id="voyages-title">On est allés goûter sur place.</h2>
+    <div class="voyages-body">
+      <!-- COPIE PROVISOIRE à valider client -->
+      <p>On retourne régulièrement au Vietnam. On s'imprègne des marchés à l'aube, on teste les étals les uns après les autres, on discute avec ceux qui cuisinent depuis toujours — et on ramène les recettes dans nos carnets, pour les refaire ici, à l'identique.</p>
+    </div>
+
+    <!-- Piste horizontale : le scooter la traversera au scroll (motion engineer) -->
+    <div class="scooter-track" data-scooter aria-hidden="true">
+      <div class="marginalia marg-stand">
+        <img loading="lazy" decoding="async" src="./assets/illus/stand-480.webp" width="480" height="349" alt=""
+             srcset="./assets/illus/stand-480.webp 480w, ./assets/illus/stand-960.webp 960w" sizes="clamp(120px, 26vw, 220px)" />
+      </div>
+      <span class="track-legend track-legend--hanoi handwritten" lang="vi">Hà Nội</span>
+      <span class="track-legend track-legend--saigon handwritten" lang="vi">Sài Gòn</span>
+      <div class="scooter">
+        <picture>
+          <source type="image/avif" srcset="./assets/illus/scooter-480.avif 480w, ./assets/illus/scooter-960.avif 960w" sizes="clamp(150px, 40vw, 300px)" />
+          <source type="image/webp" srcset="./assets/illus/scooter-480.webp 480w, ./assets/illus/scooter-960.webp 960w" sizes="clamp(150px, 40vw, 300px)" />
+          <img loading="lazy" decoding="async" src="./assets/illus/scooter-480.webp" width="480" height="510" alt="" />
+        </picture>
+      </div>
+      <div class="marginalia marg-paniers">
+        <img loading="lazy" decoding="async" src="./assets/illus/paniers-480.webp" width="480" height="373" alt=""
+             srcset="./assets/illus/paniers-480.webp 480w, ./assets/illus/paniers-960.webp 960w" sizes="clamp(80px, 18vw, 150px)" />
+      </div>
+    </div>
+    <p class="visually-hidden">Illustration&nbsp;: un scooter chargé traverse la route entre Hà Nội et Sài Gòn.</p>
+  </div>
+</section>
+
+<!-- ================= 5. LA CARTE — pg. 04 ================= -->
+<section class="section carte" id="carte" data-reveal aria-labelledby="carte-title">
   <div class="wrap">
     <p class="section-num handwritten">pg. 04</p>
-    <h2>Les illustrations d'Oriane, sur le papier</h2>
-    <p class="section-intro">
-      Le fond blanc de chaque dessin se fond dans le papier : rien à détourer. Légendes manuscrites, numéros de page en coin — comme un vrai carnet.
-    </p>
+    <h2 id="carte-title">Comme sur l'étal</h2>
+    <p class="section-intro">Un aperçu de ce qu'on sert. Les recettes qu'on a rapportées, refaites chaque jour.</p>
 
-    <div class="illus-grid">
-      <figure class="illus-card" data-page="pg. 04">
-        <picture>
-          <source type="image/avif" srcset="./assets/illus/nouilles-480.avif 480w, ./assets/illus/nouilles-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <source type="image/webp" srcset="./assets/illus/nouilles-480.webp 480w, ./assets/illus/nouilles-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <img loading="lazy" decoding="async" src="./assets/illus/nouilles-480.webp" width="480" height="440" alt="Bol de phở fumant au crayon de couleur, tranches de bœuf, herbes fraîches et cuillère en porcelaine." />
-        </picture>
-        <figcaption class="handwritten">le phở du matin</figcaption>
+    <div class="plat-grid">
+      <figure class="plat-card">
+        <img loading="lazy" decoding="async" src="./assets/illus/nouilles-480.webp" width="480" height="422" alt="Bol de phở fumant illustré au crayon de couleur."
+             srcset="./assets/illus/nouilles-480.webp 480w, ./assets/illus/nouilles-960.webp 960w" sizes="30vw" />
+        <figcaption>
+          <p class="plat-nom viet" lang="vi">Phở</p>
+          <p class="plat-desc">Le bouillon du matin, mijoté des heures, nouilles de riz et herbes fraîches.</p>
+        </figcaption>
       </figure>
 
-      <figure class="illus-card" data-page="pg. 04">
-        <picture>
-          <source type="image/avif" srcset="./assets/illus/scooter-480.avif 480w, ./assets/illus/scooter-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <source type="image/webp" srcset="./assets/illus/scooter-480.webp 480w, ./assets/illus/scooter-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <img loading="lazy" decoding="async" src="./assets/illus/scooter-480.webp" width="480" height="460" alt="Scooter surchargé de paquets colorés au crayon de couleur, style livraison de rue vietnamienne." />
-        </picture>
-        <figcaption class="handwritten">livraison express — Hà Nội</figcaption>
+      <figure class="plat-card">
+        <img loading="lazy" decoding="async" src="./assets/illus/banh-mi-480.webp" width="480" height="519" alt="Bánh mì illustré, baguette dorée garnie de crudités."
+             srcset="./assets/illus/banh-mi-480.webp 480w, ./assets/illus/banh-mi-960.webp 960w" sizes="30vw" />
+        <figcaption>
+          <p class="plat-nom viet" lang="vi">Bánh mì</p>
+          <p class="plat-desc">La baguette de rue, croustillante, crudités marinées et coriandre.</p>
+        </figcaption>
       </figure>
 
-      <figure class="illus-card" data-page="pg. 05">
-        <picture>
-          <source type="image/avif" srcset="./assets/illus/banh-mi-480.avif 480w, ./assets/illus/banh-mi-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <source type="image/webp" srcset="./assets/illus/banh-mi-480.webp 480w, ./assets/illus/banh-mi-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <img loading="lazy" decoding="async" src="./assets/illus/banh-mi-480.webp" width="480" height="440" alt="Bánh mì au crayon de couleur, baguette dorée garnie de crudités, herbes et piment." />
-        </picture>
-        <figcaption class="handwritten">bánh mì, pour la route</figcaption>
+      <figure class="plat-card">
+        <img loading="lazy" decoding="async" src="./assets/illus/nems-480.webp" width="480" height="437" alt="Nems croustillants illustrés au crayon de couleur."
+             srcset="./assets/illus/nems-480.webp 480w, ./assets/illus/nems-960.webp 960w" sizes="30vw" />
+        <figcaption>
+          <p class="plat-nom viet" lang="vi">Nems</p>
+          <p class="plat-desc">Croustillants, roulés à la main, à tremper dans la sauce.</p>
+        </figcaption>
       </figure>
 
-      <figure class="illus-card" data-page="pg. 05">
-        <picture>
-          <source type="image/avif" srcset="./assets/illus/lanternes-480.avif 480w, ./assets/illus/lanternes-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <source type="image/webp" srcset="./assets/illus/lanternes-480.webp 480w, ./assets/illus/lanternes-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
-          <img loading="lazy" decoding="async" src="./assets/illus/lanternes-480.webp" width="480" height="900" alt="Deux lanternes en soie au crayon de couleur, une bleue et une orange, avec pompons." />
-        </picture>
-        <figcaption class="handwritten">lanternes de Hội An</figcaption>
+      <figure class="plat-card">
+        <img loading="lazy" decoding="async" src="./assets/illus/cafe-480.webp" width="480" height="743" alt="Café vietnamien illustré, filtre phin sur un verre."
+             srcset="./assets/illus/cafe-480.webp 480w, ./assets/illus/cafe-960.webp 960w" sizes="30vw" />
+        <figcaption>
+          <p class="plat-nom viet" lang="vi">Cà phê</p>
+          <p class="plat-desc">Le café filtre vietnamien, intense, avec ou sans lait concentré.</p>
+        </figcaption>
       </figure>
     </div>
+
+    <p class="carte-cta">
+      <!-- TODO menu HTML complet phase 4 -->
+      <a class="ink-link" href="#" data-ink>La carte complète arrive — en attendant, téléchargez-la ↓</a>
+    </p>
+  </div>
+
+  <div class="marginalia marg-citrons" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/citrons-480.webp" width="480" height="564" alt="" sizes="clamp(60px, 13vw, 110px)" />
+  </div>
+  <div class="marginalia marg-coriandre" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/brin-coriandre01-480.webp" width="480" height="382" alt="" sizes="clamp(50px, 11vw, 90px)" />
   </div>
 </section>
 
-<!-- ================= 5. SIGNATURES MOTION ================= -->
-<section class="section motion" id="motion" data-reveal>
-  <div class="wrap">
-    <p class="section-num handwritten">pg. 06</p>
-    <h2>Signatures motion <span class="section-tag">démos live</span></h2>
-    <p class="section-intro">
-      Trois gestes qui donneront le ton. Tout est désactivé sous <code>prefers-reduced-motion</code> : la page reste lisible et calme pour qui le demande.
-    </p>
-
-    <div class="motion-demos">
-      <article class="motion-card">
-        <h3>a. Le trait de crayon</h3>
-        <p>Un séparateur qui se <em>dessine</em> quand il entre à l'écran (IntersectionObserver + stroke-dashoffset, pas de GSAP).</p>
-        <div class="pencil-sep pencil-sep--inline" data-pencil aria-hidden="true">
-          <svg viewBox="0 0 600 40" preserveAspectRatio="none" width="100%" height="40">
-            <path d="M4 24 C 80 8, 160 32, 240 20 S 400 8, 480 26 S 560 32, 596 20" fill="none" stroke="#1E6E8C" stroke-width="3.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <p class="motion-note handwritten">scrolle vers ce bloc pour le voir se tracer ↑</p>
-      </article>
-
-      <article class="motion-card">
-        <h3>b. La tache d'aquarelle au hover</h3>
-        <p>Le CTA principal — encre sur jaune. Autour, des liens dont le souligné se dessine et une tache colorée douce éclot derrière.</p>
-
-        <p class="cta-row">
-          <a class="btn-cta" data-magnetic href="#" role="button">Réserver une table</a>
-        </p>
-
-        <p class="ink-links">
-          Passez sur
-          <a class="ink-link" href="#" data-ink>la carte</a>,
-          <a class="ink-link" href="#" data-ink>notre histoire</a>,
-          <a class="ink-link" href="#" data-ink>le lieu</a>
-          — le souligné se trace et une tache éclot.
-        </p>
-      </article>
-
-      <article class="motion-card">
-        <h3>c. Le respect du calme</h3>
-        <p>Sous <code>prefers-reduced-motion: reduce</code>, tous les tracés apparaissent d'emblée, les taches sont statiques, aucun mouvement. Aucune information n'est portée par la seule animation.</p>
-        <p class="motion-note">Réglage système actuel : <strong data-motion-state>détection…</strong></p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= 6. LE CONTRASTE CARNET / LIEU ================= -->
+<!-- ================= 6. LE LIEU — pg. 05 (éclat jaune) ================= -->
 <section class="section lieu" id="lieu" data-reveal aria-labelledby="lieu-title">
   <div class="lieu-inner">
-    <p class="section-num handwritten section-num--onyellow">pg. 07</p>
+    <p class="section-num handwritten section-num--onyellow">pg. 05</p>
     <h2 id="lieu-title" class="lieu-title">…et le lieu, lui,<br />ne chuchote pas.</h2>
-    <p class="lieu-intro">Papier calme, puis l'éclat. Voilà tout le contraste que le site doit produire : on tourne une page de carnet, et le marché explose.</p>
+    <p class="lieu-intro">Le papier calme, puis l'éclat&nbsp;: on pousse la porte, et le marché explose — néons, lanternes, couleurs saturées.</p>
 
     <div class="lieu-photos">
       <figure class="lieu-photo lieu-photo--hero">
         <picture>
           <source type="image/avif" srcset="./assets/photos/28-cho-via-he-septembre25-lowres-28-480.avif 480w, ./assets/photos/28-cho-via-he-septembre25-lowres-28-960.avif 960w, ./assets/photos/28-cho-via-he-septembre25-lowres-28-1600.avif 1600w" sizes="(max-width: 800px) 92vw, 640px" />
           <source type="image/webp" srcset="./assets/photos/28-cho-via-he-septembre25-lowres-28-480.webp 480w, ./assets/photos/28-cho-via-he-septembre25-lowres-28-960.webp 960w, ./assets/photos/28-cho-via-he-septembre25-lowres-28-1600.webp 1600w" sizes="(max-width: 800px) 92vw, 640px" />
-          <img loading="lazy" decoding="async" src="./assets/photos/28-cho-via-he-septembre25-lowres-28-480.webp" width="480" height="720" alt="Enseigne néon rouge « CHỢ VỈA HÈ » et « Cuisine de rue vietnamienne » sur un mur jaune vif, au cœur du restaurant." />
+          <img loading="lazy" decoding="async" src="./assets/photos/28-cho-via-he-septembre25-lowres-28-480.webp" width="480" height="720" alt="Enseigne néon rouge « CHỢ VỈA HÈ · Cuisine de rue vietnamienne » sur un mur jaune vif." />
         </picture>
-        <figcaption>Le néon signature — la photo qui doit surgir après le papier.</figcaption>
+        <figcaption>Le néon signature.</figcaption>
       </figure>
 
       <figure class="lieu-photo">
         <picture>
           <source type="image/avif" srcset="./assets/photos/49-cho-lowres-49-480.avif 480w, ./assets/photos/49-cho-lowres-49-960.avif 960w" sizes="(max-width: 800px) 92vw, 320px" />
           <source type="image/webp" srcset="./assets/photos/49-cho-lowres-49-480.webp 480w, ./assets/photos/49-cho-lowres-49-960.webp 960w" sizes="(max-width: 800px) 92vw, 320px" />
-          <img loading="lazy" decoding="async" src="./assets/photos/49-cho-lowres-49-480.webp" width="480" height="640" alt="Lanternes en soie colorées et fleurs suspendues dans la salle du restaurant." />
+          <img loading="lazy" decoding="async" src="./assets/photos/49-cho-lowres-49-480.webp" width="480" height="720" alt="Lanternes en soie colorées et fleurs suspendues dans la salle." />
         </picture>
-        <figcaption>Lanternes en soie & fleurs.</figcaption>
+        <figcaption>Lanternes & fleurs.</figcaption>
       </figure>
 
       <figure class="lieu-photo">
         <picture>
           <source type="image/avif" srcset="./assets/photos/33-cho-via-he-septembre25-lowres-33-480.avif 480w, ./assets/photos/33-cho-via-he-septembre25-lowres-33-960.avif 960w" sizes="(max-width: 800px) 92vw, 320px" />
           <source type="image/webp" srcset="./assets/photos/33-cho-via-he-septembre25-lowres-33-480.webp 480w, ./assets/photos/33-cho-via-he-septembre25-lowres-33-960.webp 960w" sizes="(max-width: 800px) 92vw, 320px" />
-          <img loading="lazy" decoding="async" src="./assets/photos/33-cho-via-he-septembre25-lowres-33-480.webp" width="480" height="640" alt="Détail maximaliste du décor du marché : couleurs saturées et objets accumulés." />
+          <img loading="lazy" decoding="async" src="./assets/photos/33-cho-via-he-septembre25-lowres-33-480.webp" width="480" height="720" alt="Détail du décor maximaliste du marché : couleurs saturées et objets accumulés." />
         </picture>
         <figcaption>Le maximalisme du marché.</figcaption>
       </figure>
@@ -305,75 +315,73 @@
   </div>
 </section>
 
-<!-- ================= 7. INSPIRATIONS ================= -->
-<section class="section inspirations" id="inspirations" data-reveal>
+<!-- ================= 7. RÉSERVER / CONTACT — pg. 06 ================= -->
+<section class="section reserver" id="contact" aria-labelledby="reserver-title">
   <div class="wrap">
-    <p class="section-num handwritten">pg. 08</p>
-    <h2>Ce qu'on regarde</h2>
-    <p class="section-intro">Références, lues à travers notre filtre : ce qu'on prend, ce qu'on évite. Notre équilibre : papier calme + éclats.</p>
+    <p class="section-num handwritten">pg. 06</p>
+    <h2 id="reserver-title" class="reserver-title">Votre table vous attend.</h2>
+    <p class="reserver-lead">Réservez en ligne, ou passez nous voir. On vous garde une place à l'étal.</p>
 
-    <ul class="inspi-grid">
-      <li class="inspi-card">
-        <h3>Dishoom <span class="inspi-url">dishoom.com</span></h3>
-        <p class="take"><span class="lbl lbl-take">On prend</span> le storytelling famille / héritage comme colonne vertébrale — chaque resto raconte une histoire vraie.</p>
-      </li>
-      <li class="inspi-card">
-        <h3>BAO London <span class="inspi-url">baolondon.com</span></h3>
-        <p class="take"><span class="lbl lbl-take">On prend</span> les illustrations naïves comme identité totale, un monde cohérent.</p>
-        <p class="avoid"><span class="lbl lbl-avoid">On évite</span> la froideur minimale.</p>
-      </li>
-      <li class="inspi-card">
-        <h3>Big Mamma <span class="inspi-url">bigmammagroup.com</span></h3>
-        <p class="take"><span class="lbl lbl-take">On prend</span> l'énergie joyeuse assumée.</p>
-        <p class="avoid"><span class="lbl lbl-avoid">On évite</span> le chaos permanent — nous = papier calme + éclats.</p>
-      </li>
-      <li class="inspi-card">
-        <h3>Omsom <span class="inspi-url">omsom.com</span></h3>
-        <p class="take"><span class="lbl lbl-take">On prend</span> la fierté des couleurs saturées asiatiques.</p>
-        <p class="avoid"><span class="lbl lbl-avoid">On évite</span> le tout-néon permanent.</p>
-      </li>
-      <li class="inspi-card inspi-card--vivier">
-        <h3>Vivier continu</h3>
-        <p class="take"><span class="lbl lbl-take">On surveille</span> landing.love & la catégorie food d'Awwwards — pour nourrir les itérations au fil de l'eau.</p>
-      </li>
-    </ul>
+    <p class="reserver-cta">
+      <!-- TODO: remplacer par embed SDK Zenchef quand accès back-office client -->
+      <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a>
+    </p>
+
+    <div class="infos-grid">
+      <div class="info-block">
+        <h3>Horaires</h3>
+        <ul class="horaires-list">
+          <li><span class="jour">Mardi – Samedi</span> <span>12:00 – 14:30</span></li>
+          <li><span class="jour">Mardi – Samedi</span> <span>19:00 – 22:30</span></li>
+          <li><span class="jour">Dim. – Lun.</span> <span>Fermé</span></li>
+        </ul>
+      </div>
+
+      <div class="info-block">
+        <h3>Nous trouver</h3>
+        <address>
+          8 rue de Metz<br />
+          31000 Toulouse
+        </address>
+        <p><a href="https://www.google.com/maps/dir/?api=1&destination=8+rue+de+Metz+31000+Toulouse" target="_blank" rel="noopener">Itinéraire →</a></p>
+      </div>
+
+      <div class="info-block">
+        <h3>Nous joindre</h3>
+        <p><a href="tel:+33562858392">05 62 85 83 92</a></p>
+        <p><a href="https://www.instagram.com/choviahe.toulouse" target="_blank" rel="noopener">@choviahe.toulouse</a></p>
+      </div>
+    </div>
   </div>
 </section>
 
 </main>
 
-<!-- ================= 8. PIED DE PAGE ================= -->
-<footer class="footer" id="etapes">
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
   <div class="wrap">
-    <p class="section-num handwritten">pg. 09</p>
-    <h2>Les prochaines étapes</h2>
-    <ol class="etapes-list">
-      <li><span class="etape-k">1</span> V1 de la home sur cette direction</li>
-      <li><span class="etape-k">2</span> Itérations sur retours équipe / client</li>
-      <li><span class="etape-k">3</span> Carte · histoire · passage trilingue (FR / EN / VI)</li>
-      <li><span class="etape-k">4</span> Branchement réservations Zenchef</li>
-      <li><span class="etape-k">5</span> Mise en ligne OVH — objectif 1<sup>er</sup> septembre</li>
-    </ol>
+    <div class="footer-top">
+      <a class="footer-wordmark viet" href="#haut" lang="vi">Chợ Vỉa Hè</a>
 
-    <div class="footer-palette" aria-label="Rappel de la palette">
-      <p class="footer-palette-title handwritten">rappel palette</p>
-      <ul class="chip-row">
-        <li class="chip" style="--c:#F7F2E9"><span></span>Papier #F7F2E9</li>
-        <li class="chip" style="--c:#EFE6D6"><span></span>Ombré #EFE6D6</li>
-        <li class="chip" style="--c:#1E1A17"><span></span>Encre #1E1A17</li>
-        <li class="chip" style="--c:#C0264B"><span></span>Framboise #C0264B</li>
-        <li class="chip" style="--c:#E9531F"><span></span>Orange #E9531F</li>
-        <li class="chip" style="--c:#1E6E8C"><span></span>Bleu #1E6E8C</li>
-        <li class="chip" style="--c:#2E7D32"><span></span>Vert #2E7D32</li>
-        <li class="chip" style="--c:#F2B300"><span></span>Jaune #F2B300</li>
-        <li class="chip" style="--c:#E4002B"><span></span>Rouge #E4002B</li>
-      </ul>
+      <nav class="footer-nav" aria-label="Pied de page">
+        <ul>
+          <li><a href="#genese">L'histoire</a></li>
+          <li><a href="#carte">La carte</a></li>
+          <li><a href="#lieu">Le lieu</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a class="nav-da" href="./da/">Direction artistique (v0)</a></li>
+        </ul>
+      </nav>
     </div>
-
-    <p class="footer-sign handwritten">Chợ Vỉa Hè · carnet de voyage · v0 — juillet 2026</p>
+    <p class="footer-sign handwritten">Chợ Vỉa Hè · espace de travail — juillet 2026</p>
   </div>
 </footer>
 
-<script src="./app.js" defer></script>
+<!-- Motion layer : GSAP core + ScrollTrigger + Lenis (CDN épinglé, defer).
+     home.js dégrade proprement si l'un manque (fallback IntersectionObserver). -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="./home.js" defer></script>
 </body>
 </html>

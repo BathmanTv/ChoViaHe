@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chá»£ Vá»‰a HÃ¨ â€” Direction Artistique Â· carnet de voyage v0</title>
+<meta name="description" content="Direction artistique de la refonte du site du restaurant vietnamien Chá»£ Vá»‰a HÃ¨ (Toulouse). Le site est un carnet de voyage illustrÃ© : fond papier, illustrations d'Oriane, et le lieu rÃ©el qui surgit par Ã©clats." />
+<meta name="theme-color" content="#F7F2E9" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400&family=Lora:ital,wght@0,400..600;1,400&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#test-typo">Aller au test typo</a>
+
+<!-- ================= 1. EN-TÃŠTE CARNET ================= -->
+<header class="carnet-header" id="haut">
+  <div class="lanternes-pendantes" aria-hidden="true">
+    <picture>
+      <source type="image/avif" srcset="../assets/illus/lanternes-480.avif 480w, ../assets/illus/lanternes-960.avif 960w" sizes="(max-width: 600px) 40vw, 240px" />
+      <source type="image/webp" srcset="../assets/illus/lanternes-480.webp 480w, ../assets/illus/lanternes-960.webp 960w" sizes="(max-width: 600px) 40vw, 240px" />
+      <img src="../assets/illus/lanternes-480.webp" width="480" height="900" alt="" decoding="async" />
+    </picture>
+  </div>
+
+  <div class="wrap">
+    <p class="kicker">Refonte du site Â· restaurant vietnamien Â· Toulouse</p>
+    <h1><span class="viet">Chá»£ Vá»‰a HÃ¨</span><br /><span class="sub-title">Direction Artistique</span></h1>
+    <p class="handwritten annotation">carnet de voyage â€” v0 Â· juillet 2026</p>
+    <p class="lede">
+      L'idÃ©e en une phrase : <strong>le site EST le carnet.</strong> Fond papier calme, illustrations d'Oriane au crayon de couleur au centre, et le lieu rÃ©el â€” jaune vif, nÃ©ons, marchÃ© â€” qui apparaÃ®t <em>par Ã©clats</em>. Cette page matÃ©rialise la direction pour validation.
+    </p>
+    <p class="scroll-hint handwritten" aria-hidden="true">â†“ fais dÃ©filer</p>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= 2. LE TEST TYPO VIETNAMIEN ================= -->
+<section class="section test-typo" id="test-typo" data-reveal>
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 02</p>
+    <h2>Le test typo vietnamien</h2>
+    <p class="section-intro">
+      Section critique. Le vietnamien empile les diacritiques (á»£ á»™ á»¯ Æ¡ Ä‘). Beaucoup de polices display ne portent pas le sous-ensemble vietnamien : le glyphe tombe alors sur un <em>fallback</em> visible et moche. Regardez le rendu rÃ©el de la phrase test sur chaque police, ici, en vrai.
+    </p>
+    <p class="phrase-ref">Phrase test : <span lang="vi">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</span></p>
+
+    <div class="typo-grid" id="typo-grid">
+      <!-- Les specimens sont rendus, la dÃ©tection JS ajoute/ajuste les badges -->
+      <article class="specimen" data-font="Fraunces" data-family="'Fraunces', serif" data-role="Titres (display)">
+        <header class="specimen-head">
+          <span class="specimen-name">Fraunces</span>
+          <span class="specimen-role">titres / display</span>
+          <span class="badge badge-warn" data-badge>Ã  vÃ©rifier</span>
+        </header>
+        <p class="specimen-line" lang="vi" style="font-family:'Fraunces',serif">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</p>
+      </article>
+
+      <article class="specimen" data-font="Lora" data-family="'Lora', serif" data-role="Titres (display)">
+        <header class="specimen-head">
+          <span class="specimen-name">Lora</span>
+          <span class="specimen-role">titres / display</span>
+          <span class="badge badge-warn" data-badge>Ã  vÃ©rifier</span>
+        </header>
+        <p class="specimen-line" lang="vi" style="font-family:'Lora',serif">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</p>
+      </article>
+
+      <article class="specimen" data-font="Caveat" data-family="'Caveat', cursive" data-role="Manuscrit">
+        <header class="specimen-head">
+          <span class="specimen-name">Caveat</span>
+          <span class="specimen-role">manuscrit</span>
+          <span class="badge badge-warn" data-badge>Ã  vÃ©rifier</span>
+        </header>
+        <p class="specimen-line specimen-hand" lang="vi" style="font-family:'Caveat',cursive">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</p>
+      </article>
+
+      <article class="specimen" data-font="Dancing Script" data-family="'Dancing Script', cursive" data-role="Manuscrit">
+        <header class="specimen-head">
+          <span class="specimen-name">Dancing Script</span>
+          <span class="specimen-role">manuscrit</span>
+          <span class="badge badge-warn" data-badge>Ã  vÃ©rifier</span>
+        </header>
+        <p class="specimen-line specimen-hand" lang="vi" style="font-family:'Dancing Script',cursive">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</p>
+      </article>
+
+      <article class="specimen" data-font="Be Vietnam Pro" data-family="'Be Vietnam Pro', sans-serif" data-role="Corps de texte">
+        <header class="specimen-head">
+          <span class="specimen-name">Be Vietnam Pro</span>
+          <span class="specimen-role">corps</span>
+          <span class="badge badge-warn" data-badge>Ã  vÃ©rifier</span>
+        </header>
+        <p class="specimen-line specimen-body" lang="vi" style="font-family:'Be Vietnam Pro',sans-serif">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</p>
+      </article>
+
+      <article class="specimen" data-font="Inter" data-family="'Inter', sans-serif" data-role="Corps de texte">
+        <header class="specimen-head">
+          <span class="specimen-name">Inter</span>
+          <span class="specimen-role">corps</span>
+          <span class="badge badge-warn" data-badge>Ã  vÃ©rifier</span>
+        </header>
+        <p class="specimen-line specimen-body" lang="vi" style="font-family:'Inter',sans-serif">Chá»£ Vá»‰a HÃ¨ â€” phá»Ÿ bÃºn cháº£ á»‡ á»™ á»¯ Æ¡ Ä‘ Ä</p>
+      </article>
+    </div>
+
+    <aside class="reco">
+      <p class="reco-title handwritten">la reco</p>
+      <ul>
+        <li><strong>Titres :</strong> <span class="tag">Lora</span> ou <span class="tag">Fraunces</span> si son rendu VN passe la relecture. Sinon Lora, qui porte le vietnamien proprement.</li>
+        <li><strong>Manuscrit :</strong> comparer <span class="tag">Caveat</span> et <span class="tag">Dancing Script</span> Ã  l'Å“il â€” attention, Caveat n'a <em>pas</em> le sous-ensemble VN officiel.</li>
+        <li><strong>Corps :</strong> <span class="tag">Be Vietnam Pro</span> (conÃ§u pour le vietnamien) vs <span class="tag">Inter</span>. Pour le trilingue Ã  venir, Be Vietnam Pro part favori.</li>
+      </ul>
+      <p class="reco-note">Le badge <span class="badge badge-ok" style="position:static">diacritiques OK</span> est posÃ© automatiquement par une mesure JS (largeur du glyphe <span lang="vi">á»£</span> comparÃ©e au fallback). En cas de doute, faites confiance Ã  vos yeux sur le specimen, pas au badge.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 3. PALETTE ================= -->
+<section class="section palette" id="palette" data-reveal>
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 03</p>
+    <h2>La palette</h2>
+    <p class="section-intro">
+      Des taches d'aquarelle, pas des carrÃ©s froids. Trois familles : le papier qui porte tout, les encres d'Oriane, et les Ã©clats du lieu â€” rares et prÃ©cieux.
+    </p>
+
+    <div class="palette-group">
+      <h3 class="palette-group-title">Papier & encre <span class="prop">70 %</span></h3>
+      <p class="palette-group-line">La base. Le papier porte 70 % de chaque Ã©cran ; on respire dessus, le texte Ã  l'encre par-dessus.</p>
+      <div class="swatches">
+        <figure class="swatch" style="--c:#F7F2E9"><span class="blob"></span><figcaption><b>Papier</b><code>#F7F2E9</code></figcaption></figure>
+        <figure class="swatch" style="--c:#EFE6D6"><span class="blob"></span><figcaption><b>Papier ombrÃ©</b><code>#EFE6D6</code></figcaption></figure>
+        <figure class="swatch" style="--c:#1E1A17"><span class="blob"></span><figcaption><b>Encre</b><code>#1E1A17</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <h3 class="palette-group-title">Encres d'illustration <span class="prop">25 %</span></h3>
+      <p class="palette-group-line">Les couleurs d'Oriane. Elles vivent dans les dessins et les titres â€” jamais en aplats plein Ã©cran.</p>
+      <div class="swatches">
+        <figure class="swatch" style="--c:#C0264B"><span class="blob"></span><figcaption><b>Framboise Â· marque</b><code>#C0264B</code></figcaption></figure>
+        <figure class="swatch" style="--c:#E9531F"><span class="blob"></span><figcaption><b>Orange</b><code>#E9531F</code></figcaption></figure>
+        <figure class="swatch" style="--c:#1E6E8C"><span class="blob"></span><figcaption><b>Bleu lanterne</b><code>#1E6E8C</code></figcaption></figure>
+        <figure class="swatch" style="--c:#2E7D32"><span class="blob"></span><figcaption><b>Vert coriandre</b><code>#2E7D32</code></figcaption></figure>
+      </div>
+    </div>
+
+    <div class="palette-group">
+      <h3 class="palette-group-title">Ã‰clats du lieu <span class="prop">5 %</span></h3>
+      <p class="palette-group-line">Rares, donc forts. Le jaune nÃ©on = CTA et Ã©clats. Le rouge nÃ©on = glow dÃ©coratif <em>uniquement</em>, jamais en texte.</p>
+      <div class="swatches">
+        <figure class="swatch" style="--c:#F2B300"><span class="blob"></span><figcaption><b>Jaune nÃ©on Â· CTA</b><code>#F2B300</code></figcaption></figure>
+        <figure class="swatch swatch-glow" style="--c:#E4002B"><span class="blob"></span><figcaption><b>Rouge nÃ©on Â· glow</b><code>#E4002B</code></figcaption></figure>
+      </div>
+    </div>
+
+    <p class="palette-rules">
+      <strong>RÃ¨gles de contraste (AA) :</strong> texte encre sur jaune â€” jamais blanc sur jaune. Framboise rÃ©servÃ©e aux titres, sur papier.
+    </p>
+  </div>
+</section>
+
+<!-- ================= trait de crayon (sÃ©parateur animÃ©) ================= -->
+<div class="pencil-sep" data-pencil aria-hidden="true">
+  <svg viewBox="0 0 1200 40" preserveAspectRatio="none" width="100%" height="40">
+    <path d="M4 26 C 120 10, 240 34, 360 22 S 600 8, 720 24 S 960 36, 1080 18 S 1180 24, 1196 20" fill="none" stroke="#C0264B" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- ================= 4. ILLUSTRATIONS SUR PAPIER ================= -->
+<section class="section illustrations" id="illustrations" data-reveal>
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 04</p>
+    <h2>Les illustrations d'Oriane, sur le papier</h2>
+    <p class="section-intro">
+      Le fond blanc de chaque dessin se fond dans le papier : rien Ã  dÃ©tourer. LÃ©gendes manuscrites, numÃ©ros de page en coin â€” comme un vrai carnet.
+    </p>
+
+    <div class="illus-grid">
+      <figure class="illus-card" data-page="pg. 04">
+        <picture>
+          <source type="image/avif" srcset="../assets/illus/nouilles-480.avif 480w, ../assets/illus/nouilles-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <source type="image/webp" srcset="../assets/illus/nouilles-480.webp 480w, ../assets/illus/nouilles-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <img loading="lazy" decoding="async" src="../assets/illus/nouilles-480.webp" width="480" height="440" alt="Bol de phá»Ÿ fumant au crayon de couleur, tranches de bÅ“uf, herbes fraÃ®ches et cuillÃ¨re en porcelaine." />
+        </picture>
+        <figcaption class="handwritten">le phá»Ÿ du matin</figcaption>
+      </figure>
+
+      <figure class="illus-card" data-page="pg. 04">
+        <picture>
+          <source type="image/avif" srcset="../assets/illus/scooter-480.avif 480w, ../assets/illus/scooter-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <source type="image/webp" srcset="../assets/illus/scooter-480.webp 480w, ../assets/illus/scooter-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <img loading="lazy" decoding="async" src="../assets/illus/scooter-480.webp" width="480" height="460" alt="Scooter surchargÃ© de paquets colorÃ©s au crayon de couleur, style livraison de rue vietnamienne." />
+        </picture>
+        <figcaption class="handwritten">livraison express â€” HÃ  Ná»™i</figcaption>
+      </figure>
+
+      <figure class="illus-card" data-page="pg. 05">
+        <picture>
+          <source type="image/avif" srcset="../assets/illus/banh-mi-480.avif 480w, ../assets/illus/banh-mi-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <source type="image/webp" srcset="../assets/illus/banh-mi-480.webp 480w, ../assets/illus/banh-mi-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <img loading="lazy" decoding="async" src="../assets/illus/banh-mi-480.webp" width="480" height="440" alt="BÃ¡nh mÃ¬ au crayon de couleur, baguette dorÃ©e garnie de cruditÃ©s, herbes et piment." />
+        </picture>
+        <figcaption class="handwritten">bÃ¡nh mÃ¬, pour la route</figcaption>
+      </figure>
+
+      <figure class="illus-card" data-page="pg. 05">
+        <picture>
+          <source type="image/avif" srcset="../assets/illus/lanternes-480.avif 480w, ../assets/illus/lanternes-960.avif 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <source type="image/webp" srcset="../assets/illus/lanternes-480.webp 480w, ../assets/illus/lanternes-960.webp 960w" sizes="(max-width: 700px) 90vw, 440px" />
+          <img loading="lazy" decoding="async" src="../assets/illus/lanternes-480.webp" width="480" height="900" alt="Deux lanternes en soie au crayon de couleur, une bleue et une orange, avec pompons." />
+        </picture>
+        <figcaption class="handwritten">lanternes de Há»™i An</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. SIGNATURES MOTION ================= -->
+<section class="section motion" id="motion" data-reveal>
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 06</p>
+    <h2>Signatures motion <span class="section-tag">dÃ©mos live</span></h2>
+    <p class="section-intro">
+      Trois gestes qui donneront le ton. Tout est dÃ©sactivÃ© sous <code>prefers-reduced-motion</code> : la page reste lisible et calme pour qui le demande.
+    </p>
+
+    <div class="motion-demos">
+      <article class="motion-card">
+        <h3>a. Le trait de crayon</h3>
+        <p>Un sÃ©parateur qui se <em>dessine</em> quand il entre Ã  l'Ã©cran (IntersectionObserver + stroke-dashoffset, pas de GSAP).</p>
+        <div class="pencil-sep pencil-sep--inline" data-pencil aria-hidden="true">
+          <svg viewBox="0 0 600 40" preserveAspectRatio="none" width="100%" height="40">
+            <path d="M4 24 C 80 8, 160 32, 240 20 S 400 8, 480 26 S 560 32, 596 20" fill="none" stroke="#1E6E8C" stroke-width="3.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="motion-note handwritten">scrolle vers ce bloc pour le voir se tracer â†‘</p>
+      </article>
+
+      <article class="motion-card">
+        <h3>b. La tache d'aquarelle au hover</h3>
+        <p>Le CTA principal â€” encre sur jaune. Autour, des liens dont le soulignÃ© se dessine et une tache colorÃ©e douce Ã©clot derriÃ¨re.</p>
+
+        <p class="cta-row">
+          <a class="btn-cta" data-magnetic href="#" role="button">RÃ©server une table</a>
+        </p>
+
+        <p class="ink-links">
+          Passez sur
+          <a class="ink-link" href="#" data-ink>la carte</a>,
+          <a class="ink-link" href="#" data-ink>notre histoire</a>,
+          <a class="ink-link" href="#" data-ink>le lieu</a>
+          â€” le soulignÃ© se trace et une tache Ã©clot.
+        </p>
+      </article>
+
+      <article class="motion-card">
+        <h3>c. Le respect du calme</h3>
+        <p>Sous <code>prefers-reduced-motion: reduce</code>, tous les tracÃ©s apparaissent d'emblÃ©e, les taches sont statiques, aucun mouvement. Aucune information n'est portÃ©e par la seule animation.</p>
+        <p class="motion-note">RÃ©glage systÃ¨me actuel : <strong data-motion-state>dÃ©tectionâ€¦</strong></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. LE CONTRASTE CARNET / LIEU ================= -->
+<section class="section lieu" id="lieu" data-reveal aria-labelledby="lieu-title">
+  <div class="lieu-inner">
+    <p class="section-num handwritten section-num--onyellow">pg. 07</p>
+    <h2 id="lieu-title" class="lieu-title">â€¦et le lieu, lui,<br />ne chuchote pas.</h2>
+    <p class="lieu-intro">Papier calme, puis l'Ã©clat. VoilÃ  tout le contraste que le site doit produire : on tourne une page de carnet, et le marchÃ© explose.</p>
+
+    <div class="lieu-photos">
+      <figure class="lieu-photo lieu-photo--hero">
+        <picture>
+          <source type="image/avif" srcset="../assets/photos/28-cho-via-he-septembre25-lowres-28-480.avif 480w, ../assets/photos/28-cho-via-he-septembre25-lowres-28-960.avif 960w, ../assets/photos/28-cho-via-he-septembre25-lowres-28-1600.avif 1600w" sizes="(max-width: 800px) 92vw, 640px" />
+          <source type="image/webp" srcset="../assets/photos/28-cho-via-he-septembre25-lowres-28-480.webp 480w, ../assets/photos/28-cho-via-he-septembre25-lowres-28-960.webp 960w, ../assets/photos/28-cho-via-he-septembre25-lowres-28-1600.webp 1600w" sizes="(max-width: 800px) 92vw, 640px" />
+          <img loading="lazy" decoding="async" src="../assets/photos/28-cho-via-he-septembre25-lowres-28-480.webp" width="480" height="720" alt="Enseigne nÃ©on rouge Â« CHá»¢ Vá»ˆA HÃˆ Â» et Â« Cuisine de rue vietnamienne Â» sur un mur jaune vif, au cÅ“ur du restaurant." />
+        </picture>
+        <figcaption>Le nÃ©on signature â€” la photo qui doit surgir aprÃ¨s le papier.</figcaption>
+      </figure>
+
+      <figure class="lieu-photo">
+        <picture>
+          <source type="image/avif" srcset="../assets/photos/49-cho-lowres-49-480.avif 480w, ../assets/photos/49-cho-lowres-49-960.avif 960w" sizes="(max-width: 800px) 92vw, 320px" />
+          <source type="image/webp" srcset="../assets/photos/49-cho-lowres-49-480.webp 480w, ../assets/photos/49-cho-lowres-49-960.webp 960w" sizes="(max-width: 800px) 92vw, 320px" />
+          <img loading="lazy" decoding="async" src="../assets/photos/49-cho-lowres-49-480.webp" width="480" height="640" alt="Lanternes en soie colorÃ©es et fleurs suspendues dans la salle du restaurant." />
+        </picture>
+        <figcaption>Lanternes en soie & fleurs.</figcaption>
+      </figure>
+
+      <figure class="lieu-photo">
+        <picture>
+          <source type="image/avif" srcset="../assets/photos/33-cho-via-he-septembre25-lowres-33-480.avif 480w, ../assets/photos/33-cho-via-he-septembre25-lowres-33-960.avif 960w" sizes="(max-width: 800px) 92vw, 320px" />
+          <source type="image/webp" srcset="../assets/photos/33-cho-via-he-septembre25-lowres-33-480.webp 480w, ../assets/photos/33-cho-via-he-septembre25-lowres-33-960.webp 960w" sizes="(max-width: 800px) 92vw, 320px" />
+          <img loading="lazy" decoding="async" src="../assets/photos/33-cho-via-he-septembre25-lowres-33-480.webp" width="480" height="640" alt="DÃ©tail maximaliste du dÃ©cor du marchÃ© : couleurs saturÃ©es et objets accumulÃ©s." />
+        </picture>
+        <figcaption>Le maximalisme du marchÃ©.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. INSPIRATIONS ================= -->
+<section class="section inspirations" id="inspirations" data-reveal>
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 08</p>
+    <h2>Ce qu'on regarde</h2>
+    <p class="section-intro">RÃ©fÃ©rences, lues Ã  travers notre filtre : ce qu'on prend, ce qu'on Ã©vite. Notre Ã©quilibre : papier calme + Ã©clats.</p>
+
+    <ul class="inspi-grid">
+      <li class="inspi-card">
+        <h3>Dishoom <span class="inspi-url">dishoom.com</span></h3>
+        <p class="take"><span class="lbl lbl-take">On prend</span> le storytelling famille / hÃ©ritage comme colonne vertÃ©brale â€” chaque resto raconte une histoire vraie.</p>
+      </li>
+      <li class="inspi-card">
+        <h3>BAO London <span class="inspi-url">baolondon.com</span></h3>
+        <p class="take"><span class="lbl lbl-take">On prend</span> les illustrations naÃ¯ves comme identitÃ© totale, un monde cohÃ©rent.</p>
+        <p class="avoid"><span class="lbl lbl-avoid">On Ã©vite</span> la froideur minimale.</p>
+      </li>
+      <li class="inspi-card">
+        <h3>Big Mamma <span class="inspi-url">bigmammagroup.com</span></h3>
+        <p class="take"><span class="lbl lbl-take">On prend</span> l'Ã©nergie joyeuse assumÃ©e.</p>
+        <p class="avoid"><span class="lbl lbl-avoid">On Ã©vite</span> le chaos permanent â€” nous = papier calme + Ã©clats.</p>
+      </li>
+      <li class="inspi-card">
+        <h3>Omsom <span class="inspi-url">omsom.com</span></h3>
+        <p class="take"><span class="lbl lbl-take">On prend</span> la fiertÃ© des couleurs saturÃ©es asiatiques.</p>
+        <p class="avoid"><span class="lbl lbl-avoid">On Ã©vite</span> le tout-nÃ©on permanent.</p>
+      </li>
+      <li class="inspi-card inspi-card--vivier">
+        <h3>Vivier continu</h3>
+        <p class="take"><span class="lbl lbl-take">On surveille</span> landing.love & la catÃ©gorie food d'Awwwards â€” pour nourrir les itÃ©rations au fil de l'eau.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= 8. PIED DE PAGE ================= -->
+<footer class="footer" id="etapes">
+  <div class="wrap">
+    <p class="section-num handwritten">pg. 09</p>
+    <h2>Les prochaines Ã©tapes</h2>
+    <ol class="etapes-list">
+      <li><span class="etape-k">1</span> V1 de la home sur cette direction</li>
+      <li><span class="etape-k">2</span> ItÃ©rations sur retours Ã©quipe / client</li>
+      <li><span class="etape-k">3</span> Carte Â· histoire Â· passage trilingue (FR / EN / VI)</li>
+      <li><span class="etape-k">4</span> Branchement rÃ©servations Zenchef</li>
+      <li><span class="etape-k">5</span> Mise en ligne OVH â€” objectif 1<sup>er</sup> septembre</li>
+    </ol>
+
+    <div class="footer-palette" aria-label="Rappel de la palette">
+      <p class="footer-palette-title handwritten">rappel palette</p>
+      <ul class="chip-row">
+        <li class="chip" style="--c:#F7F2E9"><span></span>Papier #F7F2E9</li>
+        <li class="chip" style="--c:#EFE6D6"><span></span>OmbrÃ© #EFE6D6</li>
+        <li class="chip" style="--c:#1E1A17"><span></span>Encre #1E1A17</li>
+        <li class="chip" style="--c:#C0264B"><span></span>Framboise #C0264B</li>
+        <li class="chip" style="--c:#E9531F"><span></span>Orange #E9531F</li>
+        <li class="chip" style="--c:#1E6E8C"><span></span>Bleu #1E6E8C</li>
+        <li class="chip" style="--c:#2E7D32"><span></span>Vert #2E7D32</li>
+        <li class="chip" style="--c:#F2B300"><span></span>Jaune #F2B300</li>
+        <li class="chip" style="--c:#E4002B"><span></span>Rouge #E4002B</li>
+      </ul>
+    </div>
+
+    <p class="footer-sign handwritten">Chá»£ Vá»‰a HÃ¨ Â· carnet de voyage Â· v0 â€” juillet 2026</p>
+  </div>
+</footer>
+
+<script src="./app.js" defer></script>
+</body>
+</html>
