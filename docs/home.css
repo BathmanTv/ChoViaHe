@@ -751,6 +751,8 @@ h3 {
 }
 .genese-medaillon--patron img { transform: rotate(-1.5deg); }
 .genese-medaillon--famille img { transform: rotate(1deg); }
+.genese-medaillon--salle img { transform: rotate(1.2deg); }
+.genese-medaillon--ambiance img { transform: rotate(-1deg); }
 .genese-medaillon figcaption {
   font-family: var(--f-hand);
   color: var(--framboise);
