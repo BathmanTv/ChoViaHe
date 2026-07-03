@@ -492,22 +492,22 @@ h3 {
   transform: rotate(-4deg);
   z-index: 1;
 }
-.track-legend--hanoi { top: 6%; right: 6%; }
-.track-legend--saigon { bottom: 8%; left: 8%; color: var(--bleu); transform: rotate(3deg); }
+.track-legend--hanoi { top: 6%; left: 6%; }
+.track-legend--saigon { bottom: 8%; right: 8%; color: var(--bleu); transform: rotate(3deg); }
 .marg-paniers { width: clamp(80px, 18vw, 150px); bottom: 2%; right: 3%; opacity: 0.5; }
 
-/* stand.png = l'illustration centrale de la section voyages */
-.stand-feature {
-  margin: 2.5rem auto 0;
-  max-width: min(92vw, 640px);
+/* stand.png = image principale du site (hero) — styles dans la section couverture */
+.cover-stand {
+  margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
+  max-width: min(94vw, 700px);
   text-align: center;
 }
-.stand-feature img {
+.cover-stand img {
   width: 100%;
   height: auto;
   filter: drop-shadow(0 14px 22px rgba(30,26,23,0.14));
 }
-.stand-feature figcaption {
+.cover-stand figcaption {
   margin-top: 0.6rem;
   font-family: var(--f-hand);
   font-size: clamp(1.15rem, 3vw, 1.5rem);
