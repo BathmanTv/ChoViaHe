@@ -170,8 +170,9 @@
     var legSaigon = track.querySelector('.track-legend--saigon');
     if (!scooter) return;
 
-    // Le sens suit TOUJOURS le dessin: scooter.png v2 (détouré) regarde à
-    // droite, donc gauche -> droite (Hà Nội à gauche, Sài Gòn à droite).
+    // Direction voulue (user): droite -> gauche. Le dessin v2 regarde à
+    // droite, donc l'<img> est flippée en CSS (.scooter img scaleX(-1))
+    // pour regarder à gauche. Hà Nội à droite (départ), Sài Gòn à gauche.
     function travel() {
       var trackW = track.clientWidth;
       var sW = scooter.offsetWidth;
@@ -183,8 +184,8 @@
     if (legHanoi) gsap.set(legHanoi, { opacity: 0 });
     if (legSaigon) gsap.set(legSaigon, { opacity: 0 });
 
-    // état initial du scooter côté gauche
-    gsap.set(scooter, { x: 0, y: 0, rotation: 0, transformOrigin: '50% 100%' });
+    // état initial du scooter côté droit
+    gsap.set(scooter, { x: travel(), y: 0, rotation: 0, transformOrigin: '50% 100%' });
 
     var tl = gsap.timeline({
       scrollTrigger: {
@@ -196,7 +197,7 @@
     });
 
     // translation principale (ease none = suit le doigt/scroll = "on roule")
-    tl.to(scooter, { x: function () { return travel(); }, ease: 'none', duration: 1 }, 0);
+    tl.to(scooter, { x: 0, ease: 'none', duration: 1 }, 0);
 
     // bob vertical sinusoïdal + rotation : petites oscillations sur la course.
     // On les superpose via des keyframes pour l'effet "cahote sur le papier".
@@ -217,9 +218,9 @@
       tl.to(legSaigon, { opacity: 1, ease: 'power2.out', duration: 0.2 }, 0.62);
     }
 
-    // Recalcule la course si la largeur change.
+    // Recalcule la position de départ (droite) si la largeur change.
     ScrollTrigger.addEventListener('refreshInit', function () {
-      gsap.set(scooter, { x: 0 });
+      gsap.set(scooter, { x: travel() });
     });
   }
 
