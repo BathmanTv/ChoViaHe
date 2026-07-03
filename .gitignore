@@ -1,0 +1,4 @@
+node_modules/
+# Sources lourdes (originaux) — restent locaux, seuls les optimisés dans site/ partent sur GitHub
+img/
+*.log
