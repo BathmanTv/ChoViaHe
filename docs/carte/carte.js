@@ -133,28 +133,14 @@
     var bar = document.querySelector('[data-sticky-actions]');
     if (!bar) return;
     var cover = document.querySelector('.carte-header');
-    var end = document.querySelector('.carte-cta-final');
     if (!cover) return;
     if (!('IntersectionObserver' in window)) return;
 
     bar.hidden = false;
-    var coverVisible = true, endVisible = false;
-
-    function sync() {
-      if (!coverVisible && !endVisible) { bar.classList.add('is-visible'); }
-      else { bar.classList.remove('is-visible'); }
-    }
-
+    // Reste visible tout le long une fois l'en-tête passé (demande user).
     var coverIO = new IntersectionObserver(function (entries) {
-      coverVisible = entries[0].isIntersecting; sync();
+      bar.classList.toggle('is-visible', !entries[0].isIntersecting);
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
-
-    if (end) {
-      var endIO = new IntersectionObserver(function (entries) {
-        endVisible = entries[0].isIntersecting; sync();
-      }, { threshold: 0.05 });
-      endIO.observe(end);
-    }
   })();
 })();

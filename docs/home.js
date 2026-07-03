@@ -381,46 +381,23 @@
   });
 
   /* =======================================================
-     6. STICKY BAR MOBILE (Réserver / Appeler)
+     6. STICKY BAR MOBILE (Réserver / Appeler / Itinéraire)
      VANILLA — indépendante de GSAP.
-     Visible quand la couverture est sortie du champ ET que #contact
-     n'est pas visible (on masque la barre là où les infos contact
-     sont déjà à l'écran). CSS restreint l'affichage à ≤780px.
+     Visible dès que la couverture est passée, puis reste tout le
+     long de la page (demande user). CSS restreint à ≤780px.
      ======================================================= */
   (function initStickyActions() {
     var bar = document.querySelector('[data-sticky-actions]');
     if (!bar) return;
     var cover = document.querySelector('.couverture');
-    var contact = document.getElementById('contact');
     if (!cover) return;
     if (!('IntersectionObserver' in window)) return; // sans IO : reste masquée
 
     bar.hidden = false; // rend l'élément présent ; .is-visible pilote l'apparition
 
-    var coverVisible = true;   // hero dans le champ au départ
-    var contactVisible = false;
-
-    function sync() {
-      // affiche la barre seulement une fois le hero passé et hors du bloc contact
-      if (!coverVisible && !contactVisible) {
-        bar.classList.add('is-visible');
-      } else {
-        bar.classList.remove('is-visible');
-      }
-    }
-
     var coverIO = new IntersectionObserver(function (entries) {
-      coverVisible = entries[0].isIntersecting;
-      sync();
+      bar.classList.toggle('is-visible', !entries[0].isIntersecting);
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
-
-    if (contact) {
-      var contactIO = new IntersectionObserver(function (entries) {
-        contactVisible = entries[0].isIntersecting;
-        sync();
-      }, { threshold: 0.05 });
-      contactIO.observe(contact);
-    }
   })();
 })();

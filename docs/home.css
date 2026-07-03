@@ -842,19 +842,21 @@ h3 {
 .sticky-actions[hidden] { display: none; }
 .sticky-actions.is-visible { transform: translateY(0); }
 .sticky-btn {
-  flex: 1 1 50%;
+  flex: 1 1 0;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 3.4rem;
   font-family: var(--f-corps);
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   text-decoration: none;
   border: none;
+  white-space: nowrap;
 }
-.sticky-btn--book { background: var(--jaune); color: var(--encre); }
-.sticky-btn--call {
+.sticky-btn--book { flex-grow: 1.3; background: var(--jaune); color: var(--encre); }
+.sticky-btn--call,
+.sticky-btn--route {
   background: var(--papier);
   color: var(--encre);
   border-left: 1px solid rgba(30,26,23,0.14);
@@ -944,6 +946,17 @@ h3 {
   .cover-sub { margin-bottom: 0.3rem; }
   .cover-annotation { margin: 0.2rem 0 1.1rem; }
   .cover-stand { margin-top: clamp(1rem, 3vw, 1.6rem); }
+
+  /* Désencombrement (retour user: hero surchargé + header qui chevauche les images):
+     - guirlande retirée (passait sous le bandeau translucide)
+     - lanternes accrochées SOUS le bandeau, plus petites
+     - kicker retiré (répétait la sous-accroche), légende du stand retirée
+     - titre un cran plus compact — le dessin porte déjà le nom sur l'enseigne */
+  .guirlande-top { display: none; }
+  .lanternes-pendantes { top: var(--header-h); width: clamp(72px, 20vw, 130px); }
+  .cover-kicker { display: none; }
+  .cover-stand figcaption { display: none; }
+  .cover-title { font-size: clamp(2.2rem, 1rem + 8vw, 4rem); }
 }
 @media (max-width: 420px) {
   .site-header .wrap { gap: 0.5rem; padding-inline: 0.9rem; }
