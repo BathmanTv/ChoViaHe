@@ -281,7 +281,16 @@ h3 {
   transform: rotate(-3deg);
   display: inline-block;
 }
-.header-cta { margin-left: auto; }
+/* header-cta : cible tactile ≥44px (D3). Sur desktop le CTA garde son
+   allure compacte via padding, min-height n'agrandit visuellement rien
+   grâce au flex-align du header. */
+.header-cta {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.55rem;
+}
 
 /* burger — masqué desktop */
 .burger {
@@ -662,6 +671,18 @@ h3 {
 /* le trait crayon crescendo respire un peu plus (transition vers le jaune) */
 .pencil-sep--crescendo { padding-top: clamp(0.5rem, 3vw, 1.6rem); padding-bottom: clamp(1.5rem, 5vw, 3rem); }
 
+/* D4 — desktop ≥900px : le séparateur crescendo laissait ~1 écran de papier
+   vide entre le teaser carte et la section jaune. On resserre son padding et
+   on descend/agrandit la guirlande crescendo pour occuper et annoncer le jaune. */
+@media (min-width: 900px) {
+  .pencil-sep--crescendo { padding-top: 0.4rem; padding-bottom: 0.6rem; }
+  .marg-guirlande-lieu {
+    width: min(70vw, 620px);
+    top: clamp(-90px, -6vw, -40px);   /* déborde vers le papier, annonce le jaune */
+    opacity: 0.92;
+  }
+}
+
 .lieu-title {
   color: var(--encre);
   font-family: var(--f-titre);
@@ -932,6 +953,15 @@ h3 {
   .header-cta { margin-left: auto; }
   .burger { display: block; margin-left: 0.5rem; }
 
+  /* D2 : quand la sticky bar est visible (JS pose .sticky-active), on masque
+     le CTA du header — évite 3 boutons « Réserver » jaunes simultanés à l'écran.
+     opacity + pointer-events (transition douce), l'espace est repris par le burger. */
+  .sticky-active .header-cta {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease-out);
+  }
+
   /* Sticky bar active uniquement sur mobile/tablette étroite */
   .sticky-actions { display: flex; }
   /* compense la barre (3.4rem + safe-area) pour ne pas masquer le bas de page */
@@ -962,12 +992,31 @@ h3 {
   .cover-title { font-size: clamp(2.2rem, 1rem + 8vw, 4rem); }
 }
 @media (max-width: 420px) {
+  :root { --header-h: 3.9rem; }
   .site-header .wrap { gap: 0.5rem; padding-inline: 0.9rem; }
-  .header-cta { padding: 0.4rem 0.8rem; font-size: 0.85rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%); }
-  .burger { width: 2.4rem; height: 2.4rem; margin-left: 0.4rem; }
+  /* garde la cible tactile 44px (D3) tout en resserrant le padding horizontal */
+  .header-cta { padding: 0.45rem 0.85rem; min-height: 44px; font-size: 0.85rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%); }
+  .burger { width: 2.6rem; height: 2.6rem; margin-left: 0.4rem; }
 }
 @media (min-width: 781px) {
   .nav-overlay { display: none !important; }
+}
+
+/* =========================================================
+   D1 — MARGINALIA vs TEXTE sur mobile (≤780px)
+   En dessous de 780px les colonnes se replient en une seule et les
+   marginalia calées en % (haut-gauche / haut-droite / bas) tombent sur
+   le texte : pg.06 + H2 « Votre table vous attend » (poulets), section-num
+   + H2 des sections (sriracha, drapeau), et les grandes illus de bas de
+   section (velo, panier). On les masque proprement — décoratives,
+   aria-hidden, aucune perte de sens. Desktop inchangé.
+   ========================================================= */
+@media (max-width: 780px) {
+  .marg-poulets,
+  .marg-velo,
+  .marg-sriracha,
+  .marg-drapeau,
+  .marg-panier { display: none; }
 }
 
 /* =========================================================

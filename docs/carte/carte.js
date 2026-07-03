@@ -139,7 +139,11 @@
     bar.hidden = false;
     // Reste visible tout le long une fois l'en-tête passé (demande user).
     var coverIO = new IntersectionObserver(function (entries) {
-      bar.classList.toggle('is-visible', !entries[0].isIntersecting);
+      var visible = !entries[0].isIntersecting;
+      bar.classList.toggle('is-visible', visible);
+      // D2 : masque le CTA du header sur mobile quand la sticky bar est là
+      // (cohérent avec la home, CSS partagée ≤780px .sticky-active .header-cta).
+      document.documentElement.classList.toggle('sticky-active', visible);
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
   })();

@@ -396,8 +396,30 @@
     bar.hidden = false; // rend l'élément présent ; .is-visible pilote l'apparition
 
     var coverIO = new IntersectionObserver(function (entries) {
-      bar.classList.toggle('is-visible', !entries[0].isIntersecting);
+      var visible = !entries[0].isIntersecting;
+      bar.classList.toggle('is-visible', visible);
+      // D2 : quand la sticky bar est visible, on masque le CTA du header sur
+      // mobile (CSS ≤780px .sticky-active .header-cta) pour éviter 3 « Réserver »
+      // jaunes simultanés. Desktop inchangé (media query).
+      document.documentElement.classList.toggle('sticky-active', visible);
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
+  })();
+
+  /* =======================================================
+     7. LANTERNES — pause du balancement hors écran (D5)
+     L'animation CSS sway/entrance ne tourne que lorsque le hero
+     est visible. reduced-motion : laissé tel quel (déjà animation:none).
+     ======================================================= */
+  (function initLanternPause() {
+    if (reduce) return;                       // reduced-motion : rien à piloter
+    var lanternes = document.querySelector('.lanternes-pendantes');
+    if (!lanternes) return;
+    if (!('IntersectionObserver' in window)) return;
+
+    var io = new IntersectionObserver(function (entries) {
+      lanternes.style.animationPlayState = entries[0].isIntersecting ? 'running' : 'paused';
+    }, { threshold: 0 });
+    io.observe(lanternes);
   })();
 })();

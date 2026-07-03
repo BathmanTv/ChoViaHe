@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Chợ Vỉa Hè — Restaurant vietnamien à Toulouse · cuisine de rue</title>
-<meta name="description" content="Chợ Vỉa Hè, restaurant vietnamien à Toulouse (8 rue de Metz). Cuisine de rue vietnamienne authentique — phở, bánh mì, nems, cà phê. Le carnet de voyage d'une famille. Réservez votre table." />
+<meta name="description" content="Chợ Vỉa Hè, restaurant vietnamien à Toulouse, 8 rue de Metz. Cuisine de rue : pho, banh mi, bo bun, nems, cà phê. Le carnet de voyage d'une famille." />
 <meta name="theme-color" content="#F7F2E9" />
 
 <!-- STAGING GitHub Pages — RETIRER à la bascule OVH -->
@@ -23,17 +23,20 @@
 <meta property="og:image" content="https://www.choviahe.fr/assets/photos/28-cho-via-he-septembre25-lowres-28-1600.webp" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..600;1,400..500&family=Be+Vietnam+Pro:wght@300;400;500;600&family=Dancing+Script:wght@400;600;700&display=swap&subset=vietnamese,latin" rel="stylesheet" />
-
+<!-- Fonts auto-hébergées (subsets latin+vietnamien) — perf + CNIL, plus de tiers Google -->
+<link rel="stylesheet" href="./fonts/fonts.css" />
 <link rel="stylesheet" href="./home.css" />
+
+<link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="./favicon-16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 
 <!-- JSON-LD schema.org Restaurant -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Restaurant",
+  "@id": "https://www.choviahe.fr/#restaurant",
   "name": "Chợ Vỉa Hè",
   "description": "Restaurant vietnamien à Toulouse — cuisine de rue authentique. Le carnet de voyage d'une famille.",
   "url": "https://www.choviahe.fr",
@@ -41,6 +44,8 @@
   "servesCuisine": ["Vietnamese", "Street food"],
   "priceRange": "€€",
   "telephone": "+33562858392",
+  "email": "choviahe.toulouse@gmail.com",
+  "hasMenu": "https://www.choviahe.fr/carte/",
   "acceptsReservations": "https://bookings.zenchef.com/results?rid=377642",
   "address": {
     "@type": "PostalAddress",
@@ -51,8 +56,8 @@
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 43.6007,
-    "longitude": 1.4442
+    "latitude": 43.5999,
+    "longitude": 1.4443
   },
   "openingHoursSpecification": [
     {
@@ -69,8 +74,7 @@
     }
   ],
   "sameAs": [
-    "https://www.instagram.com/choviahe.toulouse",
-    "https://www.choviahe.fr"
+    "https://www.instagram.com/choviahe.toulouse"
   ]
 }
 </script>
@@ -87,14 +91,14 @@
     <nav class="main-nav" aria-label="Navigation principale">
       <ul>
         <li><a href="#genese" data-ink>L'histoire</a></li>
-        <li><a href="#carte" data-ink>La carte</a></li>
+        <li><a href="./carte/" data-ink>La carte</a></li>
         <li><a href="#lieu" data-ink>Le lieu</a></li>
         <li><a href="#contact" data-ink>Contact</a></li>
         <li><a class="nav-da" href="./da/">Direction artistique</a></li>
       </ul>
     </nav>
 
-    <a class="btn-cta btn-cta--sm header-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver</a>
+    <a class="btn-cta btn-cta--sm header-cta" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver</a>
 
     <button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-overlay" data-burger>
       <span></span>
@@ -108,11 +112,11 @@
   <nav aria-label="Menu">
     <ul>
       <li><a href="#genese">L'histoire</a></li>
-      <li><a href="#carte">La carte</a></li>
+      <li><a href="./carte/">La carte</a></li>
       <li><a href="#lieu">Le lieu</a></li>
       <li><a href="#contact">Contact</a></li>
       <li><a class="nav-da" href="./da/">Direction artistique</a></li>
-      <li><a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a></li>
+      <li><a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver une table</a></li>
     </ul>
   </nav>
 </div>
@@ -138,7 +142,7 @@
     <p class="cover-sub">La cuisine de rue du Vietnam, à Toulouse.</p>
     <p class="cover-annotation handwritten">le carnet de voyage d'une famille</p>
     <p class="cover-actions">
-      <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a>
+      <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver une table</a>
       <a class="ink-link cover-scroll" href="#genese" data-ink>Feuilleter le carnet ↓</a>
     </p>
 
@@ -282,7 +286,7 @@
   <div class="wrap">
     <p class="section-num handwritten">pg. 04</p>
     <h2 id="carte-title">Comme sur l'étal</h2>
-    <p class="section-intro">Un aperçu de ce qu'on sert. Les recettes qu'on a rapportées, refaites chaque jour.</p>
+    <p class="section-intro">Un aperçu de ce qu'on sert : du pho au bò bún (bo bun), en passant par le bún chả (bun cha) d'Hà Nội. Les recettes qu'on a rapportées, refaites chaque jour.</p>
     <p class="carte-fourchette">Tapas 7–14&nbsp;€ · Plats 15–16&nbsp;€ · Desserts 3–7,50&nbsp;€</p>
 
     <div class="plat-grid">
@@ -291,7 +295,7 @@
              srcset="./assets/illus/nouilles-480.webp 480w, ./assets/illus/nouilles-960.webp 960w" sizes="30vw" />
         <figcaption>
           <p class="plat-nom viet" lang="vi">Phở</p>
-          <p class="plat-desc">Le bouillon du matin, mijoté des heures, nouilles de riz et herbes fraîches.</p>
+          <p class="plat-desc">Le bouillon du matin — le pho mijoté des heures, nouilles de riz et herbes fraîches.</p>
         </figcaption>
       </figure>
 
@@ -300,7 +304,7 @@
              srcset="./assets/illus/banh-mi-480.webp 480w, ./assets/illus/banh-mi-960.webp 960w" sizes="30vw" />
         <figcaption>
           <p class="plat-nom viet" lang="vi">Bánh mì</p>
-          <p class="plat-desc">La baguette de rue, croustillante, crudités marinées et coriandre.</p>
+          <p class="plat-desc">La baguette banh mi de rue, croustillante, crudités marinées et coriandre.</p>
         </figcaption>
       </figure>
 
@@ -309,7 +313,7 @@
              srcset="./assets/illus/nems-480.webp 480w, ./assets/illus/nems-960.webp 960w" sizes="30vw" />
         <figcaption>
           <p class="plat-nom viet" lang="vi">Nems</p>
-          <p class="plat-desc">Croustillants, roulés à la main, à tremper dans la sauce.</p>
+          <p class="plat-desc">Nems croustillants, roulés à la main, à tremper dans la sauce.</p>
         </figcaption>
       </figure>
 
@@ -401,7 +405,7 @@
 
     <p class="reserver-cta">
       <!-- TODO: remplacer par embed SDK Zenchef quand accès back-office client -->
-      <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a>
+      <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver une table</a>
     </p>
 
     <div class="infos-grid">
@@ -420,6 +424,7 @@
           8 rue de Metz<br />
           31000 Toulouse
         </address>
+        <p class="info-lieu">À deux pas d'Esquirol et des quais de la Garonne, en plein centre de Toulouse.</p>
         <p><a href="https://www.google.com/maps/dir/?api=1&destination=8+rue+de+Metz+31000+Toulouse" target="_blank" rel="noopener">Itinéraire →</a></p>
       </div>
 
@@ -452,9 +457,10 @@
       <nav class="footer-nav" aria-label="Pied de page">
         <ul>
           <li><a href="#genese">L'histoire</a></li>
-          <li><a href="#carte">La carte</a></li>
+          <li><a href="./carte/">La carte</a></li>
           <li><a href="#lieu">Le lieu</a></li>
           <li><a href="#contact">Contact</a></li>
+          <li><a href="./mentions-legales/">Mentions légales</a></li>
           <li><a class="nav-da" href="./da/">Direction artistique (v0)</a></li>
         </ul>
       </nav>
@@ -469,7 +475,7 @@
      qui ajoute .is-visible. Sans JS sur mobile : reste masquée (le header porte déjà
      Réserver, et #contact liste tél/réservation). -->
 <div class="sticky-actions" data-sticky-actions aria-label="Actions rapides" hidden>
-  <a class="sticky-btn sticky-btn--book" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver</a>
+  <a class="sticky-btn sticky-btn--book" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver</a>
   <a class="sticky-btn sticky-btn--call" href="tel:+33562858392">Appeler</a>
   <a class="sticky-btn sticky-btn--route" href="https://www.google.com/maps/search/?api=1&amp;query=Ch%E1%BB%A3%20V%E1%BB%89a%20H%C3%A8%208%20rue%20de%20Metz%2031000%20Toulouse" target="_blank" rel="noopener">Itinéraire</a>
 </div>
