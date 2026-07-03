@@ -360,7 +360,9 @@ h3 {
 .lanternes-pendantes {
   position: absolute;
   top: 0;
-  right: clamp(-0.5rem, 3vw, 4rem);
+  /* max(): sur écran large, reste alignée à la colonne de contenu (1080px + léger
+     débord) au lieu de coller au bord de la fenêtre */
+  right: max(clamp(-0.5rem, 3vw, 4rem), calc(50% - 620px));
   width: clamp(88px, 26vw, 200px);
   z-index: 1;
   transform-origin: top center;
@@ -384,7 +386,8 @@ h3 {
 
 .guirlande-top {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: max(0px, calc(50% - 620px));
   width: min(60vw, 420px);
   opacity: 0.9;
   z-index: 1;
