@@ -364,12 +364,23 @@ h3 {
   width: clamp(88px, 26vw, 200px);
   z-index: 1;
   transform-origin: top center;
-  animation: sway 6s var(--ease-out) infinite alternate;
+  /* Poussée d'entrée (balancement amorti, comme si on venait de les accrocher)
+     puis balancement doux infini. L'entrée finit à -2.5deg = départ du sway. */
+  animation:
+    lantern-entrance 2.8s cubic-bezier(0.34, 0.06, 0.36, 0.96) both,
+    sway 6s var(--ease-out) 2.8s infinite alternate;
   filter: drop-shadow(0 8px 18px rgba(192,38,75,0.18));
   pointer-events: none;
 }
 .lanternes-pendantes img { width: 100%; }
 @keyframes sway { from { transform: rotate(-2.5deg); } to { transform: rotate(2.5deg); } }
+@keyframes lantern-entrance {
+  0%   { transform: rotate(0deg); }
+  22%  { transform: rotate(7deg); }
+  48%  { transform: rotate(-5.5deg); }
+  72%  { transform: rotate(4deg); }
+  100% { transform: rotate(-2.5deg); }
+}
 
 .guirlande-top {
   position: absolute;
