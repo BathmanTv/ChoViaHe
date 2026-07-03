@@ -7,6 +7,9 @@
 <meta name="description" content="Chợ Vỉa Hè, restaurant vietnamien à Toulouse (8 rue de Metz). Cuisine de rue vietnamienne authentique — phở, bánh mì, nems, cà phê. Le carnet de voyage d'une famille. Réservez votre table." />
 <meta name="theme-color" content="#F7F2E9" />
 
+<!-- STAGING GitHub Pages — RETIRER à la bascule OVH -->
+<meta name="robots" content="noindex" />
+
 <!-- retire .no-js au plus tôt pour éviter tout flash -->
 <script>document.documentElement.classList.remove('no-js');</script>
 
@@ -132,6 +135,7 @@
   <div class="wrap">
     <p class="cover-kicker">Cuisine de rue vietnamienne · Toulouse</p>
     <h1 class="cover-title" id="cover-title"><span class="viet" lang="vi">Chợ Vỉa Hè</span></h1>
+    <p class="cover-sub">La cuisine de rue du Vietnam, à Toulouse.</p>
     <p class="cover-annotation handwritten">le carnet de voyage d'une famille</p>
     <p class="cover-actions">
       <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver une table</a>
@@ -156,23 +160,33 @@
     <div class="genese-layout">
       <div>
         <p class="section-num handwritten">pg. 02</p>
-        <h2 id="genese-title">Tout commence à Toulouse</h2>
-        <!-- COPIE PROVISOIRE à valider client -->
-        <p class="genese-lead">Nous sommes une famille, et le Vietnam coule dans nos veines.</p>
+        <h2 id="genese-title"><span class="viet" lang="vi">Ngày xửa ngày xưa…</span> il était une fois</h2>
+        <p class="genese-lead">Au Vietnam, le marché fait partie intégrante des souvenirs d'enfance.</p>
         <div class="genese-body">
-          <p>Nous avons grandi entre deux cultures, avec le goût des marchés de rue et des recettes transmises de main en main. Un jour, l'envie est devenue évidente&nbsp;: <strong>faire goûter à Toulouse la vraie cuisine de rue vietnamienne</strong>, celle des étals fumants et des bols partagés.</p>
-          <p>Chợ Vỉa Hè, c'est ce carnet de voyage devenu restaurant — nos souvenirs, nos épices, notre table pour vous.</p>
+          <p>À travers le Chợ Vỉa Hè, nous voulons vous raconter ces petites histoires du quotidien qui font battre le cœur du pays.</p>
+          <p>C'est ce petit garçon qui, chaque jour, attend le retour de sa maman pour fouiller dans son panier, en quête d'une friandise glissée en cachette. C'est ce collégien qui prolonge un moment avec ses amis autour d'un Kem Xôi et d'un thé glacé, quitte à se faire gronder en rentrant. C'est cette écolière qui, chaque matin, se laisse envelopper par la vapeur du premier stand de Bánh bao.</p>
+          <p>Au Chợ Vỉa Hè, c'est un bout de ce Vietnam-là que nous partageons avec vous&nbsp;: <strong>simple, vivant et profondément humain</strong>.</p>
         </div>
       </div>
 
-      <figure class="genese-medaillon">
-        <picture>
-          <source type="image/avif" srcset="./assets/photos/44-cho-lowres-44-480.avif 480w, ./assets/photos/44-cho-lowres-44-960.avif 960w" sizes="(max-width: 900px) 90vw, 360px" />
-          <source type="image/webp" srcset="./assets/photos/44-cho-lowres-44-480.webp 480w, ./assets/photos/44-cho-lowres-44-960.webp 960w" sizes="(max-width: 900px) 90vw, 360px" />
-          <img loading="lazy" decoding="async" src="./assets/photos/44-cho-lowres-44-480.webp" width="480" height="320" alt="Salle du restaurant Chợ Vỉa Hè à Toulouse, décor coloré de marché vietnamien." />
-        </picture>
-        <figcaption class="handwritten">notre table, rue de Metz</figcaption>
-      </figure>
+      <div class="genese-medaillons">
+        <figure class="genese-medaillon genese-medaillon--patron">
+          <picture>
+            <source type="image/avif" srcset="./assets/photos/patron-480.avif 480w, ./assets/photos/patron-960.avif 960w" sizes="(max-width: 900px) 60vw, 300px" />
+            <source type="image/webp" srcset="./assets/photos/patron-480.webp 480w, ./assets/photos/patron-960.webp 960w" sizes="(max-width: 900px) 60vw, 300px" />
+            <img loading="lazy" decoding="async" src="./assets/photos/patron-480.webp" width="480" height="720" alt="Le patron du Chợ Vỉa Hè." />
+          </picture>
+          <figcaption class="handwritten">le patron</figcaption>
+        </figure>
+        <figure class="genese-medaillon genese-medaillon--famille">
+          <picture>
+            <source type="image/avif" srcset="./assets/photos/patron-famille-480.avif 480w, ./assets/photos/patron-famille-960.avif 960w" sizes="(max-width: 900px) 60vw, 300px" />
+            <source type="image/webp" srcset="./assets/photos/patron-famille-480.webp 480w, ./assets/photos/patron-famille-960.webp 960w" sizes="(max-width: 900px) 60vw, 300px" />
+            <img loading="lazy" decoding="async" src="./assets/photos/patron-famille-480.webp" width="480" height="720" alt="La famille du Chợ Vỉa Hè." />
+          </picture>
+          <figcaption class="handwritten">la famille</figcaption>
+        </figure>
+      </div>
     </div>
   </div>
 
@@ -183,6 +197,10 @@
   <div class="marginalia marg-baguette" aria-hidden="true">
     <img loading="lazy" decoding="async" src="./assets/illus/baguette-480.webp" width="480" height="864" alt=""
          srcset="./assets/illus/baguette-480.webp 480w, ./assets/illus/baguette-960.webp 960w" sizes="clamp(60px, 12vw, 100px)" />
+  </div>
+  <div class="marginalia marg-panier" data-parallax="10" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/panier-debout-480.webp" width="480" height="720" alt=""
+         srcset="./assets/illus/panier-debout-480.webp 480w, ./assets/illus/panier-debout-960.webp 960w" sizes="clamp(64px, 12vw, 108px)" />
   </div>
 </section>
 
@@ -199,8 +217,27 @@
     <p class="section-num handwritten">pg. 03</p>
     <h2 id="voyages-title">On est allés goûter sur place.</h2>
     <div class="voyages-body">
-      <!-- COPIE PROVISOIRE à valider client -->
-      <p>On retourne régulièrement au Vietnam. On s'imprègne des marchés à l'aube, on teste les étals les uns après les autres, on discute avec ceux qui cuisinent depuis toujours — et on ramène les recettes dans nos carnets, pour les refaire ici, à l'identique.</p>
+      <p>Pour créer le décor du Chợ, nous avons arpenté les marchés du Vietnam&nbsp;: la vaisselle vient du village de céramique de Bát Tràng, les fleurs artisanales des grand-mères de Thanh Tiên, les lanternes d'Hội An, les chapeaux coniques de Huế, les tissus de Vạn Phúc — et mille trouvailles marchandées à Hà Nội (en s'arrêtant grignoter pour nourrir la carte, évidemment).</p>
+    </div>
+
+    <!-- MOMENT SIGNATURE : le carnet ↔ le vrai stand familial -->
+    <div class="voyages-diptyque" data-reveal>
+      <figure class="diptyque-item diptyque-item--carnet">
+        <picture>
+          <source type="image/avif" srcset="./assets/illus/stand-480.avif 480w, ./assets/illus/stand-960.avif 960w" sizes="(max-width: 700px) 92vw, 480px" />
+          <source type="image/webp" srcset="./assets/illus/stand-480.webp 480w, ./assets/illus/stand-960.webp 960w" sizes="(max-width: 700px) 92vw, 480px" />
+          <img loading="lazy" decoding="async" src="./assets/illus/stand-480.webp" width="480" height="349" alt="Illustration au crayon de couleur du stand de cuisine de rue Chợ Vỉa Hè." />
+        </picture>
+        <figcaption class="handwritten">le carnet…</figcaption>
+      </figure>
+      <figure class="diptyque-item diptyque-item--reel">
+        <picture>
+          <source type="image/avif" srcset="./assets/photos/stand-vietnam-2-480.avif 480w, ./assets/photos/stand-vietnam-2-960.avif 960w" sizes="(max-width: 700px) 92vw, 480px" />
+          <source type="image/webp" srcset="./assets/photos/stand-vietnam-2-480.webp 480w, ./assets/photos/stand-vietnam-2-960.webp 960w" sizes="(max-width: 700px) 92vw, 480px" />
+          <img loading="lazy" decoding="async" src="./assets/photos/stand-vietnam-2-480.webp" width="480" height="360" alt="Le stand familial Bà Bu, au Vietnam." />
+        </picture>
+        <figcaption class="handwritten">…et le vrai</figcaption>
+      </figure>
     </div>
 
     <!-- Piste horizontale : le scooter la traverse de droite à gauche (sens du dessin) -->
@@ -221,6 +258,11 @@
     </div>
     <p class="visually-hidden">Illustration&nbsp;: un scooter chargé traverse la route entre Hà Nội et Sài Gòn.</p>
   </div>
+
+  <div class="marginalia marg-drapeau" data-parallax="-10" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/drapeau-480.webp" width="480" height="360" alt=""
+         srcset="./assets/illus/drapeau-480.webp 480w, ./assets/illus/drapeau-960.webp 960w" sizes="clamp(58px, 11vw, 96px)" />
+  </div>
 </section>
 
 <!-- ================= 5. LA CARTE — pg. 04 ================= -->
@@ -229,6 +271,7 @@
     <p class="section-num handwritten">pg. 04</p>
     <h2 id="carte-title">Comme sur l'étal</h2>
     <p class="section-intro">Un aperçu de ce qu'on sert. Les recettes qu'on a rapportées, refaites chaque jour.</p>
+    <p class="carte-fourchette">Tapas 7–14&nbsp;€ · Plats 15–16&nbsp;€ · Desserts 3–7,50&nbsp;€</p>
 
     <div class="plat-grid">
       <figure class="plat-card">
@@ -269,8 +312,7 @@
     </div>
 
     <p class="carte-cta">
-      <!-- TODO menu HTML complet phase 4 -->
-      <a class="ink-link" href="#" data-ink>La carte complète arrive — en attendant, téléchargez-la ↓</a>
+      <a class="btn-cta btn-cta--sm" href="./carte/">Voir la carte complète</a>
     </p>
   </div>
 
@@ -280,10 +322,28 @@
   <div class="marginalia marg-coriandre" aria-hidden="true">
     <img loading="lazy" decoding="async" src="./assets/illus/brin-coriandre01-480.webp" width="480" height="382" alt="" sizes="clamp(50px, 11vw, 90px)" />
   </div>
+  <div class="marginalia marg-sriracha" data-parallax="-12" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/sriracha-480.webp" width="480" height="720" alt=""
+         srcset="./assets/illus/sriracha-480.webp 480w, ./assets/illus/sriracha-960.webp 960w" sizes="clamp(52px, 10vw, 88px)" />
+  </div>
 </section>
+
+<!-- ================= séparateur crayon + crescendo vers le jaune =========
+     Prépare l'arrivée de l'éclat jaune du .lieu (transition trop brutale
+     sinon) : trait crayon qui se trace, puis une guirlande qui déborde
+     depuis le haut de la section jaune. -->
+<div class="pencil-sep pencil-sep--crescendo" data-pencil aria-hidden="true">
+  <svg viewBox="0 0 1200 40" preserveAspectRatio="none" width="100%" height="40">
+    <path d="M4 22 C 120 34, 240 8, 360 24 S 600 36, 720 18 S 960 8, 1080 26 S 1180 18, 1196 24" fill="none" stroke="#C0264B" stroke-width="3.5" stroke-linecap="round"/>
+  </svg>
+</div>
 
 <!-- ================= 6. LE LIEU — pg. 05 (éclat jaune) ================= -->
 <section class="section lieu" id="lieu" data-reveal aria-labelledby="lieu-title">
+  <div class="marginalia marg-guirlande-lieu" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/guirlande-480.webp" width="480" height="163" alt=""
+         srcset="./assets/illus/guirlande-480.webp 480w, ./assets/illus/guirlande-960.webp 960w" sizes="min(80vw, 520px)" />
+  </div>
   <div class="lieu-inner">
     <p class="section-num handwritten section-num--onyellow">pg. 05</p>
     <h2 id="lieu-title" class="lieu-title">…et le lieu, lui,<br />ne chuchote pas.</h2>
@@ -358,6 +418,15 @@
       </div>
     </div>
   </div>
+
+  <div class="marginalia marg-velo" data-parallax="-14" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/velo-480.webp" width="480" height="360" alt=""
+         srcset="./assets/illus/velo-480.webp 480w, ./assets/illus/velo-960.webp 960w" sizes="clamp(96px, 20vw, 168px)" />
+  </div>
+  <div class="marginalia marg-poulets" data-parallax="10" aria-hidden="true">
+    <img loading="lazy" decoding="async" src="./assets/illus/poulets-480.webp" width="480" height="360" alt=""
+         srcset="./assets/illus/poulets-480.webp 480w, ./assets/illus/poulets-960.webp 960w" sizes="clamp(66px, 13vw, 112px)" />
+  </div>
 </section>
 
 </main>
@@ -381,6 +450,16 @@
     <p class="footer-sign handwritten">Chợ Vỉa Hè · espace de travail — juillet 2026</p>
   </div>
 </footer>
+
+<!-- ================= STICKY BAR MOBILE (≤780px) ================= -->
+<!-- Actions rapides : apparaît quand le hero sort du champ, se masque sur #contact.
+     État de repos = masquée hors mobile (media query) ; visible seulement via JS
+     qui ajoute .is-visible. Sans JS sur mobile : reste masquée (le header porte déjà
+     Réserver, et #contact liste tél/réservation). -->
+<div class="sticky-actions" data-sticky-actions aria-label="Actions rapides" hidden>
+  <a class="sticky-btn sticky-btn--book" href="https://bookings.zenchef.com/results?rid=377642" target="_blank" rel="noopener">Réserver</a>
+  <a class="sticky-btn sticky-btn--call" href="tel:+33562858392">Appeler</a>
+</div>
 
 <!-- Motion layer : GSAP core + ScrollTrigger + Lenis (CDN épinglé, defer).
      home.js dégrade proprement si l'un manque (fallback IntersectionObserver). -->

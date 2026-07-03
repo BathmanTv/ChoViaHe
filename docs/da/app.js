@@ -41,47 +41,13 @@
     } catch (err) { /* getTotalLength indispo : le fallback CSS suffit */ }
   });
 
-  /* ---- 2. Badges typo vietnamien ---- */
-  // Subsets vietnamiens officiels Google Fonts — fait vérifié, pas une heuristique.
-  // (La mesure de largeur ne détecte pas le fallback par glyphe: elle disait OK partout,
-  // y compris pour Fraunces/Caveat qui n'ont pas le subset "vietnamese".)
-  var VI_SUBSET = {
-    'Fraunces': false,
-    'Caveat': false,
-    'Lora': true,
-    'Dancing Script': true,
-    'Be Vietnam Pro': true,
-    'Inter': true
-  };
+  /* ---- Écritures choisies : les badges sont fixés dans le HTML ----
+     Les trois écritures gardées (Lora, Dancing Script, Be Vietnam Pro)
+     affichent toutes le vietnamien parfaitement — badge « ✓ vietnamien parfait ».
+     Les deux écartées (Fraunces, Caveat) ne portent pas le vietnamien —
+     badge « ✗ écartée », posé en dur. Rien à calculer côté JS. */
 
-  function runDetection() {
-    document.querySelectorAll('.specimen').forEach(function (spec) {
-      var badge = spec.querySelector('[data-badge]');
-      if (!badge) return;
-      var famOnly = spec.getAttribute('data-family').split(',')[0].replace(/["']/g, '').trim();
-      var ok = VI_SUBSET[famOnly];
-
-      badge.classList.remove('badge-warn', 'badge-ok');
-      if (ok) {
-        badge.classList.add('badge-ok');
-        badge.textContent = 'subset vietnamien officiel';
-      } else {
-        badge.classList.add('badge-warn');
-        badge.textContent = 'pas de subset VN — fallback par glyphe, regardez le rendu';
-      }
-    });
-  }
-
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () {
-      // petit délai : laisse le layout se stabiliser après swap
-      setTimeout(runDetection, 60);
-    });
-  } else {
-    window.addEventListener('load', function () { setTimeout(runDetection, 300); });
-  }
-
-  /* ---- 5b. magnétisme léger du CTA (subtil, désactivé si reduced) ---- */
+  /* ---- Magnétisme léger du bouton (subtil, désactivé si reduced) ---- */
   if (!reduce && window.matchMedia('(pointer:fine)').matches) {
     document.querySelectorAll('[data-magnetic]').forEach(function (el) {
       var strength = 10;

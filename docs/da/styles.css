@@ -201,7 +201,18 @@ h1 .sub-title { font-style: italic; font-weight: 400; color: var(--encre); }
   color: var(--bleu);
   transform: rotate(-3deg);
   display: inline-block;
-  margin: 0.2rem 0 1.6rem;
+  margin: 0.2rem 0 0.4rem;
+}
+.valide {
+  display: inline-block;
+  font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+  color: #1f5d24;
+  background: rgba(46,125,50,0.14);
+  border: 1px solid rgba(46,125,50,0.4);
+  border-radius: 999px;
+  padding: 0.1rem 0.9rem;
+  transform: rotate(-2deg);
+  margin: 0 0 1.6rem;
 }
 .lede { max-width: var(--measure); font-size: clamp(1.05rem, 1rem + 0.5vw, 1.25rem); }
 .lede strong { color: var(--framboise); }
@@ -267,10 +278,11 @@ h1 .sub-title { font-style: italic; font-weight: 400; color: var(--encre); }
 .specimen-body { font-size: clamp(1.15rem, 0.9rem + 1.6vw, 1.6rem); line-height: 1.4; }
 
 .badge {
+  display: inline-block;
   font-family: var(--f-corps);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.65rem;
   border-radius: 999px;
   white-space: nowrap;
 }
@@ -299,6 +311,179 @@ h1 .sub-title { font-style: italic; font-weight: 400; color: var(--encre); }
   font-weight: 600;
 }
 .reco-note { font-size: 0.9rem; color: var(--encre-doux); margin: 1rem 0 0; }
+
+/* ---- rôles typo choisis ---- */
+.typo-roles { margin: 0.4rem 0 2rem; }
+.typo-roles ul { list-style: none; padding: 0; max-width: var(--measure); }
+.typo-roles li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed rgba(30,26,23,0.14);
+}
+.typo-roles li:last-child { border-bottom: 0; }
+
+/* ---- écartées ---- */
+.ecartees {
+  background: var(--papier-ombre);
+  border-radius: 16px;
+  border: 1px dashed rgba(192,38,75,0.45);
+  padding: clamp(1.2rem, 4vw, 1.8rem);
+}
+.ecartees-title {
+  color: var(--framboise);
+  font-size: 1.5rem;
+  transform: rotate(-3deg);
+  margin: 0 0 0.5rem;
+}
+.ecartees > p { max-width: var(--measure); }
+.ecartees-specimens {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+  grid-template-columns: 1fr;
+}
+.ecartee {
+  margin: 0;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid rgba(30,26,23,0.12);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+.ecartee-name {
+  display: inline-block;
+  font-family: var(--f-corps);
+  font-weight: 600;
+  margin: 0.4rem 0 0.2rem;
+}
+.ecartee p { margin: 0.2rem 0 0; font-size: clamp(1.15rem, 0.9rem + 2vw, 1.6rem); color: var(--encre-doux); word-break: break-word; }
+
+/* =========================================================
+   CE QUI EST DÉJÀ CONSTRUIT
+   ========================================================= */
+.deja-grid {
+  display: grid;
+  gap: 1.1rem;
+  margin: 2rem 0;
+  grid-template-columns: 1fr;
+}
+.deja-card {
+  background: rgba(255,255,255,0.42);
+  border: 1px solid rgba(30,26,23,0.12);
+  border-left: 5px solid var(--bleu);
+  border-radius: 14px;
+  padding: clamp(1.1rem, 3.5vw, 1.6rem);
+}
+.deja-card h3 { margin-bottom: 0.5rem; }
+.deja-card p { margin: 0.3rem 0; }
+.deja-actions { margin-top: 0.9rem; }
+.deja-illus { margin: 1rem 0 0; }
+.deja-illus img {
+  width: clamp(160px, 55%, 300px);
+  height: auto;
+  filter: drop-shadow(0 8px 14px rgba(30,26,23,0.12));
+}
+
+/* le carnet… et le vrai */
+.carnet-et-vrai {
+  margin-top: 2.4rem;
+  padding-top: 2rem;
+  border-top: 1px dashed rgba(30,26,23,0.2);
+}
+.cev-title { color: var(--framboise); font-size: 1.7rem; transform: rotate(-3deg); margin: 0 0 0.5rem; }
+.cev-pair {
+  display: grid;
+  gap: 1.4rem;
+  margin-top: 1.5rem;
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+.cev-card { margin: 0; text-align: center; }
+.cev-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.cev-dessin img {
+  filter: drop-shadow(0 10px 18px rgba(30,26,23,0.12));
+}
+.cev-photo img {
+  box-shadow: 0 12px 28px rgba(30,26,23,0.26);
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+.cev-card figcaption {
+  font-family: var(--f-hand);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 3.5vw, 1.55rem);
+  color: var(--framboise);
+  margin-top: 0.5rem;
+  transform: rotate(-1.5deg);
+}
+.cev-photo figcaption { color: var(--bleu); }
+
+/* fallback image manquante : bloc coloré + légende visible */
+.img-missing picture { display: none; }
+.img-missing {
+  position: relative;
+}
+.img-missing::before {
+  content: "image à venir";
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  background: var(--papier-ombre);
+  border: 2px dashed rgba(30,26,23,0.25);
+  border-radius: 12px;
+  color: var(--encre-doux);
+  font-family: var(--f-hand);
+  font-size: 1.3rem;
+}
+
+/* =========================================================
+   LES PRIORITÉS
+   ========================================================= */
+.prio-grid {
+  display: grid;
+  gap: 1.1rem;
+  margin-top: 2rem;
+  grid-template-columns: 1fr;
+}
+.prio-card {
+  position: relative;
+  background: rgba(255,255,255,0.42);
+  border: 1px solid rgba(30,26,23,0.12);
+  border-radius: 14px;
+  padding: clamp(1.1rem, 3.5vw, 1.5rem) clamp(1.1rem, 3.5vw, 1.5rem) clamp(1.1rem, 3.5vw, 1.5rem) 3.4rem;
+}
+.prio-k {
+  position: absolute;
+  left: 0.9rem;
+  top: 0.9rem;
+  font-family: var(--f-hand);
+  font-weight: 700;
+  color: var(--framboise);
+  font-size: 1.9rem;
+  line-height: 1;
+}
+.prio-card h3 { margin-bottom: 0.35rem; font-size: clamp(1.1rem, 1rem + 0.7vw, 1.35rem); }
+.prio-card p { margin: 0; color: var(--encre-doux); }
+
+/* =========================================================
+   CE QU'ON ATTEND DE VOUS
+   ========================================================= */
+.attente-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  max-width: 56ch;
+}
+.attente-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed rgba(30,26,23,0.16);
+}
+.att-check { color: var(--bleu); font-size: 1.3rem; line-height: 1; }
 
 /* =========================================================
    3. PALETTE
@@ -656,6 +841,10 @@ code {
    ========================================================= */
 @media (min-width: 620px) {
   .typo-grid { grid-template-columns: repeat(2, 1fr); }
+  .ecartees-specimens { grid-template-columns: 1fr 1fr; }
+  .cev-pair { grid-template-columns: 1fr 1fr; }
+  .deja-grid { grid-template-columns: 1fr 1fr; }
+  .prio-grid { grid-template-columns: 1fr 1fr; }
   .lieu-photos {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "hero hero" "a b";
@@ -666,7 +855,7 @@ code {
 @media (min-width: 900px) {
   .motion-demos { grid-template-columns: repeat(3, 1fr); }
   .inspi-grid { grid-template-columns: repeat(2, 1fr); }
-  .inspi-card--vivier { grid-column: 1 / -1; }
+  .prio-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* =========================================================

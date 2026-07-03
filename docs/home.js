@@ -111,6 +111,9 @@
 
     /* ---- Reveals : opacity + translateY, stagger léger sur enfants ---- */
     gsap.utils.toArray('[data-reveal]').forEach(function (section) {
+      // le diptyque a son propre reveal séquencé (moment émotion) — on l'exclut ici.
+      if (section.classList.contains('voyages-diptyque')) return;
+
       // état "repos = visible" retiré côté JS : on part de l'état animé.
       // On anime les enfants directs porteurs de texte (titre + blocs),
       // sinon la section entière — fondu doux, pas de bloc qui saute.
@@ -131,6 +134,44 @@
         }
       });
     });
+
+    /* ---- Diptyque "le carnet… / …et le vrai" : reveal séquencé (émotion) ----
+       Le dessin apparaît d'abord, la photo 0.15s après — on "pose le carnet
+       puis on montre le vrai". Fondu doux + léger décalage vertical, la
+       rotation artisanale (CSS) est préservée. Fail-to-visible via once. */
+    (function initDiptyque() {
+      var dip = document.querySelector('.voyages-diptyque');
+      if (!dip) return;
+      var carnet = dip.querySelector('.diptyque-item--carnet');
+      var reel = dip.querySelector('.diptyque-item--reel');
+      if (!carnet || !reel) return;
+
+      var tl = gsap.timeline({
+        scrollTrigger: { trigger: dip, start: 'top 80%', once: true }
+      });
+      tl.from(carnet, { opacity: 0, y: 26, duration: 0.85, ease: 'power3.out' }, 0)
+        .from(reel, { opacity: 0, y: 26, duration: 0.85, ease: 'power3.out' }, 0.15);
+    })();
+
+    /* ---- Médaillons histoire (patron / famille) : reveal doux + tilt ----
+       Le tilt final (-1.5deg / +1deg) est posé en fin d'anim et laissé sur
+       l'élément (transform GSAP), remplaçant le rotate CSS statique. */
+    (function initMedaillons() {
+      var meds = document.querySelectorAll('.genese-medaillon');
+      if (!meds.length) return;
+      meds.forEach(function (med, i) {
+        var img = med.querySelector('img');
+        if (!img) return;
+        var endRot = med.classList.contains('genese-medaillon--famille') ? 1 : -1.5;
+        gsap.fromTo(img,
+          { opacity: 0, y: 22, rotation: 0 },
+          {
+            opacity: 1, y: 0, rotation: endRot,
+            duration: 0.9, ease: 'power3.out', delay: i * 0.08,
+            scrollTrigger: { trigger: med, start: 'top 85%', once: true }
+          });
+      });
+    })();
 
     /* ---- Séparateurs crayon : tracé stroke-dashoffset au scroll-in ---- */
     document.querySelectorAll('[data-pencil]').forEach(function (sep) {
@@ -170,9 +211,9 @@
     var legSaigon = track.querySelector('.track-legend--saigon');
     if (!scooter) return;
 
-    // Direction voulue (user): droite -> gauche. Le dessin v2 regarde à
-    // droite, donc l'<img> est flippée en CSS (.scooter img scaleX(-1))
-    // pour regarder à gauche. Hà Nội à droite (départ), Sài Gòn à gauche.
+    // Direction voulue (user): GAUCHE -> DROITE. Le dessin v3 régénéré
+    // regarde à droite → aucun flip CSS. Hà Nội = départ (gauche), Sài Gòn
+    // = arrivée (droite). x part de 0 (gauche) et CROÎT vers travel() (droite).
     function travel() {
       var trackW = track.clientWidth;
       var sW = scooter.offsetWidth;
@@ -184,20 +225,27 @@
     if (legHanoi) gsap.set(legHanoi, { opacity: 0 });
     if (legSaigon) gsap.set(legSaigon, { opacity: 0 });
 
-    // état initial du scooter côté droit
-    gsap.set(scooter, { x: travel(), y: 0, rotation: 0, transformOrigin: '50% 100%' });
+    // état initial du scooter côté GAUCHE (x = 0)
+    gsap.set(scooter, { x: 0, y: 0, rotation: 0, transformOrigin: '50% 100%' });
 
     var tl = gsap.timeline({
       scrollTrigger: {
         trigger: track,
         start: 'top 78%',      // commence quand la piste entre bien dans le champ
         end: 'bottom 45%',     // ~1 viewport de course, se termine avant de sortir
-        scrub: 0.6             // scrub quasi-linéaire, léger lissage
+        scrub: 0.6,            // scrub quasi-linéaire, léger lissage
+        invalidateOnRefresh: true, // relit travel() (cible droite) au resize
+        // will-change posé pendant la course seulement, retiré sinon (perf).
+        onEnter: function () { scooter.classList.add('is-riding'); },
+        onLeave: function () { scooter.classList.remove('is-riding'); },
+        onEnterBack: function () { scooter.classList.add('is-riding'); },
+        onLeaveBack: function () { scooter.classList.remove('is-riding'); }
       }
     });
 
-    // translation principale (ease none = suit le doigt/scroll = "on roule")
-    tl.to(scooter, { x: 0, ease: 'none', duration: 1 }, 0);
+    // translation principale gauche→droite (ease none = suit le scroll = "on roule")
+    // valeur en fonction : relue à chaque refresh (invalidateOnRefresh) → responsive.
+    tl.to(scooter, { x: function () { return travel(); }, ease: 'none', duration: 1 }, 0);
 
     // bob vertical sinusoïdal + rotation : petites oscillations sur la course.
     // On les superpose via des keyframes pour l'effet "cahote sur le papier".
@@ -218,9 +266,10 @@
       tl.to(legSaigon, { opacity: 1, ease: 'power2.out', duration: 0.2 }, 0.62);
     }
 
-    // Recalcule la position de départ (droite) si la largeur change.
+    // Recalcule la position de départ (GAUCHE, x = 0) si la largeur change.
+    // travel() (la cible droite) est relue par le tween au refresh de ScrollTrigger.
     ScrollTrigger.addEventListener('refreshInit', function () {
-      gsap.set(scooter, { x: travel() });
+      gsap.set(scooter, { x: 0 });
     });
   }
 
@@ -232,6 +281,7 @@
     // désactive sous 640px : marges trop serrées, gain visuel nul, coût inutile.
     if (window.matchMedia('(max-width: 640px)').matches) return;
 
+    // marginalia "historiques" (sélecteur fixe) + toute [data-parallax].
     var picks = [
       { sel: '.marg-cafe', amt: -14 },
       { sel: '.marg-coriandre', amt: 12 },
@@ -239,9 +289,21 @@
     ];
     picks.forEach(function (p) {
       var el = document.querySelector(p.sel);
-      if (!el) return;
+      if (el) parallaxOne(el, p.amt);
+    });
+
+    // marginalia parsemées : amplitude portée par data-parallax (±8–16px).
+    document.querySelectorAll('[data-parallax]').forEach(function (el) {
+      var amt = parseFloat(el.getAttribute('data-parallax'));
+      if (!amt || isNaN(amt)) amt = 10;
+      // borne dure ±16px (garde-fou subtilité).
+      amt = Math.max(-16, Math.min(16, amt));
+      parallaxOne(el, amt);
+    });
+
+    function parallaxOne(el, amt) {
       gsap.to(el, {
-        y: p.amt,
+        y: amt,
         ease: 'none',
         scrollTrigger: {
           trigger: el.closest('.section') || el,
@@ -250,7 +312,7 @@
           scrub: true
         }
       });
-    });
+    }
   }
 
   /* =======================================================
@@ -317,4 +379,48 @@
   document.querySelectorAll('a[href="#"]').forEach(function (a) {
     a.addEventListener('click', function (e) { e.preventDefault(); });
   });
+
+  /* =======================================================
+     6. STICKY BAR MOBILE (Réserver / Appeler)
+     VANILLA — indépendante de GSAP.
+     Visible quand la couverture est sortie du champ ET que #contact
+     n'est pas visible (on masque la barre là où les infos contact
+     sont déjà à l'écran). CSS restreint l'affichage à ≤780px.
+     ======================================================= */
+  (function initStickyActions() {
+    var bar = document.querySelector('[data-sticky-actions]');
+    if (!bar) return;
+    var cover = document.querySelector('.couverture');
+    var contact = document.getElementById('contact');
+    if (!cover) return;
+    if (!('IntersectionObserver' in window)) return; // sans IO : reste masquée
+
+    bar.hidden = false; // rend l'élément présent ; .is-visible pilote l'apparition
+
+    var coverVisible = true;   // hero dans le champ au départ
+    var contactVisible = false;
+
+    function sync() {
+      // affiche la barre seulement une fois le hero passé et hors du bloc contact
+      if (!coverVisible && !contactVisible) {
+        bar.classList.add('is-visible');
+      } else {
+        bar.classList.remove('is-visible');
+      }
+    }
+
+    var coverIO = new IntersectionObserver(function (entries) {
+      coverVisible = entries[0].isIntersecting;
+      sync();
+    }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
+    coverIO.observe(cover);
+
+    if (contact) {
+      var contactIO = new IntersectionObserver(function (entries) {
+        contactVisible = entries[0].isIntersecting;
+        sync();
+      }, { threshold: 0.05 });
+      contactIO.observe(contact);
+    }
+  })();
 })();

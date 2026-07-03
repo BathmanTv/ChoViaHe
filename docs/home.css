@@ -433,6 +433,7 @@ h3 {
   }
   .couverture .wrap > .cover-kicker,
   .couverture .wrap > .cover-title,
+  .couverture .wrap > .cover-sub,
   .couverture .wrap > .cover-annotation,
   .couverture .wrap > .cover-actions { grid-column: 1; }
   .cover-stand {
@@ -469,24 +470,11 @@ h3 {
   color: var(--encre);
   margin-bottom: 1rem;
 }
-.genese-medaillon {
-  margin: 2rem 0 0;
-  max-width: 360px;
-}
-.genese-medaillon img {
-  width: 100%;
-  border-radius: 14px;
-  box-shadow: 0 12px 28px rgba(30,26,23,0.20);
-}
-.genese-medaillon figcaption {
-  font-family: var(--f-hand);
-  color: var(--framboise);
-  font-size: 1.3rem;
-  margin-top: 0.4rem;
-  transform: rotate(-2deg);
-}
+/* .genese-medaillon* : styles unifiés plus bas (bloc « GENÈSE — médaillons ») */
 .marg-cafe { width: clamp(70px, 16vw, 130px); top: 8%; right: 2%; }
 .marg-baguette { width: clamp(60px, 12vw, 100px); bottom: 4%; left: 1%; }
+/* panier debout : marge basse à droite de l'histoire, discret */
+.marg-panier { width: clamp(64px, 12vw, 108px); bottom: 6%; right: 3%; opacity: 0.72; }
 
 /* =========================================================
    4. LES VOYAGES + piste scooter
@@ -507,10 +495,33 @@ h3 {
   margin-left: 2%;
   z-index: 2;
 }
+
+/* --- Scooter MOBILE : piste pleine largeur d'écran + scooter plus petit ---
+   Sous 780px le .wrap est étroit (piste ~ 200px) : la signature passe
+   inaperçue. On sort la piste hors du .wrap (full-bleed via margin négative
+   calée sur --pad-x) pour allonger la course, et on réduit le scooter afin
+   que la traversée relative soit bien plus lisible. Overflow maîtrisé :
+   la piste garde overflow:hidden et body a overflow-x:hidden. */
+@media (max-width: 780px) {
+  .scooter-track {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    min-height: clamp(140px, 40vw, 200px);
+    padding-inline: 0;
+  }
+  .scooter {
+    width: clamp(104px, 26vw, 150px);
+    margin-left: 4vw;
+  }
+  .track-legend { font-size: clamp(1.35rem, 6vw, 1.9rem); }
+  .track-legend--hanoi { top: 5%; left: 5vw; }
+  .track-legend--saigon { bottom: 6%; right: 5vw; }
+  .marg-paniers { right: 4vw; }
+}
 .scooter img {
   width: 100%;
-  /* dessin v2 regarde à droite; flip pour rouler vers la gauche (sens voulu) */
-  transform: scaleX(-1);
+  /* dessin v3 régénéré : regarde à DROITE → aucun flip, roule gauche→droite */
   filter: drop-shadow(0 10px 16px rgba(30,26,23,0.15));
 }
 .track-legend {
@@ -521,10 +532,15 @@ h3 {
   font-size: clamp(1.4rem, 4vw, 2rem);
   transform: rotate(-4deg);
   z-index: 1;
+  /* léger halo papier pour lisibilité sur la piste pointillée (mobile surtout) */
+  text-shadow: 0 1px 0 var(--papier), 0 0 10px var(--papier), 0 0 4px var(--papier);
 }
-.track-legend--hanoi { top: 6%; right: 6%; }
-.track-legend--saigon { bottom: 8%; left: 8%; color: var(--bleu); transform: rotate(3deg); }
+/* Hà Nội = départ, EN HAUT À GAUCHE ; Sài Gòn = arrivée, EN BAS À DROITE */
+.track-legend--hanoi { top: 6%; left: 6%; }
+.track-legend--saigon { bottom: 8%; right: 8%; color: var(--bleu); transform: rotate(3deg); }
 .marg-paniers { width: clamp(80px, 18vw, 150px); bottom: 2%; right: 3%; opacity: 0.5; }
+/* petit drapeau joyeux en haut-droite de la section voyages */
+.marg-drapeau { width: clamp(58px, 11vw, 96px); top: 6%; right: 3%; opacity: 0.78; }
 
 /* stand.png = image principale du site (hero) — styles dans la section couverture */
 .cover-stand {
@@ -585,6 +601,8 @@ h3 {
 .carte-cta .ink-link { font-weight: 600; }
 .marg-citrons { width: clamp(60px, 13vw, 110px); top: 10%; right: 2%; opacity: 0.9; }
 .marg-coriandre { width: clamp(50px, 11vw, 90px); bottom: 6%; left: 1%; opacity: 0.9; }
+/* sriracha : petite touche piquante en haut-gauche du teaser carte */
+.marg-sriracha { width: clamp(52px, 10vw, 88px); top: 12%; left: 2%; opacity: 0.7; }
 
 /* =========================================================
    6. LE LIEU (éclat jaune plein largeur)
@@ -615,6 +633,21 @@ h3 {
   z-index: 1;
   pointer-events: none;
 }
+/* guirlande crescendo : suspendue au bord haut de la section jaune, déborde
+   légèrement vers le papier au-dessus. overflow:hidden du .lieu la coupe
+   proprement en bas — pas de fuite hors flux, pas de scroll horizontal. */
+.marg-guirlande-lieu {
+  width: min(80vw, 520px);
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.85;
+  filter: drop-shadow(0 6px 12px rgba(30,26,23,0.14));
+  z-index: 3;
+}
+/* le trait crayon crescendo respire un peu plus (transition vers le jaune) */
+.pencil-sep--crescendo { padding-top: clamp(0.5rem, 3vw, 1.6rem); padding-bottom: clamp(1.5rem, 5vw, 3rem); }
+
 .lieu-title {
   color: var(--encre);
   font-family: var(--f-titre);
@@ -672,6 +705,9 @@ h3 {
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
 .horaires-list .jour { color: var(--encre-doux); }
+/* marginalia de la section contact : vélo (bas droite) + poulets (haut gauche) */
+.marg-velo { width: clamp(96px, 20vw, 168px); bottom: 5%; right: 2%; opacity: 0.62; }
+.marg-poulets { width: clamp(66px, 13vw, 112px); top: 8%; left: 1%; opacity: 0.7; }
 
 /* =========================================================
    FOOTER
@@ -694,6 +730,123 @@ h3 {
 .footer-nav a:hover, .footer-nav a:focus-visible { color: var(--framboise); }
 .footer-nav .nav-da { font-family: var(--f-hand); color: var(--bleu); font-size: 1.15rem; }
 .footer-sign { color: var(--encre-doux); font-size: 0.85rem; margin-top: 2rem; }
+
+/* =========================================================
+   GENÈSE — médaillons patron + famille
+   ========================================================= */
+.genese-medaillons {
+  margin: 2rem 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 420px;
+}
+.genese-medaillon { margin: 0; }
+.genese-medaillon img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(30,26,23,0.20);
+}
+.genese-medaillon--patron img { transform: rotate(-1.5deg); }
+.genese-medaillon--famille img { transform: rotate(1deg); }
+.genese-medaillon figcaption {
+  font-family: var(--f-hand);
+  color: var(--framboise);
+  font-size: 1.2rem;
+  margin-top: 0.4rem;
+  transform: rotate(-2deg);
+}
+
+/* =========================================================
+   VOYAGES — diptyque signature "le carnet ↔ le vrai"
+   ========================================================= */
+.voyages-diptyque {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.4rem;
+  margin: 2.5rem 0 1rem;
+  align-items: end;
+}
+.diptyque-item { margin: 0; }
+.diptyque-item picture { display: block; }
+.diptyque-item--carnet img {
+  width: 100%;
+  filter: drop-shadow(0 12px 20px rgba(30,26,23,0.14));
+  transform: rotate(-1.2deg);
+}
+.diptyque-item--reel img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(30,26,23,0.22);
+  object-fit: cover;
+  transform: rotate(1.2deg);
+}
+.diptyque-item figcaption {
+  font-family: var(--f-hand);
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+  color: var(--bleu);
+  margin-top: 0.5rem;
+}
+.diptyque-item--carnet figcaption { color: var(--framboise); transform: rotate(-2deg); }
+.diptyque-item--reel figcaption { transform: rotate(1.5deg); text-align: right; }
+@media (min-width: 640px) {
+  .voyages-diptyque { grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); }
+}
+
+/* =========================================================
+   CARTE — fourchette de prix
+   ========================================================= */
+.carte-fourchette {
+  font-family: var(--f-corps);
+  font-weight: 600;
+  color: var(--encre);
+  font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.15rem);
+  margin: 0.4rem 0 0;
+}
+
+/* =========================================================
+   STICKY BAR MOBILE — 2 actions plein écran (≤780px)
+   Masquée par défaut ; JS ajoute .is-visible quand le hero est sorti
+   et #contact hors champ. z-index sous l'overlay menu (1500).
+   ========================================================= */
+.sticky-actions {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1400;
+  display: none;             /* activée uniquement sous 780px (media query) */
+  gap: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  background: color-mix(in srgb, var(--papier) 94%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(30,26,23,0.14);
+  box-shadow: 0 -6px 18px rgba(30,26,23,0.12);
+  transform: translateY(110%);
+  transition: transform 0.35s var(--ease-out);
+}
+.sticky-actions[hidden] { display: none; }
+.sticky-actions.is-visible { transform: translateY(0); }
+.sticky-btn {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.4rem;
+  font-family: var(--f-corps);
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  border: none;
+}
+.sticky-btn--book { background: var(--jaune); color: var(--encre); }
+.sticky-btn--call {
+  background: var(--papier);
+  color: var(--encre);
+  border-left: 1px solid rgba(30,26,23,0.14);
+}
+.sticky-btn:active { filter: brightness(0.95); }
 
 /* =========================================================
    SÉPARATEURS CRAYON
@@ -727,8 +880,9 @@ h3 {
   transform: none;
   transition: none;
 }
-/* léger indice GPU pendant la course du scooter (retiré implicitement par GSAP) */
-.gsap-ready .scooter { will-change: transform; }
+/* will-change posé/retiré par ScrollTrigger (onEnter/onLeaveBack) — pas de CSS
+   statique permanent (évitait de garder une couche GPU toute la page). */
+.scooter.is-riding { will-change: transform; }
 
 /* =========================================================
    RESPONSIVE — desktop
@@ -751,7 +905,7 @@ h3 {
     gap: 2.5rem;
     align-items: start;
   }
-  .genese-medaillon { margin-top: 0; }
+  .genese-medaillons { margin-top: 0; max-width: none; }
 }
 
 /* Header responsive : burger sous 780px, CTA Réserver conservé */
@@ -759,6 +913,24 @@ h3 {
   .main-nav { display: none; }
   .header-cta { margin-left: auto; }
   .burger { display: block; margin-left: 0.5rem; }
+
+  /* Sticky bar active uniquement sur mobile/tablette étroite */
+  .sticky-actions { display: flex; }
+  /* compense la barre (3.4rem + safe-area) pour ne pas masquer le bas de page */
+  body { padding-bottom: calc(3.4rem + env(safe-area-inset-bottom, 0)); }
+}
+
+/* Hero densifié sous 900px : le haut du stand visible dès le 1er écran (375×812) */
+@media (max-width: 899px) {
+  .couverture {
+    padding-top: calc(var(--header-h) + clamp(1rem, 4vw, 2rem));
+    padding-bottom: clamp(2.5rem, 7vw, 4rem);
+  }
+  .cover-kicker { margin-bottom: 0.6rem; }
+  .cover-title { margin-bottom: 0.35rem; }
+  .cover-sub { margin-bottom: 0.3rem; }
+  .cover-annotation { margin: 0.2rem 0 1.1rem; }
+  .cover-stand { margin-top: clamp(1rem, 3vw, 1.6rem); }
 }
 @media (max-width: 420px) {
   .site-header .wrap { gap: 0.5rem; padding-inline: 0.9rem; }
