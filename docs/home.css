@@ -362,13 +362,15 @@ h3 {
 .couverture {
   position: relative;
   z-index: 1;
-  padding: calc(var(--header-h) + clamp(2.5rem, 8vw, 5rem)) 0 var(--sec-y);
+  /* 2× header-h: les décos pendent désormais SOUS le bandeau, le texte descend d'autant */
+  padding: calc(var(--header-h) * 2 + 0.75rem + clamp(2.5rem, 8vw, 5rem)) 0 var(--sec-y);
   overflow: hidden;
   border-bottom: 1px dashed rgba(30,26,23,0.18);
 }
 .lanternes-pendantes {
   position: absolute;
-  top: 0;
+  /* accrochées au bord bas du bandeau fixe (avant: top:0 = haut caché derrière) */
+  top: calc(var(--header-h) - 2px);
   /* max(): sur écran large, reste alignée à la colonne de contenu (1080px + léger
      débord) au lieu de coller au bord de la fenêtre */
   right: max(clamp(-0.5rem, 3vw, 4rem), calc(50% - 620px));
@@ -395,7 +397,7 @@ h3 {
 
 .guirlande-top {
   position: absolute;
-  top: 0;
+  top: calc(var(--header-h) - 2px);
   left: max(0px, calc(50% - 620px));
   width: min(60vw, 420px);
   opacity: 0.9;
