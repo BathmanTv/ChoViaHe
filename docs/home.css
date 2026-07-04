@@ -658,12 +658,12 @@ h3 {
   z-index: 1;
   pointer-events: none;
 }
-/* guirlande crescendo : suspendue au bord haut de la section jaune, déborde
-   légèrement vers le papier au-dessus. overflow:hidden du .lieu la coupe
-   proprement en bas — pas de fuite hors flux, pas de scroll horizontal. */
+/* guirlande crescendo : suspendue DANS le jaune, entièrement visible
+   (retour user: le haut négatif était coupé par l'overflow:hidden du .lieu,
+   cordelette tranchée au bord — on décale vers le bas à la place). */
 .marg-guirlande-lieu {
   width: min(80vw, 520px);
-  top: 0;
+  top: clamp(0.6rem, 2vw, 1.4rem);
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.85;
@@ -680,7 +680,7 @@ h3 {
   .pencil-sep--crescendo { padding-top: 0.4rem; padding-bottom: 0.6rem; }
   .marg-guirlande-lieu {
     width: min(70vw, 620px);
-    top: clamp(-90px, -6vw, -40px);   /* déborde vers le papier, annonce le jaune */
+    top: 1.2rem;                      /* entièrement dans le jaune, cordelette visible */
     opacity: 0.92;
   }
 }
@@ -767,8 +767,8 @@ h3 {
   padding: 1.1rem 1.2rem;
   box-shadow: 0 8px 20px rgba(30,26,23,0.08);
 }
-.comptoir-item:nth-child(odd) { transform: rotate(-0.4deg); }
-.comptoir-item:nth-child(even) { transform: rotate(0.4deg); }
+/* pas de rotation sur les cartes: à ±0.4deg le texte rend "flottant" /
+   désaligné sur Windows (retour user) — l'inclinaison reste sur le titre */
 .comptoir-item dt {
   font-family: var(--f-hand);
   font-weight: 600;
