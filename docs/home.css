@@ -128,6 +128,10 @@ body::before {
   outline-offset: 3px;
   border-radius: 3px;
 }
+/* sur fond jaune, le bleu tombe à ~3:1 — encre (contrat DESIGN.md) */
+.btn-cta:focus-visible, .sticky-btn--book:focus-visible, .lieu :focus-visible {
+  outline-color: var(--encre);
+}
 .visually-hidden {
   position: absolute !important;
   width: 1px; height: 1px;
@@ -460,7 +464,14 @@ h3 {
   align-items: center;
   gap: 1rem 1.4rem;
 }
-.cover-scroll { font-family: var(--f-hand); color: var(--encre-doux); font-size: 1.3rem; }
+.cover-scroll {
+  font-family: var(--f-hand);
+  color: var(--encre-doux);
+  font-size: 1.3rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* cible tactile (QA #6) */
+}
 
 /* Desktop: texte à gauche, stand à droite — le papier vide de part et
    d'autre du stand centré donnait un hero creux (retour user) */
@@ -752,7 +763,15 @@ h3 {
   margin-bottom: 0.5rem;
 }
 .info-block p, .info-block address { margin: 0 0 0.3rem; font-style: normal; }
-.info-block a { color: var(--encre); text-decoration: none; border-bottom: 1px solid var(--framboise); }
+.info-block a {
+  color: var(--encre);
+  text-decoration: none;
+  border-bottom: 1px solid var(--framboise);
+  /* zone de tap élargie sans bouger la ligne (QA #6: tél mesuré à 22px) */
+  display: inline-block;
+  padding-block: 0.55rem;
+  margin-block: -0.55rem;
+}
 .info-block a:hover, .info-block a:focus-visible { color: var(--framboise); }
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
@@ -811,7 +830,14 @@ h3 {
   text-decoration: none;
 }
 .footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
-.footer-nav a { color: var(--encre); text-decoration: none; }
+.footer-nav a {
+  color: var(--encre);
+  text-decoration: none;
+  /* zone de tap élargie (QA #6: liens footer mesurés à 21px) */
+  display: inline-block;
+  padding-block: 0.55rem;
+  margin-block: -0.55rem;
+}
 .footer-nav a:hover, .footer-nav a:focus-visible { color: var(--framboise); }
 .footer-nav .nav-da { font-family: var(--f-hand); color: var(--bleu); font-size: 1.15rem; }
 .footer-sign { color: var(--encre-doux); font-size: 0.85rem; margin-top: 2rem; }
@@ -1046,7 +1072,7 @@ h3 {
   .site-header .wrap { gap: 0.5rem; padding-inline: 0.9rem; }
   /* garde la cible tactile 44px (D3) tout en resserrant le padding horizontal */
   .header-cta { padding: 0.45rem 0.85rem; min-height: 44px; font-size: 0.85rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%); }
-  .burger { width: 2.6rem; height: 2.6rem; margin-left: 0.4rem; }
+  .burger { width: 2.75rem; height: 2.75rem; margin-left: 0.4rem; } /* 44px tactile (QA #5) */
 }
 @media (min-width: 781px) {
   .nav-overlay { display: none !important; }

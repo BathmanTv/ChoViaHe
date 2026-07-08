@@ -136,7 +136,8 @@
   transform: rotate(-2deg);
   margin-left: 0.3rem;
 }
-.menu-item-tag--saigon { color: var(--orange); }
+/* orange assombri: #E9531F sur papier = 3.4:1, échoue AA texte normal (QA #4) */
+.menu-item-tag--saigon { color: #C63A0F; }
 
 /* petite précision (verre/bouteille, origine) sous un item */
 .menu-sub {
