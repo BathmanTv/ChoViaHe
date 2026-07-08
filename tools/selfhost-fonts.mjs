@@ -3,7 +3,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36';
-const CSS_URL = 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@600&display=swap';
+const CSS_URL = 'https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@600&display=swap';
 const KEEP = ['latin', 'vietnamese']; // pas de latin-ext ni cyrillic
 
 mkdirSync('docs/fonts', { recursive: true });

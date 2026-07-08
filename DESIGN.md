@@ -9,9 +9,9 @@ colors:
   encre: "#1E1A17"           # texte courant — jamais de noir pur (contraste 14:1)
   encre-doux: "#4a423a"      # texte secondaire
   framboise: "#C0264B"       # marque n°1 — titres h2, prix, liens. AA en gros texte sur papier (5.2:1), PAS en corps <18px
-  orange: "#E9531F"          # chaleur, hover
+  orange: "#E9531F"          # RÉSERVE (défini, pas encore employé dans le code)
   bleu-lanterne: "#1E6E8C"   # annotations manuscrites, kicker, focus
-  vert-coriandre: "#2E7D32"  # touches végétales, jamais en aplat large
+  vert-coriandre: "#2E7D32"  # RÉSERVE — touches végétales, jamais en aplat large
   jaune-neon: "#F2B300"      # ACCENT RARE — CTA Réserver + section Le Lieu uniquement. Texte = encre, JAMAIS blanc sur jaune
   rouge-neon: "#E4002B"      # glow décoratif néon uniquement, jamais du texte
   ligne-carnet: "rgba(30,110,140,0.10)"  # trame horizontale 32px du papier
@@ -22,6 +22,7 @@ typography:
   display:
     fontFamily: "Lora, Georgia, serif"
     usage: "h1/h2/h3, wordmark, noms viet"
+    italique: "disponible en 400 ET 600 (fichiers lora-400i/600i chargés) — ne jamais demander une graisse italique non chargée: le navigateur synthétise un faux oblique, laid sur les diacritiques viet"
     h1: { fontSize: "clamp(2.6rem, 1.2rem + 9vw, 7rem)", fontWeight: 600, lineHeight: 1.02, mobile: "clamp(2.2rem, 1rem + 8vw, 4rem)" }
     h2: { fontSize: "clamp(1.8rem, 1.2rem + 3.2vw, 3rem)", fontWeight: 600, color: framboise, letterSpacing: "-0.01em" }
   hand:
@@ -35,6 +36,11 @@ typography:
     lineHeight: 1.65
     weights: { corps: 400, labels: 500, prix: 600 }
     prix: "tabular-nums, couleur framboise, alignés à droite avec pointillés de liaison"
+
+tokens:
+  # une valeur par rôle — jamais de radius/ombre saisis à la main (dérive constatée au benchmark)
+  radius: { card: "var(--r-card) = 14px", photo: "var(--r-photo) = 14px", ui: "var(--r-ui) = 10px" }
+  shadows: { card: "var(--sh-card) = 0 8px 20px rgba(30,26,23,0.08)", photo: "var(--sh-photo) = 0 12px 28px rgba(30,26,23,0.22)" }
 
 components:
   btn-cta:
@@ -50,7 +56,7 @@ components:
     comportement: "apparaît quand le hero sort du viewport, reste ensuite; masque le CTA header (classe html.sticky-active) — UN SEUL Réserver jaune visible à la fois"
   cartes: "fond papier-ombre, radius 14px, ombre douce 0 8px 20px rgba(30,26,23,0.08), SANS rotation (texte)"
   photos: "radius 14px, ombre 0 12px 28px, rotation ±1-1.5deg (images seulement, jamais de texte), object-fit cover 2:3"
-  illustrations: "PNG détourés d'Oriane posés sur le papier, jamais en fond, jamais mélangés à une photo dans le même cadre; marginalia décoratives aria-hidden, opacité 0.5-0.85, MASQUÉES ≤780px si elles touchent du texte"
+  illustrations: "PNG détourés d'Oriane posés sur le papier, jamais en fond, jamais mélangés à une photo dans le même cadre; marginalia décoratives aria-hidden, opacité 0.5-0.85. RÈGLE BINAIRE ≤780px: toute marginalia positionnée en % de bord est MASQUÉE, sauf whitelist explicitement testée à 375px sans chevauchement de texte"
   separateur-crayon: "SVG path framboise stroke 3.5, tracé stroke-dashoffset au scroll-in (--len calculé JS)"
 
 layout:

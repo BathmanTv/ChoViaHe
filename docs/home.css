@@ -40,6 +40,13 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --rev-dur: 0.7s;
 
+  /* Échelles nommées (benchmark awesome-design-md: une valeur par rôle, pas d'ad-hoc) */
+  --r-card: 14px;
+  --r-photo: 14px;
+  --r-ui: 10px;
+  --sh-card: 0 8px 20px rgba(30,26,23,0.08);
+  --sh-photo: 0 12px 28px rgba(30,26,23,0.22);
+
   --header-h: 3.6rem;
 }
 
@@ -196,7 +203,15 @@ h3 {
 }
 .btn-cta:hover::before, .btn-cta:focus-visible::before { opacity: 1; transform: scale(1); }
 .btn-cta:active { transform: translateY(0); box-shadow: 0 3px 0 color-mix(in srgb, var(--jaune) 60%, #000 18%); }
-.btn-cta--sm { padding: 0.5rem 1rem; font-size: 0.9rem; box-shadow: 0 4px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%); }
+.btn-cta--sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%);
+  /* cible tactile 44px même en variante compacte (benchmark: la spec l'exige partout) */
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
 
 /* lien secondaire "encre" — souligné qui se dessine + tache aquarelle */
 .ink-link {
@@ -600,7 +615,7 @@ h3 {
   margin: 0;
   background: rgba(255,255,255,0.42);
   border: 1px solid rgba(30,26,23,0.12);
-  border-radius: 16px;
+  border-radius: var(--r-card);
   padding: clamp(1rem, 3.5vw, 1.5rem);
   display: grid;
   grid-template-columns: minmax(84px, 30%) 1fr;
@@ -702,8 +717,8 @@ h3 {
 .lieu-photo { margin: 0; }
 .lieu-photo img {
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(30,26,23,0.28);
+  border-radius: var(--r-photo);
+  box-shadow: var(--sh-photo);
   object-fit: cover;
 }
 .lieu-photo--hero img { aspect-ratio: 3/4; }
@@ -763,9 +778,9 @@ h3 {
 }
 .comptoir-item {
   background: var(--papier-ombre);
-  border-radius: 14px;
+  border-radius: var(--r-card);
   padding: 1.1rem 1.2rem;
-  box-shadow: 0 8px 20px rgba(30,26,23,0.08);
+  box-shadow: var(--sh-card);
 }
 /* pas de rotation sur les cartes: à ±0.4deg le texte rend "flottant" /
    désaligné sur Windows (retour user) — l'inclinaison reste sur le titre */
@@ -816,8 +831,8 @@ h3 {
   width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 14px;
-  box-shadow: 0 12px 28px rgba(30,26,23,0.20);
+  border-radius: var(--r-photo);
+  box-shadow: var(--sh-photo);
 }
 .genese-medaillon--patron img { transform: rotate(-1.5deg); }
 .genese-medaillon--famille img { transform: rotate(1deg); }
@@ -850,8 +865,8 @@ h3 {
 }
 .diptyque-item--reel img {
   width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 12px 28px rgba(30,26,23,0.22);
+  border-radius: var(--r-photo);
+  box-shadow: var(--sh-photo);
   object-fit: cover;
   transform: rotate(1.2deg);
 }
