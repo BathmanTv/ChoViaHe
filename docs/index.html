@@ -429,7 +429,6 @@
     <p class="reserver-lead">Réservez votre table en ligne, ou passez nous voir du mardi au samedi, midi et soir. On vous garde une place à l'étal.</p>
 
     <p class="reserver-cta">
-      <!-- TODO: remplacer par embed SDK Zenchef quand accès back-office client -->
       <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver une table</a>
     </p>
 
@@ -544,5 +543,19 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
 <script src="./home.js" defer></script>
+
+<!-- Zenchef SDK (snippet officiel) — le module s'ouvre en overlay sur le site.
+     Les boutons Réserver gardent leur lien direct en fallback si le SDK ne charge pas. -->
+<script>
+  ;(function (d, s, id) {
+    const el = d.getElementsByTagName(s)[0]
+    if (d.getElementById(id) || el.parentNode == null) return
+    var js = d.createElement(s)
+    js.id = id
+    js.src = 'https://sdk.zenchef.com/v1/sdk.min.js'
+    el.parentNode.insertBefore(js, el)
+  })(document, 'script', 'zenchef-sdk')
+</script>
+<div class="zc-widget-config" data-restaurant="377642" data-hide-button="true"></div>
 </body>
 </html>

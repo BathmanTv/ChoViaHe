@@ -422,4 +422,20 @@
     }, { threshold: 0 });
     io.observe(lanternes);
   })();
+
+  /* =======================================================
+     8. ZENCHEF — ouverture en overlay
+     Si le SDK est chargé (window.ZenchefWidget), un clic Réserver
+     ouvre le module PAR-DESSUS le site. Sinon le lien direct
+     bookings.zenchef.com fonctionne tel quel (fallback).
+     ======================================================= */
+  document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
+        e.preventDefault();
+        window.ZenchefWidget.open();
+      }
+      // sinon : navigation normale vers la page Zenchef hébergée
+    });
+  });
 })();

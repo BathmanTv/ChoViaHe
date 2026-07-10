@@ -147,4 +147,16 @@
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
   })();
+
+  /* =======================================================
+     4. ZENCHEF — ouverture en overlay (fallback = lien direct)
+     ======================================================= */
+  document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
+        e.preventDefault();
+        window.ZenchefWidget.open();
+      }
+    });
+  });
 })();
