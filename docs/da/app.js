@@ -8,14 +8,6 @@
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- 5c. afficher l'état du réglage système ---- */
-  var stateEl = document.querySelector('[data-motion-state]');
-  if (stateEl) {
-    stateEl.textContent = reduce
-      ? 'mouvement réduit — animations désactivées'
-      : 'mouvement autorisé — animations actives';
-  }
-
   /* ---- Reveal sections + tracé crayon (IntersectionObserver) ---- */
   if (reduce || !('IntersectionObserver' in window)) {
     // état visible d'emblée, pas d'observation
@@ -41,13 +33,7 @@
     } catch (err) { /* getTotalLength indispo : le fallback CSS suffit */ }
   });
 
-  /* ---- Écritures choisies : les badges sont fixés dans le HTML ----
-     Les trois écritures gardées (Lora, Dancing Script, Be Vietnam Pro)
-     affichent toutes le vietnamien parfaitement — badge « ✓ vietnamien parfait ».
-     Les deux écartées (Fraunces, Caveat) ne portent pas le vietnamien —
-     badge « ✗ écartée », posé en dur. Rien à calculer côté JS. */
-
-  /* ---- Magnétisme léger du bouton (subtil, désactivé si reduced) ---- */
+  /* ---- Magnétisme léger des cartes/boutons (subtil, désactivé si reduced) ---- */
   if (!reduce && window.matchMedia('(pointer:fine)').matches) {
     document.querySelectorAll('[data-magnetic]').forEach(function (el) {
       var strength = 10;

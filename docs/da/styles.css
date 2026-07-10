@@ -24,11 +24,11 @@
   /* Trame carnet (lignes crayon bleu clair) */
   --ligne-carnet: rgba(30, 110, 140, 0.10);
 
-  /* Type */
+  /* Type — uniquement les 3 écritures choisies (vietnamien parfait) */
   --f-titre: 'Lora', Georgia, serif;
-  --f-display: 'Fraunces', Georgia, serif;
+  --f-display: 'Lora', Georgia, serif;
   --f-corps: 'Be Vietnam Pro', system-ui, sans-serif;
-  --f-hand: 'Caveat', cursive;
+  --f-hand: 'Dancing Script', cursive;
 
   /* Espacements fluides */
   --pad-x: clamp(1.15rem, 5vw, 4rem);
@@ -468,22 +468,118 @@ h1 .sub-title { font-style: italic; font-weight: 400; color: var(--encre); }
 .prio-card p { margin: 0; color: var(--encre-doux); }
 
 /* =========================================================
-   CE QU'ON ATTEND DE VOUS
+   L'IDÉE EN UNE PHRASE
    ========================================================= */
+.idee-label {
+  color: var(--bleu);
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  transform: rotate(-3deg);
+  margin: 0 0 0.6rem;
+}
+.idee-phrase {
+  font-family: var(--f-titre);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 1.1rem + 2.6vw, 2.4rem);
+  line-height: 1.3;
+  color: var(--encre);
+  max-width: 20ch;
+  margin: 0;
+}
+.idee-phrase strong { color: var(--framboise); font-weight: 600; }
+.hl-jaune {
+  background: linear-gradient(transparent 55%, color-mix(in srgb, var(--jaune) 70%, transparent) 55%);
+  padding: 0 0.1em;
+}
+
+/* =========================================================
+   C'EST DÉJÀ EN LIGNE — gros boutons
+   ========================================================= */
+.voir-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 1.8rem 0 1.2rem;
+  grid-template-columns: 1fr;
+}
+.voir-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-decoration: none;
+  color: var(--encre);
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(30,26,23,0.14);
+  border-left: 6px solid var(--jaune);
+  border-radius: 16px;
+  padding: clamp(1.1rem, 4vw, 1.6rem);
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--jaune) 40%, #0000);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  will-change: transform;
+}
+.voir-card:hover, .voir-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 0 color-mix(in srgb, var(--jaune) 45%, #0000);
+}
+.voir-ico { font-size: 1.9rem; line-height: 1; }
+.voir-titre {
+  font-family: var(--f-titre);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 1rem + 1.4vw, 1.6rem);
+  color: var(--framboise);
+}
+.voir-sub { color: var(--encre-doux); font-size: 0.95rem; }
+.voir-mobile {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--papier-ombre);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  max-width: var(--measure);
+  margin: 0;
+}
+.voir-mobile-pic { font-size: 1.5rem; line-height: 1; }
+.voir-mobile strong { color: var(--framboise); }
+
+/* =========================================================
+   CE QU'ON ATTEND DE VOUS — grandes cases à cocher
+   ========================================================= */
+.attente { background: var(--papier-ombre); }
 .attente-list {
   list-style: none;
   padding: 0;
-  margin: 1.5rem 0 0;
-  max-width: 56ch;
+  margin: 1.8rem 0 0;
+  display: grid;
+  gap: 0.9rem;
+  max-width: 68ch;
 }
-.attente-list li {
-  display: flex;
-  align-items: baseline;
-  gap: 0.7rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px dashed rgba(30,26,23,0.16);
+.attente-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(30,26,23,0.14);
+  border-radius: 14px;
+  padding: clamp(0.9rem, 3.5vw, 1.2rem) clamp(1rem, 4vw, 1.4rem);
 }
-.att-check { color: var(--bleu); font-size: 1.3rem; line-height: 1; }
+.att-num {
+  font-family: var(--f-hand);
+  font-weight: 700;
+  color: var(--framboise);
+  font-size: 1.9rem;
+  line-height: 1;
+  min-width: 1.1ch;
+  text-align: center;
+}
+.att-box {
+  width: 26px;
+  height: 26px;
+  border: 2.5px solid var(--bleu);
+  border-radius: 7px;
+  flex: none;
+}
+.att-txt { font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem); line-height: 1.45; }
+.att-txt strong { color: var(--encre); }
 
 /* =========================================================
    3. PALETTE
@@ -831,6 +927,58 @@ code {
 .footer-sign { color: var(--framboise); font-size: 1.4rem; transform: rotate(-2deg); margin-top: 1.5rem; }
 
 /* =========================================================
+   COULEURS + ÉCRITURES : sous-titres de bloc
+   ========================================================= */
+.sub-block {
+  font-family: var(--f-titre);
+  color: var(--bleu);
+  font-size: clamp(1.15rem, 1rem + 1vw, 1.5rem);
+  margin: 1.8rem 0 0.5rem;
+}
+.sub-block--space { margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px dashed rgba(30,26,23,0.18); }
+
+/* =========================================================
+   LA SUITE — timeline 4 étapes
+   ========================================================= */
+.timeline {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+.tl-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(30,26,23,0.14);
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+}
+.tl-dot {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bleu);
+  color: var(--papier);
+  font-family: var(--f-hand);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.tl-txt { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.1rem); line-height: 1.35; }
+.tl-txt strong { color: var(--framboise); }
+.tl-step--end { border-color: color-mix(in srgb, var(--jaune) 70%, #000 8%); background: color-mix(in srgb, var(--jaune) 20%, #fff); }
+.tl-step--end .tl-dot { background: var(--jaune); color: var(--encre); }
+.tl-step--end .tl-txt strong { color: var(--encre); }
+
+/* =========================================================
    REVEAL (hooks motion — état initial)
    ========================================================= */
 [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity var(--rev-dur) var(--ease-out), transform var(--rev-dur) var(--ease-out); }
@@ -841,21 +989,12 @@ code {
    ========================================================= */
 @media (min-width: 620px) {
   .typo-grid { grid-template-columns: repeat(2, 1fr); }
-  .ecartees-specimens { grid-template-columns: 1fr 1fr; }
   .cev-pair { grid-template-columns: 1fr 1fr; }
-  .deja-grid { grid-template-columns: 1fr 1fr; }
-  .prio-grid { grid-template-columns: 1fr 1fr; }
-  .lieu-photos {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "hero hero" "a b";
-  }
-  .lieu-photo--hero { grid-area: hero; }
-  .lieu-photo--hero img { aspect-ratio: 16/10; }
+  .voir-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (min-width: 900px) {
-  .motion-demos { grid-template-columns: repeat(3, 1fr); }
-  .inspi-grid { grid-template-columns: repeat(2, 1fr); }
-  .prio-grid { grid-template-columns: repeat(3, 1fr); }
+  .timeline { grid-template-columns: repeat(4, 1fr); align-items: stretch; }
+  .tl-step { flex-direction: column; text-align: center; gap: 0.6rem; }
 }
 
 /* =========================================================
