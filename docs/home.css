@@ -884,6 +884,16 @@ h3 {
   border-radius: var(--r-photo);
   box-shadow: var(--sh-photo);
 }
+/* paniers d'Oriane sous les 4 photos (demande cliente) — déco, pleine largeur de la grille */
+.genese-paniers {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.4rem;
+  opacity: 0.9;
+}
+.genese-paniers img { width: clamp(140px, 30vw, 220px); transform: rotate(-1.5deg); }
+
 .genese-medaillon--patron img { transform: rotate(-1.5deg); }
 .genese-medaillon--famille img { transform: rotate(1deg); }
 .genese-medaillon--salle img { transform: rotate(1.2deg); }
