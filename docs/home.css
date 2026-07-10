@@ -7,9 +7,10 @@
 
 /* ---------- TOKENS (source unique — alignés sur la DA) ---------- */
 :root {
-  /* Papier & encre (70%) */
-  --papier: #F7F2E9;
-  --papier-ombre: #EFE6D6;
+  /* Papier & encre (70%) — teinte échantillonnée sur la carte imprimée 01.26
+     (le carnet réel est un ivoire doré, pas un crème rosé) */
+  --papier: #ECEBD7;
+  --papier-ombre: #E3E0C8;
   --encre: #1E1A17;
   --encre-doux: #4a423a;
 
@@ -33,7 +34,7 @@
 
   /* Espacements fluides */
   --pad-x: clamp(1.15rem, 5vw, 4rem);
-  --sec-y: clamp(3.5rem, 9vw, 7rem);
+  --sec-y: clamp(2.75rem, 7vw, 5rem); /* resserré (retour cliente: scroll trop long) */
   --measure: 60ch;
 
   /* Ease + durées motion (tweakables) */
@@ -478,9 +479,11 @@ h3 {
 @media (min-width: 900px) {
   .couverture .wrap {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    column-gap: clamp(2rem, 5vw, 4.5rem);
+    /* colonne stand élargie: l'étal est l'image principale (retour cliente) */
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    column-gap: clamp(1.5rem, 4vw, 3rem);
     align-items: center;
+    max-width: 1160px; /* le hero respire plus large que les sections */
   }
   .couverture .wrap > .cover-kicker,
   .couverture .wrap > .cover-title,
@@ -537,7 +540,9 @@ h3 {
   min-height: clamp(150px, 34vw, 260px);
   border-top: 2px dashed rgba(30,110,140,0.35);
   border-bottom: 2px dashed rgba(30,110,140,0.35);
-  padding: 1.5rem 0;
+  /* bande basse réservée à la légende Sài Gòn — le scooter roule au-dessus,
+     plus de chevauchement à l'arrivée (retour cliente) */
+  padding: 1.5rem 0 5.6rem;
   overflow: hidden;
 }
 .scooter {
@@ -588,7 +593,7 @@ h3 {
 }
 /* Hà Nội = départ, EN HAUT À GAUCHE ; Sài Gòn = arrivée, EN BAS À DROITE */
 .track-legend--hanoi { top: 6%; left: 6%; }
-.track-legend--saigon { bottom: 8%; right: 8%; color: var(--bleu); transform: rotate(3deg); }
+.track-legend--saigon { bottom: 0.6rem; right: 8%; color: var(--bleu); transform: rotate(3deg); }
 .marg-paniers { width: clamp(80px, 18vw, 150px); bottom: 2%; right: 3%; opacity: 0.5; }
 /* petit drapeau joyeux en haut-droite de la section voyages */
 .marg-drapeau { width: clamp(58px, 11vw, 96px); top: 6%; right: 3%; opacity: 0.78; }
@@ -596,7 +601,7 @@ h3 {
 /* stand.png = image principale du site (hero) — styles dans la section couverture */
 .cover-stand {
   margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
-  max-width: min(94vw, 700px);
+  max-width: min(96vw, 800px); /* étal agrandi (retour cliente) */
   text-align: center;
 }
 .cover-stand img {
@@ -779,6 +784,25 @@ h3 {
 /* marginalia de la section contact : vélo (bas droite) + poulets (haut gauche) */
 .marg-velo { width: clamp(96px, 20vw, 168px); bottom: 5%; right: 2%; opacity: 0.62; }
 .marg-poulets { width: clamp(66px, 13vw, 112px); top: 8%; left: 1%; opacity: 0.7; }
+
+/* Ils en parlent — presse + avis (tickets collés au carnet) */
+.presse { margin-top: clamp(2.5rem, 6vw, 4rem); }
+.presse-quote {
+  margin: 0;
+  max-width: 46ch;
+  background: var(--papier-ombre);
+  border-radius: var(--r-card);
+  padding: 1.1rem 1.3rem;
+  box-shadow: var(--sh-card);
+}
+.presse-quote p {
+  font-family: var(--f-titre);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+  margin: 0 0 0.5rem;
+}
+.presse-quote cite { font-style: normal; color: var(--encre-doux); font-size: 0.92rem; }
+.presse-quote cite a { color: var(--encre); border-bottom: 1px solid var(--framboise); text-decoration: none; }
 
 /* Questions du comptoir — mini FAQ style carnet, en fin de section contact */
 .comptoir { margin-top: clamp(2.5rem, 6vw, 4rem); }

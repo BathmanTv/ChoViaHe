@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "pdf-parse": "^2.4.5",
+    "pdf-to-img": "^6.2.0",
     "sharp": "^0.35.3"
   }
 }
