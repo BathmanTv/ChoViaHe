@@ -149,14 +149,29 @@
   })();
 
   /* =======================================================
-     4. ZENCHEF — ouverture en overlay (fallback = lien direct)
+     4. ZENCHEF — overlay chargé À LA DEMANDE (RGPD + perf).
+     Rien ne charge avant le premier clic; fallback lien direct à 4s.
      ======================================================= */
-  document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
+  (function initZenchefLazy() {
+    function openWhenReady(fallbackHref, deadline) {
       if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
-        e.preventDefault();
         window.ZenchefWidget.open();
+        return;
       }
+      if (Date.now() > deadline) { window.open(fallbackHref, '_blank', 'noopener'); return; }
+      setTimeout(function () { openWhenReady(fallbackHref, deadline); }, 120);
+    }
+    document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!document.getElementById('zenchef-sdk')) {
+          var js = document.createElement('script');
+          js.id = 'zenchef-sdk';
+          js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';
+          document.head.appendChild(js);
+        }
+        openWhenReady(a.href, Date.now() + 4000);
+      });
     });
-  });
+  })();
 })();

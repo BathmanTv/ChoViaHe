@@ -424,18 +424,33 @@
   })();
 
   /* =======================================================
-     8. ZENCHEF — ouverture en overlay
-     Si le SDK est chargé (window.ZenchefWidget), un clic Réserver
-     ouvre le module PAR-DESSUS le site. Sinon le lien direct
-     bookings.zenchef.com fonctionne tel quel (fallback).
+     8. ZENCHEF — overlay chargé À LA DEMANDE
+     Le SDK (et l'iframe bookings + ses trackers) ne charge RIEN
+     avant le premier clic Réserver: RGPD propre sans bandeau,
+     et ~15 requêtes de moins à chaque visite.
+     Fallback: si le SDK ne répond pas en 4s, on suit le lien direct.
+     Sans JS: les liens fonctionnent tels quels.
      ======================================================= */
-  document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
+  (function initZenchefLazy() {
+    function openWhenReady(fallbackHref, deadline) {
       if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
-        e.preventDefault();
         window.ZenchefWidget.open();
+        return;
       }
-      // sinon : navigation normale vers la page Zenchef hébergée
+      if (Date.now() > deadline) { window.open(fallbackHref, '_blank', 'noopener'); return; }
+      setTimeout(function () { openWhenReady(fallbackHref, deadline); }, 120);
+    }
+    document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        if (!document.getElementById('zenchef-sdk')) {
+          var js = document.createElement('script');
+          js.id = 'zenchef-sdk';
+          js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';
+          document.head.appendChild(js);
+        }
+        openWhenReady(a.href, Date.now() + 4000);
+      });
     });
-  });
+  })();
 })();

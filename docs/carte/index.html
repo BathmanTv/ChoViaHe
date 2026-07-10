@@ -537,17 +537,8 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
 <script src="./carte.js" defer></script>
 
-<!-- Zenchef SDK (snippet officiel) — overlay, fallback = lien direct -->
-<script>
-  ;(function (d, s, id) {
-    const el = d.getElementsByTagName(s)[0]
-    if (d.getElementById(id) || el.parentNode == null) return
-    var js = d.createElement(s)
-    js.id = id
-    js.src = 'https://sdk.zenchef.com/v1/sdk.min.js'
-    el.parentNode.insertBefore(js, el)
-  })(document, 'script', 'zenchef-sdk')
-</script>
-<div class="zc-widget-config" data-restaurant="377642" data-hide-button="true"></div>
+<!-- Zenchef SDK — chargé À LA DEMANDE au premier clic Réserver (carte.js). Fallback = lien direct. -->
+<div class="zc-widget-config" data-restaurant="377642" data-hide-button="true" data-disable-gtm="true" data-disable-ga4="true"></div>
+<script src="../analytics.js" defer></script>
 </body>
 </html>
