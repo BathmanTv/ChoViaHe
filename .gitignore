@@ -2,3 +2,8 @@ node_modules/
 # Sources lourdes (originaux) — restent locaux, seuls les optimisés dans site/ partent sur GitHub
 img/
 *.log
+# Rendus temporaires du PDF de la carte (régénérables via tools/carte-rentree.mjs)
+_carte-p*.png
+_carte-texte.txt
+_texture-brute.png
+docs/carte/*.pdf

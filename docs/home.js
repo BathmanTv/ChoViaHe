@@ -28,16 +28,11 @@
      ======================================================= */
   function revealFallbackVisible() {
     document.querySelectorAll('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
-    document.querySelectorAll('[data-pencil]').forEach(function (el) { el.classList.add('is-drawn'); });
   }
 
-  /* longueur réelle des paths crayon (tracé propre) — utile GSAP ou CSS */
-  document.querySelectorAll('[data-pencil] path').forEach(function (p) {
-    try {
-      var len = Math.ceil(p.getTotalLength());
-      p.parentElement.parentElement.style.setProperty('--len', len);
-    } catch (err) { /* fallback CSS suffit */ }
-  });
+  /* V2 : les séparateurs crayon rouges ont été retirés (demande cliente).
+     Les transitions entre sections sont désormais portées par les bandeaux
+     photo pleine largeur. */
 
   if (reduce) {
     // Mouvement réduit : rien ne bouge, tout est là.
@@ -49,11 +44,11 @@
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
-        e.target.classList.add('is-in', 'is-drawn');
+        e.target.classList.add('is-in');
         io.unobserve(e.target);
       });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
-    document.querySelectorAll('[data-reveal], [data-pencil]').forEach(function (el) { io.observe(el); });
+    document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
   } else {
     revealFallbackVisible();
   }
@@ -172,16 +167,6 @@
           });
       });
     })();
-
-    /* ---- Séparateurs crayon : tracé stroke-dashoffset au scroll-in ---- */
-    document.querySelectorAll('[data-pencil]').forEach(function (sep) {
-      ScrollTrigger.create({
-        trigger: sep,
-        start: 'top 85%',
-        once: true,
-        onEnter: function () { sep.classList.add('is-drawn'); }
-      });
-    });
 
     /* ---- SIGNATURE : le scooter traverse la piste au scrub ---- */
     initScooter(gsap, ScrollTrigger);

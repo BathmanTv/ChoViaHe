@@ -1,51 +1,62 @@
 /* =========================================================
-   Chợ Vỉa Hè — Home V1
-   "Le carnet de voyage d'une famille." Mobile-first strict.
-   Tokens repris à l'identique de la Direction Artistique (docs/da).
+   Chợ Vỉa Hè — Home V2 « carnet kraft »
+   Refonte 07.2026 (retours cliente) : fond kraft de la carte imprimée,
+   marqueurs littéraux retirés (pg. 0X, traits crayon, annotation),
+   histoire fusionnée, composition à rail unique + diptyques alternés,
+   pied de page jaune.
    État de repos SANS JS = tout visible (progressive enhancement).
    ========================================================= */
 
-/* ---------- TOKENS (source unique — alignés sur la DA) ---------- */
+/* ---------- TOKENS (source unique — voir DESIGN.md) ---------- */
 :root {
-  /* Papier & encre (70%) — teinte échantillonnée sur la carte imprimée 01.26
-     (le carnet réel est un ivoire doré, pas un crème rosé) */
-  --papier: #ECEBD7;
-  --papier-ombre: #E3E0C8;
+  /* Papier & encre (70%) — kraft échantillonné sur la carte imprimée de
+     la cliente. Contrastes mesurés sur --papier :
+     encre 12.6:1 · encre-doux 7.3:1 · framboise 4.3:1 (GROS TEXTE UNIQUEMENT)
+     · framboise-fonce 5.3:1 · bleu 4.25:1 (gros texte / filets) · bleu-fonce 6.0:1 */
+  --papier: #EADCBD;
+  --papier-ombre: #DFCDA6;
   --encre: #1E1A17;
   --encre-doux: #4a423a;
 
   /* Encres illustration (25%) */
-  --framboise: #C0264B;
+  --framboise: #C0264B;        /* titres, gros texte ≥24px (ou ≥18.7px gras) */
+  --framboise-fonce: #A81F3F;  /* corps de texte, liens, petits labels */
   --orange: #E9531F;
-  --bleu: #1E6E8C;
+  --bleu: #1E6E8C;             /* filets, focus, gros texte */
+  --bleu-fonce: #17566E;       /* labels, légendes, petits textes */
   --vert: #2E7D32;
 
   /* Éclats du lieu (5%) */
-  --jaune: #F2B300;
+  --jaune: #F2B300;            /* encre sur jaune = 9.0:1 — JAMAIS de blanc */
   --rouge-neon: #E4002B;
 
-  /* Trame carnet (lignes crayon bleu clair) */
-  --ligne-carnet: rgba(30, 110, 140, 0.10);
+  /* Trame carnet (adoucie : le kraft porte déjà de la matière) */
+  --ligne-carnet: rgba(30, 90, 115, 0.07);
 
-  /* Type — reco en attente de validation équipe */
+  /* Type */
   --f-titre: 'Lora', Georgia, serif;
   --f-corps: 'Be Vietnam Pro', system-ui, sans-serif;
   --f-hand: 'Dancing Script', 'Segoe Script', cursive;
 
-  /* Espacements fluides */
+  /* Espacements fluides — rapport 5:1 section/paragraphe (80px / 16px) */
   --pad-x: clamp(1.15rem, 5vw, 4rem);
-  --sec-y: clamp(2.75rem, 7vw, 5rem); /* resserré (retour cliente: scroll trop long) */
-  --measure: 60ch;
+  --sec-y: clamp(3rem, 6vw, 5rem);   /* 48px mobile → 80px desktop */
+  --measure: 66ch;                    /* plafond de lisibilité FR (62-68 car.) */
+
+  /* Conteneurs */
+  --wrap-max: 1080px;    /* colonne courante */
+  --wrap-prose: 940px;   /* texte long : 78% de son contenu ≈ 66ch */
+  --wrap-wide: 1240px;   /* diptyques : images plus grandes */
 
   /* Ease + durées motion (tweakables) */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --rev-dur: 0.7s;
 
-  /* Échelles nommées (benchmark awesome-design-md: une valeur par rôle, pas d'ad-hoc) */
+  /* Échelles nommées (une valeur par rôle, pas d'ad-hoc) */
   --r-card: 14px;
   --r-photo: 14px;
   --r-ui: 10px;
-  --sh-card: 0 8px 20px rgba(30,26,23,0.08);
+  --sh-card: 0 8px 20px rgba(30,26,23,0.10);
   --sh-photo: 0 12px 28px rgba(30,26,23,0.22);
 
   --header-h: 3.6rem;
@@ -72,23 +83,40 @@ body {
 img, picture, svg { display: block; max-width: 100%; }
 img { height: auto; }
 h1, h2, h3 { line-height: 1.08; margin: 0 0 0.5em; text-wrap: balance; }
-p { margin: 0 0 1rem; }
-a { color: var(--framboise); }
+p { margin: 0 0 1rem; }              /* 16px — base du rapport 5:1 */
+a { color: var(--framboise-fonce); } /* 5.3:1 sur kraft */
 ul, ol { margin: 0; }
 
-/* ---------- GRAIN PAPIER + TRAME CARNET ---------- */
-body::before {
+/* ---------- MATIÈRE : grain + texture kraft + trame carnet ----------
+   1) body::before  : micro-grain (multiply, très léger)
+   2) body::after   : TEXTURE RÉELLE extraite de la carte imprimée.
+      mix-blend-mode: overlay — le gris ~131/255 de la tuile est neutre,
+      il ne fait que moduler le kraft (jamais multiply : assombrirait tout).
+      Les deux couches sont en z-index 0 : elles n'atteignent que le papier,
+      pas les photos ni le pied de page jaune (opaques, au-dessus).
+   3) .section/.couverture : trame de lignes carnet, adoucie sur le kraft. */
+body::before,
+body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.5;
+}
+body::before {
+  opacity: 0.4;
   background-image: radial-gradient(rgba(30,26,23,0.035) 1px, transparent 1.2px);
   background-size: 3px 3px;
   mix-blend-mode: multiply;
 }
-.section, .couverture, .footer {
+body::after {
+  opacity: 0.85;
+  background-image: url('./assets/papier-tile.webp');
+  background-repeat: repeat;
+  background-size: 700px auto;
+  mix-blend-mode: overlay;
+}
+.section, .couverture {
   position: relative;
   z-index: 1;
   background-image:
@@ -102,15 +130,26 @@ body::before {
   background-attachment: local;
 }
 
+/* ---------- CONTENEURS ---------- */
 .wrap {
   width: 100%;
-  max-width: 1080px;
+  max-width: var(--wrap-max);
   margin-inline: auto;
   padding-inline: var(--pad-x);
   position: relative;
   z-index: 2;
 }
+.wrap--prose { max-width: var(--wrap-prose); }
+.wrap--wide  { max-width: var(--wrap-wide); }
 .section { padding-block: var(--sec-y); position: relative; overflow: hidden; }
+
+/* RAIL UNIQUE : titres, textes et boutons démarrent tous au même x.
+   Colonne de texte à 78% du conteneur, plafonnée à 66 caractères →
+   la gouttière droite (~22%) accueille les illustrations d'Oriane. */
+.rail { width: min(78%, var(--measure)); max-width: 100%; }
+
+/* alias d'ancre : docs/carte/ pointe encore vers ../#genese */
+.anchor-alias { display: block; height: 0; }
 
 /* ---------- ACCÈS ---------- */
 .skip-link {
@@ -129,10 +168,10 @@ body::before {
   outline-offset: 3px;
   border-radius: 3px;
 }
-/* sur fond jaune, le bleu tombe à ~3:1 — encre (contrat DESIGN.md) */
-.btn-cta:focus-visible, .sticky-btn--book:focus-visible, .lieu :focus-visible {
-  outline-color: var(--encre);
-}
+/* sur fond jaune (CTA, pied de page), le bleu tombe à ~3:1 → encre */
+.btn-cta:focus-visible,
+.sticky-btn--book:focus-visible,
+.footer :focus-visible { outline-color: var(--encre); }
 .visually-hidden {
   position: absolute !important;
   width: 1px; height: 1px;
@@ -141,23 +180,9 @@ body::before {
   white-space: nowrap; border: 0;
 }
 
-/* ---------- HELPERS ---------- */
+/* ---------- HELPERS TYPO ---------- */
 .handwritten { font-family: var(--f-hand); font-weight: 600; }
 .viet { font-family: var(--f-titre); }
-
-.section-num {
-  /* inline-block: boîte réduite au texte — en bloc pleine largeur, la rotation
-     faisait plonger le coin gauche sur les h2 (chevauchement intermittent) */
-  display: inline-block;
-  font-family: var(--f-hand);
-  font-weight: 600;
-  font-size: clamp(1.3rem, 3vw, 1.7rem);
-  color: var(--bleu);
-  transform: rotate(-4deg);
-  margin: 0 0 0.5rem;
-  opacity: 0.75;
-}
-.section-num--onyellow { color: var(--encre); opacity: 0.85; }
 
 h2 {
   font-family: var(--f-titre);
@@ -172,15 +197,28 @@ h3 {
   color: var(--encre);
   font-size: clamp(1.15rem, 1rem + 0.9vw, 1.5rem);
 }
-.section-intro { color: var(--encre-doux); max-width: var(--measure); }
+.section-intro { color: var(--encre-doux); }
+
+/* Ouverture manuscrite des longs blocs : 2-3 lignes courtes, une par
+   paragraphe — texture dans le texte sans changer la mise en page. */
+.lede {
+  margin: 0 0 1.6rem;
+  font-family: var(--f-hand);
+  font-weight: 600;
+  color: var(--bleu-fonce);
+  font-size: clamp(1.5rem, 1.05rem + 2vw, 2.35rem);
+  line-height: 1.18;
+}
+.lede p { margin: 0; }
+.lede p + p { margin-top: 0.1em; }
 
 /* =========================================================
-   BOUTONS / LIENS (repris de la DA — CSS pur)
+   BOUTONS / LIENS
    ========================================================= */
 .btn-cta {
   display: inline-block;
   background: var(--jaune);
-  color: var(--encre);          /* encre sur jaune, jamais blanc */
+  color: var(--encre);          /* encre sur jaune (9.0:1), jamais blanc */
   text-decoration: none;
   font-family: var(--f-corps);
   font-weight: 600;
@@ -212,11 +250,20 @@ h3 {
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   box-shadow: 0 4px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%);
-  /* cible tactile 44px même en variante compacte (benchmark: la spec l'exige partout) */
-  min-height: 44px;
+  min-height: 44px;             /* cible tactile partout */
   display: inline-flex;
   align-items: center;
 }
+/* PIÈGE FOND JAUNE : le CTA jaune disparaît sur le pied de page jaune.
+   Variante encre (papier sur encre = 12.6:1). */
+.btn-cta--ink {
+  background: var(--encre);
+  color: var(--papier);
+  box-shadow: 0 6px 0 rgba(30,26,23,0.35);
+}
+.btn-cta--ink::before { background: radial-gradient(closest-side, rgba(30,26,23,0.30), transparent 75%); }
+.btn-cta--ink:hover, .btn-cta--ink:focus-visible { box-shadow: 0 9px 0 rgba(30,26,23,0.4); filter: none; }
+.btn-cta--ink:active { box-shadow: 0 3px 0 rgba(30,26,23,0.4); }
 
 /* lien secondaire "encre" — souligné qui se dessine + tache aquarelle */
 .ink-link {
@@ -260,7 +307,7 @@ h3 {
   min-height: var(--header-h);
   display: flex;
   align-items: center;
-  background: color-mix(in srgb, var(--papier) 88%, transparent);
+  background: color-mix(in srgb, var(--papier) 90%, transparent);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(30,26,23,0.10);
@@ -270,6 +317,7 @@ h3 {
   align-items: center;
   gap: 0.8rem;
   padding-block: 0.5rem;
+  max-width: var(--wrap-wide);
 }
 .wordmark {
   font-family: var(--f-titre);
@@ -296,14 +344,11 @@ h3 {
 }
 .main-nav a.nav-da {
   font-family: var(--f-hand);
-  color: var(--bleu);
+  color: var(--bleu-fonce);
   font-size: 1.15rem;
   transform: rotate(-3deg);
   display: inline-block;
 }
-/* header-cta : cible tactile ≥44px (D3). Sur desktop le CTA garde son
-   allure compacte via padding, min-height n'agrandit visuellement rien
-   grâce au flex-align du header. */
 .header-cta {
   margin-left: auto;
   display: inline-flex;
@@ -320,7 +365,7 @@ h3 {
   padding: 0;
   border: 1px solid rgba(30,26,23,0.18);
   border-radius: 10px;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.32);
   color: var(--encre);
   cursor: pointer;
 }
@@ -361,7 +406,7 @@ h3 {
   text-decoration: none;
   font-size: clamp(1.9rem, 8vw, 2.8rem);
 }
-.nav-overlay a.nav-da { font-family: var(--f-hand); color: var(--bleu); font-size: clamp(1.4rem, 5vw, 1.8rem); }
+.nav-overlay a.nav-da { font-family: var(--f-hand); color: var(--bleu-fonce); font-size: clamp(1.4rem, 5vw, 1.8rem); }
 .nav-overlay .btn-cta { margin-top: 1rem; font-size: 1.2rem; }
 .overlay-close {
   position: absolute;
@@ -369,7 +414,7 @@ h3 {
   width: 3rem; height: 3rem;
   border: 1px solid rgba(30,26,23,0.2);
   border-radius: 12px;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.4);
   font-size: 1.6rem;
   line-height: 1;
   cursor: pointer;
@@ -377,28 +422,22 @@ h3 {
 }
 
 /* =========================================================
-   2. COUVERTURE (hero)
+   COUVERTURE (hero) — l'illustration du stand EST l'image du site
    ========================================================= */
 .couverture {
   position: relative;
   z-index: 1;
-  /* 2× header-h: les décos pendent désormais SOUS le bandeau, le texte descend d'autant */
-  padding: calc(var(--header-h) * 2 + 0.75rem + clamp(2.5rem, 8vw, 5rem)) 0 var(--sec-y);
+  padding: calc(var(--header-h) * 2 + 0.75rem + clamp(2rem, 6vw, 4rem)) 0 var(--sec-y);
   overflow: hidden;
   border-bottom: 1px dashed rgba(30,26,23,0.18);
 }
 .lanternes-pendantes {
   position: absolute;
-  /* accrochées au bord bas du bandeau fixe (avant: top:0 = haut caché derrière) */
   top: calc(var(--header-h) - 2px);
-  /* max(): sur écran large, reste alignée à la colonne de contenu (1080px + léger
-     débord) au lieu de coller au bord de la fenêtre */
-  right: max(clamp(-0.5rem, 3vw, 4rem), calc(50% - 620px));
-  width: clamp(88px, 26vw, 200px);
-  z-index: 1;
+  right: max(0.5rem, calc(50% - 880px));
+  width: clamp(88px, 22vw, 176px);
+  z-index: 3;
   transform-origin: top center;
-  /* Poussée d'entrée (balancement amorti, comme si on venait de les accrocher)
-     puis balancement doux infini. L'entrée finit à -2.5deg = départ du sway. */
   animation:
     lantern-entrance 2.8s cubic-bezier(0.34, 0.06, 0.36, 0.96) both,
     sway 6s var(--ease-out) 2.8s infinite alternate;
@@ -418,52 +457,30 @@ h3 {
 .guirlande-top {
   position: absolute;
   top: calc(var(--header-h) - 2px);
-  left: max(0px, calc(50% - 620px));
-  width: min(60vw, 420px);
+  left: max(0px, calc(50% - 880px));
+  width: min(46vw, 380px);
   opacity: 0.9;
   z-index: 1;
   pointer-events: none;
 }
 
 .couverture .wrap { position: relative; z-index: 2; }
-.cover-kicker {
-  font-family: var(--f-corps);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--bleu);
-  margin-bottom: 1rem;
-}
 .cover-title {
   font-family: var(--f-titre);
   font-weight: 600;
   color: var(--framboise);
-  font-size: clamp(2.6rem, 1.2rem + 9vw, 7rem);
-  line-height: 1.02;
-  margin: 0 0 0.6rem;
-  max-width: 12ch;
+  font-size: clamp(2.1rem, 1.1rem + 4.6vw, 3.5rem);
+  line-height: 1.06;
+  margin: 0 0 1.4rem;
+  max-width: 15ch;
   overflow-wrap: break-word;
-}
-.cover-sub {
-  font-size: clamp(1.1rem, 1rem + 1vw, 1.5rem);
-  color: var(--encre);
-  font-weight: 500;
-  margin-bottom: 0.4rem;
-  max-width: 24ch;
-}
-.cover-annotation {
-  font-size: clamp(1.5rem, 4.5vw, 2.2rem);
-  color: var(--bleu);
-  transform: rotate(-3deg);
-  display: inline-block;
-  margin: 0.3rem 0 1.8rem;
 }
 .cover-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem 1.4rem;
+  margin: 0;
 }
 .cover-scroll {
   font-family: var(--f-hand);
@@ -471,36 +488,52 @@ h3 {
   font-size: 1.3rem;
   display: inline-flex;
   align-items: center;
-  min-height: 44px; /* cible tactile (QA #6) */
+  min-height: 44px;
 }
 
-/* Desktop: texte à gauche, stand à droite — le papier vide de part et
-   d'autre du stand centré donnait un hero creux (retour user) */
-@media (min-width: 900px) {
+/* le stand : plein cadre confortable sur mobile (déborde jusqu'aux bords) */
+.cover-stand {
+  margin: clamp(1.5rem, 5vw, 2.5rem) calc(var(--pad-x) * -1) 0;
+}
+.cover-stand img {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 22px rgba(30,26,23,0.14));
+}
+.cover-stand figcaption {
+  margin-top: 0.6rem;
+  padding-inline: var(--pad-x);
+  font-family: var(--f-hand);
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  color: var(--bleu-fonce);
+}
+
+/* Desktop : texte au rail gauche, stand géant qui file vers le bord droit.
+   Cible ~1000-1100px de large sur 1440-1600px de viewport. */
+@media (min-width: 1000px) {
   .couverture .wrap {
     display: grid;
-    /* colonne stand élargie: l'étal est l'image principale (retour cliente) */
-    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-    column-gap: clamp(1.5rem, 4vw, 3rem);
+    grid-template-columns: minmax(270px, 27vw) minmax(0, 1fr);
+    column-gap: clamp(1rem, 2vw, 2rem);
     align-items: center;
-    max-width: 1160px; /* le hero respire plus large que les sections */
+    max-width: 1760px;
+    padding-right: 0;              /* le stand file jusqu'au bord */
   }
-  .couverture .wrap > .cover-kicker,
   .couverture .wrap > .cover-title,
-  .couverture .wrap > .cover-sub,
-  .couverture .wrap > .cover-annotation,
   .couverture .wrap > .cover-actions { grid-column: 1; }
+  .cover-actions { flex-direction: column; align-items: flex-start; }
   .cover-stand {
     grid-column: 2;
-    grid-row: 1 / span 4;
+    grid-row: 1 / span 2;
     margin: 0;
-    max-width: none;
+    max-width: 1200px;
   }
-  .cover-stand img { transform: rotate(1.2deg); }
+  .cover-stand img { transform: rotate(1deg); }
+  .cover-stand figcaption { padding-inline: 0; }
 }
 
 /* =========================================================
-   MARGINALIA (illustrations décoratives en marge)
+   MARGINALIA (illustrations d'Oriane dans la gouttière)
    ========================================================= */
 .marginalia {
   position: absolute;
@@ -512,113 +545,163 @@ h3 {
 .marginalia img { width: 100%; }
 
 /* =========================================================
-   3. LA GENÈSE
+   BANDEAU PHOTO PLEIN-BLEED (séparateur de sections)
+   Remplace les traits crayon supprimés. Format très panoramique,
+   opposé franc au format « contenu » 3:2 des diptyques.
    ========================================================= */
-.genese .wrap { position: relative; }
-.genese-body { max-width: var(--measure); font-size: clamp(1.05rem, 1rem + 0.4vw, 1.2rem); }
-.genese-body strong { color: var(--framboise); }
-.genese-lead {
+.bandeau {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--papier-ombre);
+}
+.bandeau img {
+  width: 100%;
+  aspect-ratio: 2.8 / 1;
+  min-height: 190px;
+  object-fit: cover;
+}
+.bandeau--lanternes img { object-position: center 62%; }
+
+/* =========================================================
+   DIPTYQUES ALTERNÉS (texte à côté de l'image)
+   Toutes les images contenues ont RIGOUREUSEMENT la même taille
+   (même colonne 1fr, même ratio 3:2) — seul le côté change.
+   ========================================================= */
+.dip {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  align-items: center;
+  margin-block: clamp(2rem, 5vw, 3.5rem);
+}
+.dip-text > *:last-child { margin-bottom: 0; }
+.dip-media { margin: 0; }
+.dip-media img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--r-photo);
+  box-shadow: var(--sh-photo);
+}
+.dip-media figcaption {
+  margin-top: 0.55rem;
+  font-family: var(--f-hand);
+  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+  color: var(--bleu-fonce);
+}
+@media (min-width: 900px) {
+  .dip { grid-template-columns: 1fr 1fr; }
+  .dip--media-right .dip-text  { grid-column: 1; grid-row: 1; }
+  .dip--media-right .dip-media { grid-column: 2; grid-row: 1; }
+  .dip--media-left  .dip-text  { grid-column: 2; grid-row: 1; }
+  .dip--media-left  .dip-media { grid-column: 1; grid-row: 1; }
+  .dip--media-right .dip-media img { transform: rotate(1deg); }
+  .dip--media-left  .dip-media img { transform: rotate(-1deg); }
+}
+
+/* DUO signature : le dessin ↔ la vraie photo, taille identique */
+.duo {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 4vw, 3rem);
+  margin-block: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+}
+@media (min-width: 700px) { .duo { grid-template-columns: 1fr 1fr; } }
+.duo-item { margin: 0; }
+.duo-item img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+.duo-item--carnet img {
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(30,26,23,0.14));
+  transform: rotate(-1deg);
+}
+.duo-item--reel img {
+  object-fit: cover;
+  border-radius: var(--r-photo);
+  box-shadow: var(--sh-photo);
+  transform: rotate(1deg);
+}
+.duo-item figcaption {
+  font-family: var(--f-hand);
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+  margin-top: 0.6rem;
+}
+.duo-item--carnet figcaption { color: var(--framboise-fonce); }
+.duo-item--reel figcaption { color: var(--bleu-fonce); text-align: right; }
+
+/* =========================================================
+   HISTOIRE (genèse + voyages fusionnées)
+   ========================================================= */
+.histoire .wrap { position: relative; }
+.prose { font-size: clamp(1.05rem, 1rem + 0.4vw, 1.18rem); }
+.prose p:last-child { margin-bottom: 0; }
+.histoire-punch {
   font-family: var(--f-titre);
   font-style: italic;
-  font-size: clamp(1.25rem, 1rem + 1.4vw, 1.7rem);
+  font-size: clamp(1.25rem, 1rem + 1.3vw, 1.65rem);
   color: var(--encre);
-  margin-bottom: 1rem;
+  margin-block: clamp(1.5rem, 4vw, 2.5rem) 0;
 }
-/* .genese-medaillon* : styles unifiés plus bas (bloc « GENÈSE — médaillons ») */
-.marg-cafe { width: clamp(70px, 16vw, 130px); top: 8%; right: 2%; }
-.marg-baguette { width: clamp(60px, 12vw, 100px); bottom: 4%; left: 1%; }
-/* panier debout : marge basse à droite de l'histoire, discret */
-.marg-panier { width: clamp(64px, 12vw, 108px); bottom: 6%; right: 3%; opacity: 0.72; }
+.histoire-punch strong { color: var(--framboise-fonce); font-style: normal; font-weight: 600; }
 
-/* =========================================================
-   4. LES VOYAGES + piste scooter
-   ========================================================= */
-.voyages-body { max-width: var(--measure); }
-.scooter-track {
+/* encarts définition CHỢ / VỈA HÈ — texte officiel de la carte */
+.lexique {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.1rem, 3vw, 2rem);
+  margin-block: clamp(2rem, 5vw, 3.5rem) 0;
+}
+@media (min-width: 780px) { .lexique { grid-template-columns: 1fr 1fr; } }
+.lexique-item {
   position: relative;
-  margin: 2.5rem 0 1rem;
-  min-height: clamp(150px, 34vw, 260px);
-  border-top: 2px dashed rgba(30,110,140,0.35);
-  border-bottom: 2px dashed rgba(30,110,140,0.35);
-  /* bande basse réservée à la légende Sài Gòn — le scooter roule au-dessus,
-     plus de chevauchement à l'arrivée (retour cliente) */
-  padding: 1.5rem 0 5.6rem;
-  overflow: hidden;
+  background: var(--papier-ombre);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-card);
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+  padding-right: clamp(1.2rem, 3vw, 4.5rem);
+  margin: 0;
 }
-.scooter {
-  position: relative;
-  width: clamp(150px, 40vw, 300px);
-  margin-left: 2%;
-  z-index: 2;
+.lexique-mot {
+  display: block;
+  font-family: var(--f-titre);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.1rem);
+  color: var(--framboise);
+  line-height: 1.1;
+  margin-bottom: 0.15rem;
 }
-
-/* --- Scooter MOBILE : piste pleine largeur d'écran + scooter plus petit ---
-   Sous 780px le .wrap est étroit (piste ~ 200px) : la signature passe
-   inaperçue. On sort la piste hors du .wrap (full-bleed via margin négative
-   calée sur --pad-x) pour allonger la course, et on réduit le scooter afin
-   que la traversée relative soit bien plus lisible. Overflow maîtrisé :
-   la piste garde overflow:hidden et body a overflow-x:hidden. */
-@media (max-width: 780px) {
-  .scooter-track {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    min-height: clamp(140px, 40vw, 200px);
-    padding-inline: 0;
-  }
-  .scooter {
-    width: clamp(104px, 26vw, 150px);
-    margin-left: 4vw;
-  }
-  .track-legend { font-size: clamp(1.35rem, 6vw, 1.9rem); }
-  .track-legend--hanoi { top: 5%; left: 5vw; }
-  .track-legend--saigon { bottom: 6%; right: 5vw; }
-  .marg-paniers { right: 4vw; }
-}
-.scooter img {
-  width: 100%;
-  /* dessin v3 régénéré : regarde à DROITE → aucun flip, roule gauche→droite */
-  filter: drop-shadow(0 10px 16px rgba(30,26,23,0.15));
-}
-.track-legend {
-  position: absolute;
+.lexique-trad {
+  display: block;
   font-family: var(--f-hand);
   font-weight: 600;
-  color: var(--framboise);
-  font-size: clamp(1.4rem, 4vw, 2rem);
-  transform: rotate(-4deg);
-  z-index: 1;
-  /* léger halo papier pour lisibilité sur la piste pointillée (mobile surtout) */
-  text-shadow: 0 1px 0 var(--papier), 0 0 10px var(--papier), 0 0 4px var(--papier);
+  font-size: 1.25rem;
+  color: var(--bleu-fonce);
+  margin-bottom: 0.7rem;
 }
-/* Hà Nội = départ, EN HAUT À GAUCHE ; Sài Gòn = arrivée, EN BAS À DROITE */
-.track-legend--hanoi { top: 6%; left: 6%; }
-.track-legend--saigon { bottom: 0.6rem; right: 8%; color: var(--bleu); transform: rotate(3deg); }
-.marg-paniers { width: clamp(80px, 18vw, 150px); bottom: 2%; right: 3%; opacity: 0.5; }
-/* petit drapeau joyeux en haut-droite de la section voyages */
-.marg-drapeau { width: clamp(58px, 11vw, 96px); top: 6%; right: 3%; opacity: 0.78; }
+.lexique-item p { margin: 0; color: var(--encre-doux); }
+.lexique-illus {
+  position: absolute;
+  right: -0.4rem;
+  bottom: -0.6rem;
+  width: clamp(64px, 9vw, 104px);
+  opacity: 0.85;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(30,26,23,0.12));
+}
 
-/* stand.png = image principale du site (hero) — styles dans la section couverture */
-.cover-stand {
-  margin: clamp(1.5rem, 4vw, 2.5rem) auto 0;
-  max-width: min(96vw, 800px); /* étal agrandi (retour cliente) */
-  text-align: center;
-}
-.cover-stand img {
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 14px 22px rgba(30,26,23,0.14));
-}
-.cover-stand figcaption {
-  margin-top: 0.6rem;
-  font-family: var(--f-hand);
-  font-size: clamp(1.15rem, 3vw, 1.5rem);
-  color: var(--bleu);
-  transform: rotate(-1.5deg);
-}
+/* marginalia de l'histoire — dans la gouttière droite du rail */
+.marg-cafe { width: clamp(90px, 13vw, 150px); top: 5%; right: 1%; }
+.marg-baguette { width: clamp(70px, 10vw, 118px); bottom: 6%; left: 0.5%; }
+.marg-panier { width: clamp(80px, 11vw, 132px); top: 46%; right: 2%; opacity: 0.72; }
+.marg-drapeau { width: clamp(64px, 9vw, 108px); top: 24%; left: 1%; opacity: 0.78; }
 
 /* =========================================================
-   5. LA CARTE (teaser)
+   CARTE (teaser)
    ========================================================= */
 .carte .wrap { position: relative; }
 .plat-grid {
@@ -629,7 +712,7 @@ h3 {
 }
 .plat-card {
   margin: 0;
-  background: rgba(255,255,255,0.42);
+  background: rgba(255,255,255,0.34);
   border: 1px solid rgba(30,26,23,0.12);
   border-radius: var(--r-card);
   padding: clamp(1rem, 3.5vw, 1.5rem);
@@ -653,104 +736,72 @@ h3 {
   line-height: 1.1;
 }
 .plat-desc { margin: 0; color: var(--encre-doux); font-size: 0.98rem; }
+.carte-fourchette {
+  font-family: var(--f-corps);
+  font-weight: 600;
+  color: var(--encre);
+  font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.15rem);
+  margin: 0.4rem 0 0;
+}
 .carte-cta { margin-top: 1.5rem; }
-.carte-cta .ink-link { font-weight: 600; }
-.marg-citrons { width: clamp(60px, 13vw, 110px); top: 10%; right: 2%; opacity: 0.9; }
-.marg-coriandre { width: clamp(50px, 11vw, 90px); bottom: 6%; left: 1%; opacity: 0.9; }
-/* sriracha : petite touche piquante en haut-gauche du teaser carte */
-.marg-sriracha { width: clamp(52px, 10vw, 88px); top: 12%; left: 2%; opacity: 0.7; }
+.marg-citrons { width: clamp(72px, 11vw, 128px); top: 8%; right: 1.5%; opacity: 0.9; }
+.marg-coriandre { width: clamp(60px, 9vw, 104px); bottom: 6%; left: 1%; opacity: 0.9; }
+.marg-sriracha { width: clamp(60px, 8vw, 100px); top: 44%; left: 1.5%; opacity: 0.7; }
 
 /* =========================================================
-   6. LE LIEU (éclat jaune plein largeur)
+   LE LIEU — même papier que le reste (le jaune est parti) ;
+   l'énergie vient désormais des photos, plus grandes.
    ========================================================= */
-.lieu {
-  background: var(--jaune);
-  background-image: none;
-  color: var(--encre);
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
-.lieu-inner {
-  max-width: 1080px;
-  margin-inline: auto;
-  padding: var(--sec-y) var(--pad-x);
-  position: relative;
-  z-index: 2;
-}
-.lieu::before {
-  content: "";
-  position: absolute;
-  top: -10%; right: -5%;
-  width: 60vw; height: 60vw;
-  max-width: 640px; max-height: 640px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--rouge-neon) 42%, transparent), transparent 68%);
-  filter: blur(30px);
-  z-index: 1;
-  pointer-events: none;
-}
-/* guirlande crescendo : suspendue DANS le jaune, entièrement visible
-   (retour user: le haut négatif était coupé par l'overflow:hidden du .lieu,
-   cordelette tranchée au bord — on décale vers le bas à la place). */
-.marg-guirlande-lieu {
-  width: min(80vw, 520px);
-  top: clamp(0.6rem, 2vw, 1.4rem);
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.85;
-  filter: drop-shadow(0 6px 12px rgba(30,26,23,0.14));
-  z-index: 3;
-}
-/* le trait crayon crescendo respire un peu plus (transition vers le jaune) */
-.pencil-sep--crescendo { padding-top: clamp(0.5rem, 3vw, 1.6rem); padding-bottom: clamp(1.5rem, 5vw, 3rem); }
-
-/* D4 — desktop ≥900px : le séparateur crescendo laissait ~1 écran de papier
-   vide entre le teaser carte et la section jaune. On resserre son padding et
-   on descend/agrandit la guirlande crescendo pour occuper et annoncer le jaune. */
-@media (min-width: 900px) {
-  .pencil-sep--crescendo { padding-top: 0.4rem; padding-bottom: 0.6rem; }
-  .marg-guirlande-lieu {
-    width: min(70vw, 620px);
-    top: 1.2rem;                      /* entièrement dans le jaune, cordelette visible */
-    opacity: 0.92;
-  }
-}
-
+.lieu { position: relative; z-index: 1; }
 .lieu-title {
-  color: var(--encre);
+  color: var(--framboise);
   font-family: var(--f-titre);
   font-weight: 600;
   font-style: italic;
-  font-size: clamp(2.1rem, 1.2rem + 5.5vw, 4rem);
+  font-size: clamp(2rem, 1.2rem + 4.4vw, 3.4rem);
 }
-.lieu-intro { max-width: var(--measure); font-size: clamp(1.05rem, 1rem + 0.5vw, 1.25rem); }
+.lieu-intro { font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem); color: var(--encre); }
+.lieu-bandeau { margin-block: clamp(1.75rem, 4vw, 2.75rem); }
+.lieu-bandeau img { object-position: center 58%; }
 .lieu-photos {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: clamp(1.1rem, 3vw, 2rem);
 }
 .lieu-photo { margin: 0; }
 .lieu-photo img {
   width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
   border-radius: var(--r-photo);
   box-shadow: var(--sh-photo);
-  object-fit: cover;
 }
-.lieu-photo--hero img { aspect-ratio: 3/4; }
+.lieu-photo--neon img { object-position: center 22%; }
 .lieu-photo figcaption {
-  font-size: 0.85rem;
+  font-family: var(--f-hand);
+  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
   margin-top: 0.5rem;
-  color: color-mix(in srgb, var(--encre) 80%, transparent);
+  color: var(--bleu-fonce);
+}
+.lieu-photo:nth-child(odd) img { transform: rotate(-0.8deg); }
+.lieu-photo:nth-child(even) img { transform: rotate(0.8deg); }
+@media (min-width: 780px) { .lieu-photos { grid-template-columns: 1fr 1fr; } }
+.marg-guirlande-lieu {
+  width: min(56vw, 420px);
+  top: clamp(0.4rem, 1.5vw, 1rem);
+  right: 3%;
+  opacity: 0.85;
+  filter: drop-shadow(0 6px 12px rgba(30,26,23,0.14));
+  z-index: 3;
 }
 
 /* =========================================================
-   7. RÉSERVER / CONTACT (sobre)
+   RÉSERVER / CONTACT (sobre)
    ========================================================= */
-.reserver { background-image: none; background: var(--papier); }
+.reserver { background-image: none; }
 .reserver .wrap { position: relative; z-index: 2; }
 .reserver-title { color: var(--framboise); }
-.reserver-lead { max-width: var(--measure); font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem); }
+.reserver-lead { font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem); }
 .reserver-cta { margin: 1.5rem 0 2.5rem; }
 .reserver-cta .btn-cta { font-size: 1.15rem; padding: 1rem 2rem; }
 
@@ -764,7 +815,7 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.78rem;
-  color: var(--bleu);
+  color: var(--bleu-fonce);   /* 6.0:1 — petit texte, le bleu clair ne passait pas */
   margin-bottom: 0.5rem;
 }
 .info-block p, .info-block address { margin: 0 0 0.3rem; font-style: normal; }
@@ -772,20 +823,18 @@ h3 {
   color: var(--encre);
   text-decoration: none;
   border-bottom: 1px solid var(--framboise);
-  /* zone de tap élargie sans bouger la ligne (QA #6: tél mesuré à 22px) */
   display: inline-block;
   padding-block: 0.55rem;
   margin-block: -0.55rem;
 }
-.info-block a:hover, .info-block a:focus-visible { color: var(--framboise); }
+.info-block a:hover, .info-block a:focus-visible { color: var(--framboise-fonce); }
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
 .horaires-list .jour { color: var(--encre-doux); }
-/* marginalia de la section contact : vélo (bas droite) + poulets (haut gauche) */
-.marg-velo { width: clamp(96px, 20vw, 168px); bottom: 5%; right: 2%; opacity: 0.62; }
-.marg-poulets { width: clamp(66px, 13vw, 112px); top: 8%; left: 1%; opacity: 0.7; }
+.marg-velo { width: clamp(110px, 17vw, 190px); bottom: 5%; right: 2%; opacity: 0.62; }
+.marg-poulets { width: clamp(76px, 11vw, 132px); top: 7%; left: 1%; opacity: 0.7; }
 
-/* Ils en parlent — presse + avis (tickets collés au carnet) */
+/* Ils en parlent — presse + avis */
 .presse { margin-top: clamp(2.5rem, 6vw, 4rem); }
 .presse-quote {
   margin: 0;
@@ -804,12 +853,11 @@ h3 {
 .presse-quote cite { font-style: normal; color: var(--encre-doux); font-size: 0.92rem; }
 .presse-quote cite a { color: var(--encre); border-bottom: 1px solid var(--framboise); text-decoration: none; }
 
-/* Questions du comptoir — mini FAQ style carnet, en fin de section contact */
+/* Questions du comptoir */
 .comptoir { margin-top: clamp(2.5rem, 6vw, 4rem); }
 .comptoir-title {
   font-size: clamp(1.5rem, 4vw, 2rem);
-  color: var(--bleu);
-  transform: rotate(-2deg);
+  color: var(--bleu-fonce);
   display: inline-block;
   margin: 0 0 1.2rem;
 }
@@ -825,144 +873,163 @@ h3 {
   padding: 1.1rem 1.2rem;
   box-shadow: var(--sh-card);
 }
-/* pas de rotation sur les cartes: à ±0.4deg le texte rend "flottant" /
-   désaligné sur Windows (retour user) — l'inclinaison reste sur le titre */
 .comptoir-item dt {
   font-family: var(--f-hand);
   font-weight: 600;
-  font-size: 1.25rem;
-  color: var(--framboise);
+  font-size: 1.3rem;
+  color: var(--framboise-fonce);
   margin-bottom: 0.4rem;
 }
 .comptoir-item dd { margin: 0; color: var(--encre-doux); font-size: 0.97rem; }
 .comptoir-item dd a { color: var(--encre); border-bottom: 1px solid var(--framboise); text-decoration: none; }
 
 /* =========================================================
-   FOOTER
+   PISTE SCOOTER — pleine largeur, juste au-dessus du pied de page.
+   Le scooter la traverse au scroll (gauche→droite, sens du dessin).
+   Pas de pin, pas de scroll-trap.
+   ========================================================= */
+.scooter-track {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  /* la piste ne sert qu'à faire rouler le scooter : juste sa hauteur + la
+     bande basse des légendes, sinon la fin de page paraît vide */
+  min-height: clamp(150px, 17vw, 210px);
+  border-top: 2px dashed rgba(30,110,140,0.32);
+  border-bottom: 2px dashed rgba(30,110,140,0.32);
+  padding: 1.2rem 0 3.6rem;
+  margin-top: clamp(1rem, 3vw, 2rem);
+  overflow: hidden;
+}
+.scooter {
+  position: relative;
+  width: clamp(130px, 20vw, 300px);
+  margin-left: 3%;
+  z-index: 2;
+}
+.scooter img {
+  width: 100%;
+  /* dessin v3 : regarde à DROITE → aucun flip, roule gauche→droite */
+  filter: drop-shadow(0 10px 16px rgba(30,26,23,0.15));
+}
+.track-legend {
+  position: absolute;
+  font-family: var(--f-hand);
+  font-weight: 600;
+  color: var(--framboise-fonce);
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  transform: rotate(-4deg);
+  z-index: 1;
+  text-shadow: 0 1px 0 var(--papier), 0 0 10px var(--papier), 0 0 4px var(--papier);
+}
+.track-legend--hanoi { top: 8%; left: var(--pad-x); }
+.track-legend--saigon { bottom: 0.8rem; right: var(--pad-x); color: var(--bleu-fonce); transform: rotate(3deg); }
+
+/* =========================================================
+   FOOTER JAUNE (toutes les pages)
+   Encre sur jaune = 9.0:1. JAMAIS de blanc sur jaune.
    ========================================================= */
 .footer {
-  background: var(--papier-ombre);
-  padding-block: var(--sec-y);
-  border-top: 1px dashed rgba(30,26,23,0.2);
+  position: relative;
+  z-index: 1;
+  background: var(--jaune);
+  background-image: none;
+  color: var(--encre);
+  padding-block: clamp(2.25rem, 5vw, 3.5rem);
+  overflow: hidden;
 }
-.footer-top { display: flex; flex-wrap: wrap; gap: 1.5rem 3rem; align-items: flex-start; }
+.footer .wrap { max-width: var(--wrap-max); }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem 3rem;
+  align-items: start;
+}
+@media (min-width: 700px) {
+  .footer-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+}
 .footer-wordmark {
+  display: inline-block;
   font-family: var(--f-titre);
   font-weight: 600;
-  color: var(--framboise);
+  color: var(--encre);          /* framboise sur jaune = 3.1:1 → encre */
   font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
   text-decoration: none;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
 }
-.footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.footer-infos p, .footer-infos address {
+  margin: 0 0 0.35rem;
+  font-style: normal;
+  color: var(--encre);
+}
+.footer-infos a {
+  color: var(--encre);
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(30,26,23,0.45);
+  display: inline-block;
+  padding-block: 0.5rem;
+  margin-block: -0.5rem;
+}
+.footer-infos a:hover, .footer-infos a:focus-visible { border-bottom-color: var(--encre); }
+.footer-cta { margin-top: 1.2rem !important; }
+/* le CTA du pied de page est un bouton, pas un lien de liste : il ne doit
+   hériter ni de la couleur encre ni du soulignement de .footer-infos a
+   (sinon texte encre sur pastille encre = illisible). */
+.footer-infos .btn-cta--ink {
+  color: var(--papier);
+  border-bottom: 0;
+  padding-block: 0.85rem;
+  margin-block: 0;
+}
+.footer-nav-title {
+  font-family: var(--f-corps);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--encre);
+  opacity: 0.72;
+  margin: 0 0 0.6rem;
+}
+.footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
 .footer-nav a {
   color: var(--encre);
   text-decoration: none;
-  /* zone de tap élargie (QA #6: liens footer mesurés à 21px) */
   display: inline-block;
-  padding-block: 0.55rem;
-  margin-block: -0.55rem;
+  padding-block: 0.5rem;
+  margin-block: -0.5rem;
+  border-bottom: 1.5px solid transparent;
 }
-.footer-nav a:hover, .footer-nav a:focus-visible { color: var(--framboise); }
-.footer-nav .nav-da { font-family: var(--f-hand); color: var(--bleu); font-size: 1.15rem; }
-.footer-sign { color: var(--encre-doux); font-size: 0.85rem; margin-top: 2rem; }
-
-/* =========================================================
-   GENÈSE — médaillons patron + famille
-   ========================================================= */
-.genese-medaillons {
+.footer-nav a:hover, .footer-nav a:focus-visible { border-bottom-color: var(--encre); }
+.footer-nav .nav-da { font-family: var(--f-hand); font-size: 1.15rem; }
+.footer-sign {
+  color: var(--encre-doux);      /* 5.2:1 sur jaune */
+  font-size: 1.05rem;
   margin: 2rem 0 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  max-width: 420px;
+  position: relative;
+  z-index: 2;
 }
-.genese-medaillon { margin: 0; }
-.genese-medaillon img {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-  border-radius: var(--r-photo);
-  box-shadow: var(--sh-photo);
+/* l'illustration d'Oriane habite le coin bas-droit du pied de page */
+.footer-illus {
+  position: absolute;
+  right: clamp(0.5rem, 3vw, 2.5rem);
+  bottom: 0;
+  width: clamp(120px, 18vw, 230px);
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 14px rgba(30,26,23,0.14));
 }
-/* paniers d'Oriane sous les 4 photos (demande cliente) — déco, pleine largeur de la grille */
-.genese-paniers {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: center;
-  margin-top: 0.4rem;
-  opacity: 0.9;
-}
-.genese-paniers img { width: clamp(140px, 30vw, 220px); transform: rotate(-1.5deg); }
-
-.genese-medaillon--patron img { transform: rotate(-1.5deg); }
-.genese-medaillon--famille img { transform: rotate(1deg); }
-.genese-medaillon--salle img { transform: rotate(1.2deg); }
-.genese-medaillon--ambiance img { transform: rotate(-1deg); }
-.genese-medaillon figcaption {
-  font-family: var(--f-hand);
-  color: var(--framboise);
-  font-size: 1.2rem;
-  margin-top: 0.4rem;
-  transform: rotate(-2deg);
-}
+.footer-illus img { width: 100%; }
 
 /* =========================================================
-   VOYAGES — diptyque signature "le carnet ↔ le vrai"
-   ========================================================= */
-.voyages-diptyque {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.4rem;
-  margin: 2.5rem 0 1rem;
-  align-items: end;
-}
-.diptyque-item { margin: 0; }
-.diptyque-item picture { display: block; }
-.diptyque-item--carnet img {
-  width: 100%;
-  filter: drop-shadow(0 12px 20px rgba(30,26,23,0.14));
-  transform: rotate(-1.2deg);
-}
-.diptyque-item--reel img {
-  width: 100%;
-  border-radius: var(--r-photo);
-  box-shadow: var(--sh-photo);
-  object-fit: cover;
-  transform: rotate(1.2deg);
-}
-.diptyque-item figcaption {
-  font-family: var(--f-hand);
-  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
-  color: var(--bleu);
-  margin-top: 0.5rem;
-}
-.diptyque-item--carnet figcaption { color: var(--framboise); transform: rotate(-2deg); }
-.diptyque-item--reel figcaption { transform: rotate(1.5deg); text-align: right; }
-@media (min-width: 640px) {
-  .voyages-diptyque { grid-template-columns: 1fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); }
-}
-
-/* =========================================================
-   CARTE — fourchette de prix
-   ========================================================= */
-.carte-fourchette {
-  font-family: var(--f-corps);
-  font-weight: 600;
-  color: var(--encre);
-  font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.15rem);
-  margin: 0.4rem 0 0;
-}
-
-/* =========================================================
-   STICKY BAR MOBILE — 2 actions plein écran (≤780px)
-   Masquée par défaut ; JS ajoute .is-visible quand le hero est sorti
-   et #contact hors champ. z-index sous l'overlay menu (1500).
+   STICKY BAR MOBILE (≤780px)
    ========================================================= */
 .sticky-actions {
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 1400;
-  display: none;             /* activée uniquement sous 780px (media query) */
+  display: none;
   gap: 0;
   padding-bottom: env(safe-area-inset-bottom, 0);
   background: color-mix(in srgb, var(--papier) 94%, transparent);
@@ -998,19 +1065,7 @@ h3 {
 .sticky-btn:active { filter: brightness(0.95); }
 
 /* =========================================================
-   SÉPARATEURS CRAYON
-   ========================================================= */
-.pencil-sep { padding: clamp(1rem,4vw,2.4rem) var(--pad-x); position: relative; z-index: 1; }
-.pencil-sep svg { max-width: 1080px; margin-inline: auto; }
-.pencil-sep path {
-  stroke-dasharray: var(--len, 2600);
-  stroke-dashoffset: var(--len, 2600);
-  transition: stroke-dashoffset 1.3s var(--ease-out);
-}
-.pencil-sep.is-drawn path { stroke-dashoffset: 0; }
-
-/* =========================================================
-   REVEAL (hooks motion — état initial ; sans JS reste visible via .no-js fallback)
+   REVEAL (hooks motion — sans JS reste visible via .no-js)
    ========================================================= */
 [data-reveal] {
   opacity: 0;
@@ -1018,43 +1073,19 @@ h3 {
   transition: opacity var(--rev-dur) var(--ease-out), transform var(--rev-dur) var(--ease-out);
 }
 [data-reveal].is-in { opacity: 1; transform: none; }
-/* Sans JS : la classe .no-js (posée par défaut, retirée par JS) force tout visible */
 .no-js [data-reveal] { opacity: 1; transform: none; }
-.no-js .pencil-sep path { stroke-dashoffset: 0; }
-
-/* Quand GSAP pilote : la section reste visible (pas de flash), GSAP masque
-   et révèle les ENFANTS directs. Neutralise l'état caché CSS du conteneur. */
-.gsap-ready [data-reveal] {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-/* will-change posé/retiré par ScrollTrigger (onEnter/onLeaveBack) — pas de CSS
-   statique permanent (évitait de garder une couche GPU toute la page). */
+.gsap-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
 .scooter.is-riding { will-change: transform; }
 
 /* =========================================================
-   RESPONSIVE — desktop
+   RESPONSIVE
    ========================================================= */
 @media (min-width: 640px) {
   .plat-grid { grid-template-columns: 1fr 1fr; }
-  .lieu-photos {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "hero hero" "a b";
-  }
-  .lieu-photo--hero { grid-area: hero; }
-  .lieu-photo--hero img { aspect-ratio: 16/10; }
   .infos-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 900px) {
   .infos-grid { grid-template-columns: repeat(3, 1fr); }
-  .genese-layout {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    gap: 2.5rem;
-    align-items: start;
-  }
-  .genese-medaillons { margin-top: 0; max-width: none; }
 }
 
 /* Header responsive : burger sous 780px, CTA Réserver conservé */
@@ -1063,74 +1094,52 @@ h3 {
   .header-cta { margin-left: auto; }
   .burger { display: block; margin-left: 0.5rem; }
 
-  /* D2 : quand la sticky bar est visible (JS pose .sticky-active), on masque
-     le CTA du header — évite 3 boutons « Réserver » jaunes simultanés à l'écran.
-     opacity + pointer-events (transition douce), l'espace est repris par le burger. */
   .sticky-active .header-cta {
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s var(--ease-out);
   }
-
-  /* Sticky bar active uniquement sur mobile/tablette étroite */
   .sticky-actions { display: flex; }
-  /* compense la barre (3.4rem + safe-area) pour ne pas masquer le bas de page */
   body { padding-bottom: calc(3.4rem + env(safe-area-inset-bottom, 0)); }
-}
-
-/* Hero densifié sous 900px : le haut du stand visible dès le 1er écran (375×812) */
-@media (max-width: 899px) {
-  .couverture {
-    padding-top: calc(var(--header-h) + clamp(1rem, 4vw, 2rem));
-    padding-bottom: clamp(2.5rem, 7vw, 4rem);
-  }
-  .cover-kicker { margin-bottom: 0.6rem; }
-  .cover-title { margin-bottom: 0.35rem; }
-  .cover-sub { margin-bottom: 0.3rem; }
-  .cover-annotation { margin: 0.2rem 0 1.1rem; }
-  .cover-stand { margin-top: clamp(1rem, 3vw, 1.6rem); }
-
-  /* Désencombrement (retour user: hero surchargé + header qui chevauche les images):
-     - guirlande retirée (passait sous le bandeau translucide)
-     - lanternes accrochées SOUS le bandeau, plus petites
-     - kicker retiré (répétait la sous-accroche), légende du stand retirée
-     - titre un cran plus compact — le dessin porte déjà le nom sur l'enseigne */
-  .guirlande-top { display: none; }
-  .lanternes-pendantes { top: var(--header-h); width: clamp(72px, 20vw, 130px); }
-  .cover-kicker { display: none; }
-  .cover-stand figcaption { display: none; }
-  .cover-title { font-size: clamp(2.2rem, 1rem + 8vw, 4rem); }
-}
-@media (max-width: 420px) {
-  :root { --header-h: 3.9rem; }
-  .site-header .wrap { gap: 0.5rem; padding-inline: 0.9rem; }
-  /* garde la cible tactile 44px (D3) tout en resserrant le padding horizontal */
-  .header-cta { padding: 0.45rem 0.85rem; min-height: 44px; font-size: 0.85rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%); }
-  .burger { width: 2.75rem; height: 2.75rem; margin-left: 0.4rem; } /* 44px tactile (QA #5) */
 }
 @media (min-width: 781px) {
   .nav-overlay { display: none !important; }
 }
 
-/* =========================================================
-   D1 — MARGINALIA vs TEXTE sur mobile (≤780px)
-   En dessous de 780px les colonnes se replient en une seule et les
-   marginalia calées en % (haut-gauche / haut-droite / bas) tombent sur
-   le texte : pg.06 + H2 « Votre table vous attend » (poulets), section-num
-   + H2 des sections (sriracha, drapeau), et les grandes illus de bas de
-   section (velo, panier). On les masque proprement — décoratives,
-   aria-hidden, aucune perte de sens. Desktop inchangé.
-   ========================================================= */
+/* Hero densifié sous 1000px : le haut du stand visible dès le 1er écran */
+@media (max-width: 999px) {
+  .couverture {
+    padding-top: calc(var(--header-h) + clamp(1.5rem, 5vw, 3rem));
+    padding-bottom: clamp(2.5rem, 7vw, 4rem);
+  }
+  .guirlande-top { display: none; }
+  .lanternes-pendantes { top: var(--header-h); width: clamp(72px, 20vw, 130px); }
+  .cover-stand figcaption { display: none; }
+}
+
+/* RÈGLE BINAIRE ≤780px : toute marginalia calée en % de bord est masquée
+   (elle tomberait sur le texte quand les colonnes se replient).
+   Whitelist testée à 375px : .footer-illus (le pied de page lui réserve
+   sa place par un padding-bottom dédié). */
 @media (max-width: 780px) {
-  .marg-poulets,
-  .marg-velo,
-  .marg-sriracha,
-  .marg-drapeau,
-  .marg-panier { display: none; }
+  .rail { width: 100%; }
+  .marginalia { display: none; }
+  .track-legend--hanoi { top: 5%; }
+  .scooter { width: clamp(120px, 30vw, 170px); margin-left: 5%; }
+  .scooter-track { min-height: clamp(150px, 34vw, 200px); padding-bottom: 4rem; }
+  .footer { padding-bottom: clamp(7rem, 30vw, 9rem); }
+  .footer-illus { width: clamp(110px, 30vw, 160px); }
+  .lexique-illus { width: clamp(56px, 14vw, 84px); }
+}
+@media (max-width: 420px) {
+  :root { --header-h: 3.9rem; }
+  .site-header .wrap { gap: 0.5rem; padding-inline: 0.9rem; }
+  .header-cta { padding: 0.45rem 0.85rem; min-height: 44px; font-size: 0.85rem; box-shadow: 0 3px 0 color-mix(in srgb, var(--jaune) 60%, #000 15%); }
+  .burger { width: 2.75rem; height: 2.75rem; margin-left: 0.4rem; }
 }
 
 /* =========================================================
-   REDUCED MOTION — tout calme
+   REDUCED MOTION — tout statique
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1140,6 +1149,5 @@ h3 {
     transition-duration: 0.001ms !important;
   }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
-  .pencil-sep path { stroke-dashoffset: 0 !important; }
   .lanternes-pendantes { animation: none !important; }
 }

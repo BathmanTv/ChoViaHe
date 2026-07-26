@@ -1,20 +1,29 @@
 ---
-version: 1.0
+version: 2.0
 name: ChoViaHe-carnet-de-voyage
-description: Design system du site Chợ Vỉa Hè (restaurant de cuisine de rue vietnamienne, Toulouse). Concept — le site EST le carnet de voyage de la famille. Fond papier chaud avec grain et trame de lignes carnet, illustrations crayon de couleur d'Oriane posées sur le papier (jamais en plein cadre), photos réelles rares et plein cadre en contrepoint. Le jaune néon du lieu réel est réservé aux grands moments (CTA, section "Le Lieu"). Hiérarchie 70% papier / 25% encres illustration / 5% éclats néon. Feel motion calme et artisanal ("on feuillette"), jamais clinquant.
+description: Design system du site Chợ Vỉa Hè (restaurant de cuisine de rue vietnamienne, Toulouse). Concept — le site EST le carnet de voyage de la famille. V2 (retours cliente 07.2026) — le carnet passe de DISPOSITIF à MATIÈRE: plus de numéros de page, plus de séparateurs crayon, plus de mention "carnet de voyage"; à la place, le vrai papier kraft de la carte imprimée (texture échantillonnée), les illustrations d'Oriane et de grandes photos. Le jaune du lieu déménage de la section "Le Lieu" vers le PIED DE PAGE de toutes les pages. Feel motion calme et artisanal ("on feuillette"), jamais clinquant.
 
 colors:
-  papier: "#F7F2E9"          # fond global — jamais de blanc pur
-  papier-ombre: "#EFE6D6"    # cartes, encarts
-  encre: "#1E1A17"           # texte courant — jamais de noir pur (contraste 14:1)
-  encre-doux: "#4a423a"      # texte secondaire
-  framboise: "#C0264B"       # marque n°1 — titres h2, prix, liens. AA en gros texte sur papier (5.2:1), PAS en corps <18px
-  orange: "#E9531F"          # RÉSERVE (défini, pas encore employé dans le code)
-  bleu-lanterne: "#1E6E8C"   # annotations manuscrites, kicker, focus
-  vert-coriandre: "#2E7D32"  # RÉSERVE — touches végétales, jamais en aplat large
-  jaune-neon: "#F2B300"      # ACCENT RARE — CTA Réserver + section Le Lieu uniquement. Texte = encre, JAMAIS blanc sur jaune
-  rouge-neon: "#E4002B"      # glow décoratif néon uniquement, jamais du texte
-  ligne-carnet: "rgba(30,110,140,0.10)"  # trame horizontale 32px du papier
+  # V2 — kraft échantillonné au pixel sur la carte imprimée (voir tools/extract-texture.mjs)
+  papier: "#EADCBD"          # fond global kraft (V1 était #F7F2E9, ivoire froid)
+  papier-ombre: "#DFCDA6"    # cartes, encarts
+  encre: "#1E1A17"           # texte courant — 12.6:1 sur kraft
+  encre-doux: "#4a423a"      # texte secondaire — 7.3:1
+  framboise: "#C0264B"       # titres h2 et GROS texte uniquement (4.3:1 sur kraft)
+  framboise-fonce: "#A81F3F" # corps, liens, petits labels (5.3:1) — le kraft assombrit, d'où la variante
+  orange: "#E9531F"          # RÉSERVE
+  bleu-lanterne: "#1E6E8C"   # filets, focus, gros texte (4.25:1)
+  bleu-fonce: "#17566E"      # labels, légendes, petits textes (6.0:1)
+  vert-coriandre: "#2E7D32"  # code des plats végétariens (repris de la carte imprimée)
+  jaune-neon: "#F2B300"      # PIED DE PAGE de toutes les pages + CTA. Encre sur jaune (9.0:1), JAMAIS blanc
+  rouge-neon: "#E4002B"      # glow décoratif uniquement, jamais du texte
+  ligne-carnet: "rgba(30,90,115,0.07)"  # trame 32px, adoucie (le kraft porte déjà de la matière)
+
+texture:
+  fichier: "docs/assets/papier-tile.webp (700x425, 2.2 Ko)"
+  origine: "marbrures extraites de la couverture du PDF de la carte, contraste écrasé, tuile en miroir 4 quadrants"
+  usage: "body::after, mix-blend-mode: overlay (le gris ~128 est neutre en overlay: il module sans assombrir). JAMAIS multiply."
+  regle: "la texture doit se SENTIR, pas se voir — écart-type cible < 8"
 
 typography:
   # 3 familles, self-hosted (docs/fonts/), subsets latin + vietnamese OBLIGATOIRES
@@ -57,18 +66,25 @@ components:
   cartes: "fond papier-ombre, radius 14px, ombre douce 0 8px 20px rgba(30,26,23,0.08), SANS rotation (texte)"
   photos: "radius 14px, ombre 0 12px 28px, rotation ±1-1.5deg (images seulement, jamais de texte), object-fit cover 2:3"
   illustrations: "PNG détourés d'Oriane posés sur le papier, jamais en fond, jamais mélangés à une photo dans le même cadre; marginalia décoratives aria-hidden, opacité 0.5-0.85. RÈGLE BINAIRE ≤780px: toute marginalia positionnée en % de bord est MASQUÉE, sauf whitelist explicitement testée à 375px sans chevauchement de texte"
-  separateur-crayon: "SVG path framboise stroke 3.5, tracé stroke-dashoffset au scroll-in (--len calculé JS)"
+  footer:
+    quoi: "V2 — fond jaune sur TOUTES les pages (la signature de marque répétée). 2 colonnes (infos pratiques / navigation) + illustration d'Oriane ancrée en bas à droite pour l'habiter"
+    piege: "le CTA Réserver est jaune → sur fond jaune il disparaît. Dans le footer il passe en .btn-cta--ink (fond encre, texte papier). Attention aussi à .footer-infos a qui surcharge la couleur par spécificité — d'où .footer-infos .btn-cta--ink"
+  SUPPRIMÉS EN V2: "numéros de page manuscrits (pg. 0X), séparateurs crayon rouges (.pencil-sep + JS), annotation « le carnet de voyage d'une famille », fond jaune de la section Le Lieu"
 
 layout:
-  wrap: "max-width 1080px, padding-inline clamp(1.15rem, 5vw, 4rem)"
-  sections: "chaque section = une double-page du carnet, numéro manuscrit pg. 0X bleu incliné"
-  decorations-hero: "guirlande/lanternes accrochées au bord bas du header fixe (top = header-h), alignées à la colonne de contenu sur écran large (max(clamp, calc(50% - 620px)))"
-  pacing: "sections papier calmes → crescendo (séparateur crayon + guirlande) → éclat jaune section Le Lieu → contact SOBRE (zéro animation à la conversion)"
+  wrap: "max-width 1080px (--wrap-max), prose 940px (--wrap-prose), large 1240px (--wrap-wide)"
+  rail: "RÈGLE MAÎTRESSE (réf. manmoi.vn): un seul rail vertical — titres, textes et boutons démarrent au même x. Colonne de texte à 78% du conteneur plafonnée à 66 caractères → la gouttière droite (~22%) accueille les illustrations d'Oriane. Jamais de bouton centré sous un texte aligné à gauche, jamais deux blocs centrés consécutifs"
+  diptyques: "images alternées droite / gauche / droite, de taille RIGOUREUSEMENT IDENTIQUE — seul le côté change (c'est ce qui fait rythme et pas patchwork)"
+  ratios: "DEUX formats seulement, très éloignés: bandeau plein-bleed ~2.8:1 (100vw, ~55vh) et images contenues 1:1 ou 3:2. INTERDIT 4:3 et 16:9 (formats mous)"
+  espacement: "rapport 5:1 — sections 80px desktop / 48px mini mobile (--sec-y), paragraphes 16px"
+  ouverture: "les longs blocs s'ouvrent par 2-3 lignes courtes (<35 car.) en Dancing Script (.lede), une par paragraphe"
+  decorations-hero: "guirlande/lanternes accrochées au bord bas du header fixe (top = header-h), alignées à la colonne de contenu sur écran large"
+  pacing: "sections kraft → bandeau photo plein-bleed comme séparateur (remplace les traits crayon supprimés) → contact SOBRE → piste du scooter → pied de page jaune"
 
 motion:
   feel: "calme, artisanal — l'énergie vient des couleurs, pas de la vitesse"
   stack: "GSAP 3.12.5 + ScrollTrigger + Lenis 1.1.14 (CDN épinglés, defer). Lenis desktop only (pointer:fine), lerp 0.14. UN SEUL RAF (Lenis sur ticker GSAP)"
-  signature: "le scooter d'Oriane traverse la piste au scrub — LE SENS SUIT TOUJOURS LE DESSIN (v3 regarde à droite → gauche→droite, Hà Nội haut-gauche départ, Sài Gòn bas-droite arrivée). Piste full-bleed mobile. PAS de pin (scroll-trap interdit)"
+  signature: "le scooter d'Oriane traverse la piste au scrub — LE SENS SUIT TOUJOURS LE DESSIN (v3 regarde à droite → gauche→droite, Hà Nội départ à gauche, Sài Gòn arrivée à droite). V2: la piste est descendue JUSTE AU-DESSUS DU PIED DE PAGE (demande cliente), pleine largeur. PAS de pin (scroll-trap interdit)"
   reveals: "opacity + translateY 24px, power3.out, 0.7s, stagger 0.08, once:true (fail-to-visible)"
   regles: "transform/opacity uniquement; will-change posé/retiré par trigger, jamais permanent; prefers-reduced-motion = TOUT statique; sans JS = tout visible"
 
