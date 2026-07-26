@@ -86,6 +86,7 @@ motion:
   stack: "GSAP 3.12.5 + ScrollTrigger + Lenis 1.1.14 (CDN épinglés, defer). Lenis desktop only (pointer:fine), lerp 0.14. UN SEUL RAF (Lenis sur ticker GSAP)"
   signature: "le scooter d'Oriane traverse la piste au scrub — LE SENS SUIT TOUJOURS LE DESSIN (v3 regarde à droite → gauche→droite, Hà Nội départ à gauche, Sài Gòn arrivée à droite). V2: la piste est descendue JUSTE AU-DESSUS DU PIED DE PAGE (demande cliente), pleine largeur. PAS de pin (scroll-trap interdit)"
   reveals: "opacity + translateY 24px, power3.out, 0.7s, stagger 0.08, once:true (fail-to-visible)"
+  PIEGE-REVEALS: "TOUJOURS gsap.fromTo() + immediateRender:false, JAMAIS gsap.from() avec un ScrollTrigger once:true. Un ScrollTrigger.refresh() (déclenché sur fonts.ready et window.load) ré-applique l'état de départ d'un `from` déjà joué, alors que le trigger est mort → le bloc reste à opacity:0 pour toujours, de façon intermittente selon le timing de chargement des polices. Bug vécu 07.2026: le diptyque signature et le lexique étaient invisibles, ~520px de vide à la place. Doublé d'un filet de sécurité dans home.js (filetDeSecurite) qui force à visible tout bloc déjà dépassé et encore à opacité ~0."
   regles: "transform/opacity uniquement; will-change posé/retiré par trigger, jamais permanent; prefers-reduced-motion = TOUT statique; sans JS = tout visible"
 
 constraints:
