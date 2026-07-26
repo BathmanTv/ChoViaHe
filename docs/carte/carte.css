@@ -157,6 +157,34 @@
 /* orange assombri: #E9531F sur papier = 3.4:1, échoue AA texte normal (QA #4) */
 .menu-item-tag--saigon { color: #C63A0F; }
 
+/* ---------- Code végétarien (repris de la carte imprimée) ----------
+   Sur le PDF, les plats végétariens sont écrits en vert. En ligne on garde
+   le code couleur (var(--vert)) MAIS jamais seul : chaque plat porte aussi
+   l'étiquette texte « végétarien », lisible sans percevoir la couleur.
+   --vert brut (#2E7D32) = 3.8:1 sur le kraft → échoue AA dès que le texte
+   repasse sous 18,7px gras (nom de plat en mobile). On travaille donc avec
+   --vert-lisible, dérivé du token (color-mix 82% + noir) = 5,1:1, à l'œil
+   le même vert que la carte imprimée. */
+.menu-section { --vert-lisible: color-mix(in srgb, var(--vert) 82%, #000); }
+.menu-item--vege .menu-item-nom { color: var(--vert-lisible); }
+.menu-item-tag--vege {
+  font-family: var(--f-corps);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vert-lisible);
+  background: color-mix(in srgb, var(--vert) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vert) 42%, transparent);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+  transform: none;
+  margin-left: 0.15rem;
+  white-space: nowrap;
+}
+/* double classe : .menu-sub (défini plus bas) porte la même spécificité */
+.menu-sub.menu-sub--vege { color: var(--vert-lisible); font-style: normal; }
+
 /* petite précision (verre/bouteille, origine) sous un item */
 .menu-sub {
   display: block;
@@ -187,6 +215,14 @@
 /* rangée compacte (vins, boissons fraîches, cafés) : nom + prix serrés */
 .menu-list--compact .menu-item { padding: 0.55rem 0; }
 .menu-list--compact .menu-item-desc { margin-top: 0.1rem; }
+/* si le nom est trop long, le prix passe à la ligne : qu'il reste à droite */
+.menu-item-prix { margin-left: auto; }
+/* appellation d'un vin : sous la ligne nom → prix, en petit italique */
+.menu-item-cepage {
+  font-size: 0.86rem;
+  font-style: italic;
+  margin-top: 0.15rem;
+}
 
 /* note bas de section (suppléments, précisions) */
 .menu-section-note {
@@ -213,6 +249,112 @@
     break-inside: avoid;
     -webkit-column-break-inside: avoid;
   }
+}
+
+/* =========================================================
+   PLATEAU À PARTAGER — Mẹt Vỉa Hè
+   Un seul item : il vaut une carte, pas une ligne de liste.
+   ========================================================= */
+.plateau-card {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.9rem, 3vw, 2rem);
+  background: var(--papier-ombre);
+  border: 1px solid rgba(30,26,23,0.14);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-card, 0 8px 20px rgba(30,26,23,0.10));
+  padding: clamp(1.1rem, 4vw, 2rem);
+}
+.plateau-illus {
+  flex: 0 0 auto;
+  width: clamp(60px, 16vw, 120px);
+  filter: drop-shadow(0 8px 14px rgba(30,26,23,0.14));
+}
+.plateau-illus img { width: 100%; height: auto; }
+.plateau-body { min-width: 0; }
+.plateau-kicker {
+  color: var(--bleu);
+  font-size: clamp(1.05rem, 3.4vw, 1.35rem);
+  margin: 0 0 0.1rem;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+}
+.plateau-desc {
+  margin: 0.5rem 0 0;
+  color: var(--encre-doux);
+  font-size: clamp(0.94rem, 0.9rem + 0.25vw, 1.02rem);
+  max-width: 56ch;
+}
+.plateau-prix {
+  margin: 0.6rem 0 0;
+  font-family: var(--f-corps);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--framboise);
+  font-size: clamp(1.25rem, 1rem + 1.4vw, 1.7rem);
+}
+
+/* =========================================================
+   PHỞ BÒ DU NORD — le plat signature
+   Une page entière dans la carte imprimée : ici une bande à part,
+   fond kraft foncé + filets framboise, puis 3 cartes de déclinaison.
+   ========================================================= */
+.pho-section {
+  background: var(--papier-ombre);
+  border-block: 2px solid rgba(192,38,75,0.3);
+}
+.pho-section.menu-section:nth-of-type(even) { background: var(--papier-ombre); }
+.pho-intro {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1rem, 4vw, 2.5rem);
+  flex-direction: column;
+}
+.pho-illus {
+  flex: 0 0 auto;
+  width: clamp(110px, 32vw, 240px);
+  filter: drop-shadow(0 10px 18px rgba(30,26,23,0.18));
+}
+.pho-illus img { width: 100%; height: auto; }
+.pho-texte { min-width: 0; }
+.pho-kicker {
+  color: var(--bleu);
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  margin: 0 0 0.15rem;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+.pho-title { font-size: clamp(1.9rem, 1.2rem + 4vw, 3.1rem); }
+.pho-desc {
+  margin: 0.7rem 0 0;
+  color: var(--encre);
+  font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem);
+  max-width: 58ch;
+}
+.pho-conseil {
+  margin: 0.9rem 0 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid rgba(30,110,140,0.35);
+  color: var(--encre-doux);
+  font-size: clamp(0.94rem, 0.9rem + 0.25vw, 1.02rem);
+  max-width: 58ch;
+}
+.pho-subhead {
+  border-bottom-color: rgba(192,38,75,0.4);
+  margin-top: clamp(1.6rem, 5vw, 2.6rem);
+}
+.pho-list { display: grid; gap: clamp(0.6rem, 2vw, 1rem); }
+.pho-list .menu-item {
+  border-bottom: none;
+  background: color-mix(in srgb, var(--papier) 82%, #fff);
+  border: 1px solid rgba(30,26,23,0.12);
+  border-radius: var(--r-card);
+  padding: clamp(0.85rem, 3vw, 1.15rem);
+}
+
+@media (min-width: 780px) {
+  .pho-intro { flex-direction: row; align-items: center; }
+  .pho-list { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* ---------- CTA footer réserver ---------- */

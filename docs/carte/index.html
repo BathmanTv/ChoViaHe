@@ -31,7 +31,9 @@
 <link rel="icon" href="../favicon-16.png" type="image/png" sizes="16x16" />
 <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
 
-<!-- JSON-LD Menu complet -->
+<!-- JSON-LD Menu complet — carte « rentrée 26 ».
+     Les items sans "offers" attendent une confirmation de prix par le restaurant
+     (cocktails et boissons viet : prix absents ou ambigus sur le PDF source). -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -61,66 +63,82 @@
       "@type": "MenuSection",
       "name": "Món khai vị — Tapas vietnamiens",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Nem Chợ porc ou poulet (x3)", "description": "Galette de riz, farce porc ou poulet, champignons, carottes, chou rave, pousses de soja et œufs, sauce nước mắm.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Nem chua rán Hà Nội", "description": "Bâtonnets de porc haché panés au panko, sauce mayonnaise épicée. Cuisine de rue d'Hanoï.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Gỏi gà", "description": "Salade de poulet effiloché, oignons, carottes, pousses de soja et rau răm.", "offers": { "@type": "Offer", "price": "13.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Samoussas aux légumes frits (x5)", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Tofu lắc saté", "description": "Tofu frit au saté maison et rau răm. Végétarien.", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Chả cốm (x3)", "description": "Boulettes de poulet, riz gluant au pandan frit.", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Bánh bao (x1)", "description": "Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny-Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Chả cốm (x3)", "description": "Galette de poulet haché, mélangée avec du jeune riz vert récolté avant maturité (le cốm) et différentes épices viet.", "offers": { "@type": "Offer", "price": "8.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Nem Chợ porc ou poulet (x3)", "description": "Avec farce de porc ou poulet haché, champignons, carottes, chou rave, pousses de soja et œufs, sauce nước mắm.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Gà chiên xù", "description": "Cuisse de poulet désossée, marinée avec des épices viet, panée au panko. Servie avec une sauce de piment au citron et à l'ail.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Samoussas aux légumes frits (x5)", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Tofu lắc saté", "description": "Tofu frit au saté maison et rau răm (coriandre vietnamienne).", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Nem chua rán Hà Nội", "description": "Plat de la cuisine de rue d'Hanoï : bouchées de porc croustillantes, préparées à base de porc et de couenne, servies avec sauce mayonnaise épicée et mangue verte marinée.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Bánh khọt (x8)", "description": "Palets de farine de riz au lait de coco, crevettes, sauce nước mắm.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bánh tráng trộn", "description": "Salade de feuilles de riz, œuf dur, poudre de crevette séchée, oignons frits, cacahuètes, mangue verte, bœuf séché, coriandre viet, piment, sauce soja braisé. Emblème de Saïgon.", "offers": { "@type": "Offer", "price": "13.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bánh bao (x1)", "description": "Brioche vapeur farcie porc xá-xíu, sauce maison pomme Granny-Smith, oignon, soja.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bánh cuốn Hà Nội", "description": "Fines crêpes de riz vapeur, porc haché sauté aux champignons, giò (pâté vietnamien), coriandre, nước mắm.", "offers": { "@type": "Offer", "price": "14.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Sa lát gỏi tôm", "description": "Salade vietnamienne aux crevettes, légumes croquants (carottes, papaye, mangue verte, oignons, pousses de soja) et herbes aromatiques, relevée d'une vinaigrette au nước mắm et citron vert.", "offers": { "@type": "Offer", "price": "13.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Bánh cuốn Hà Nội", "description": "Fines crêpes de riz vapeur, garnies de porc haché sauté aux champignons, accompagnées de giò (charcuterie vietnamienne au bœuf), coriandre et sauce nước mắm.", "offers": { "@type": "Offer", "price": "13.00", "priceCurrency": "EUR" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
+      "name": "Plateau à partager",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Mẹt Vỉa Hè", "description": "Plateau assortiment de tapas : gà chiên xù, chả cốm, nem chua rán, nem chợ au porc.", "offers": { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } }
       ]
     },
     {
       "@type": "MenuSection",
       "name": "Món chính — Plats",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Bò-bún", "description": "Salade, crudités, fruits, bœuf à la citronnelle et saté, nem au porc, vermicelles de riz. Option végétarienne : protéines de soja à la citronnelle, samoussas aux légumes.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Phở bò du Nord", "description": "Nouilles de riz, bouillon de viande aux épices, bœuf cru et cuit, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bún chả Hà Nội", "description": "Ventrèche grillée parfumée, vermicelle de riz, nem, salade. Plat emblématique de la capitale.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Tôm chiên", "description": "Gambas frites, sauce hải sản à la citronnelle, nouilles jaunes sautées.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Xôi-mặn", "description": "Riz gluant, porc au caramel, sauce soja braisée, pickles de légumes.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Xôi-mặn", "description": "Riz gluant avec thịt kho (poitrine de porc mijotée pendant 4 h dans une sauce caramélisée), servi avec des pickles de légumes.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Cơm gà chiên", "description": "Riz blanc avec cuisse de poulet panée au panko, servi avec des pickles de légumes et sauce maison pomme Granny Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Bò-bún", "description": "Salade, crudités, fruits, bœuf sauté à la citronnelle et saté, 2 nems au porc ou poulet, vermicelles de riz. Option végétarienne : protéines de soja à la citronnelle, 2 samoussas aux légumes.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Bún chả Hà Nội", "description": "Plat emblématique de la cuisine de rue de la capitale : vermicelles de riz, poitrine de porc grillée parfumée, nem, salade et herbes fraîches.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Hủ tiếu trộn", "description": "Plat ultra populaire dans le Sud du Vietnam : nouilles de riz garnies de crevettes, porc xá-xíu, accompagnées d'herbes fraîches, salade, cacahuètes, ail frit et sauce maison. Recette sans bouillon.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Tôm chiên", "description": "Gambas frites, accompagnées de sa sauce hải sản à la citronnelle, nouilles jaunes sautées avec des légumes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Supplément — bol de riz blanc", "offers": { "@type": "Offer", "price": "4.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Supplément — riz gluant", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
       ]
     },
     {
       "@type": "MenuSection",
+      "name": "Phở bò du Nord",
+      "description": "Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8 h, nouilles de riz et fines tranches de bœuf, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.",
+      "hasMenuItem": [
+        { "@type": "MenuItem", "name": "Phở bò tái", "description": "Bœuf cru (merlan) mariné avec des épices, gingembre, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Phở bò chín", "description": "Fine tranche de poitrine de bœuf cuit pendant 8 h, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Phở bò tái chín", "description": "Bœuf cru et cuit, herbes viet.", "offers": { "@type": "Offer", "price": "17.00", "priceCurrency": "EUR" } }
+      ]
+    },
+    {
+      "@type": "MenuSection",
       "name": "Tráng miệng — Desserts",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Kem xôi", "description": "Riz gluant au sésame servi chaud, lait de coco, glace vanille.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bơ vơ", "description": "Brioche perdue, glace vanille, crème au pandan.", "offers": { "@type": "Offer", "price": "7.50", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Kem bơ", "description": "Glace coco, crème avocat, poudre de coco grillée.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Glace & sorbet (mangue, coco, vanille)", "offers": [ { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" } ] }
+        { "@type": "MenuItem", "name": "Kem bơ", "description": "Crème avocat, glace coco, poudre de coco grillée.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Kem xôi", "description": "Riz gluant au sésame. Servi chaud avec lait de coco, glace vanille.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Bơ vơ", "description": "Brioche perdue, glace vanille, crème au pandan (feuille tropicale aux délicates notes de vanille et noisette).", "offers": { "@type": "Offer", "price": "7.50", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Glace & sorbet (mangue, coco, vanille)", "offers": [ { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } ] }
       ]
     },
     {
       "@type": "MenuSection",
       "name": "Giải khát Việt — Boissons viet",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Cà phê sữa đá", "description": "Café viet Robusta, lait concentré, glaçons.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Thé glacé maison (Trà đá / Cam Sả)", "description": "Trà đá : thé vert jasmin, lime, menthe. Cam Sả : thé orange, pêche, citronnelle.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Cà phê sữa đá", "description": "Café Viet Robusta, lait concentré, glaçons." },
+        { "@type": "MenuItem", "name": "Trà đá", "description": "Thé glacé maison : thé vert jasmin vietnamien, lime, menthe." },
+        { "@type": "MenuItem", "name": "Trà tắc", "description": "Thé glacé maison au kumquat et fruit de la passion." }
       ]
     },
     {
       "@type": "MenuSection",
       "name": "Cocktails",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Dragon", "description": "Frais & acidulé — téquila, fruit du dragon, basilic, bitter, lime, jus d'orange.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Lady Gy", "description": "Fruité & tonique — vodka, ginger beer, vanille, citron vert, framboises, St-Germain, Angostura.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Cocktail du moment", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade." },
+        { "@type": "MenuItem", "name": "Dragon", "description": "Fruité & frais — téquila, fruits du dragon, Gimber, lime, limonade." },
+        { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier." }
       ]
     },
     {
       "@type": "MenuSection",
       "name": "Mocktails",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Tám-Đi", "description": "Gin sans alcool, fruit de la passion, lime, yuzu, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Mocktail du moment", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Tám-Đi", "description": "Gin sans alcool, fruit de la passion, lime, yuzu, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -132,14 +150,13 @@
     },
     {
       "@type": "MenuSection",
-      "name": "Vins (verre 12cl / bouteille 75cl)",
+      "name": "Vins (verre 12 cl / bouteille 75 cl)",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Cuvée des Galets — Côtes du Rhône (rouge)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "24.00", "priceCurrency": "EUR" } ] },
-        { "@type": "MenuItem", "name": "Pinot Noir — Dom. Girard (rouge)", "offers": { "@type": "Offer", "price": "29.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Héritage Gérard Bertrand — Pic Saint Loup (rouge)", "offers": { "@type": "Offer", "price": "35.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Les Pieds dans le Sable — IGP Landes (rosé)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "24.00", "priceCurrency": "EUR" } ] },
-        { "@type": "MenuItem", "name": "Demoiselle moelleux — Côtes de Gascogne (blanc)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } ] },
-        { "@type": "MenuItem", "name": "Les Rassembleurs — Chardonnay Limoux (blanc)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "24.00", "priceCurrency": "EUR" } ] }
+        { "@type": "MenuItem", "name": "Demoiselle — Domaine Laballe, Côtes de Gascogne (blanc moelleux)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } ] },
+        { "@type": "MenuItem", "name": "Les Rassembleurs — Chardonnay, Limoux (blanc sec)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "24.00", "priceCurrency": "EUR" } ] },
+        { "@type": "MenuItem", "name": "Les Pieds dans le Sable — Domaine de la Pointe, IGP Landes Capbreton (rosé)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "24.00", "priceCurrency": "EUR" } ] },
+        { "@type": "MenuItem", "name": "Cuvée des Galets — Les Vignerons d'Estezargues, Côtes du Rhône (rouge)", "offers": [ { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "24.00", "priceCurrency": "EUR" } ] },
+        { "@type": "MenuItem", "name": "Héritage — Gérard Bertrand, Pic Saint Loup (rouge)", "offers": [ { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "32.00", "priceCurrency": "EUR" } ] }
       ]
     },
     {
@@ -147,11 +164,12 @@
       "name": "Boissons fraîches",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Sirop à l'eau", "offers": { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Canettes 33cl (Coca, Coca zéro, Perrier, Oasis)", "offers": { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Jus ACE", "offers": { "@type": "Offer", "price": "4.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Perrier 1L", "offers": { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Kombucha (citron-gingembre, pêche, hibiscus)", "offers": { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Limonade « shoot gingembre »", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Coca / Coca zéro / Perrier (canette 33 cl)", "offers": { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Perrier 1 L", "offers": { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Kombucha (citron gingembre, pêche ou hibiscus)", "offers": { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Limonade façon « shoot gingembre »", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Jus litchi Maya", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Eau de coco Maya", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -159,8 +177,9 @@
       "name": "Cafés & thés chauds",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Café / déca / allongé", "offers": { "@type": "Offer", "price": "2.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Noisette", "offers": { "@type": "Offer", "price": "2.50", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Thé / tisane bio", "offers": { "@type": "Offer", "price": "4.50", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Café noisette", "offers": { "@type": "Offer", "price": "2.50", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Thé vert jasmin du Vietnam", "offers": { "@type": "Offer", "price": "4.50", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Tisane bio immunité (gingembre, sureau, thym, ginseng)", "offers": { "@type": "Offer", "price": "4.50", "priceCurrency": "EUR" } }
       ]
     }
   ]
@@ -221,11 +240,19 @@
     </h1>
     <p class="carte-annotation handwritten">tout ce qu'on rapporte de l'étal</p>
     <p class="carte-note">La carte du restaurant, comme au bord du trottoir : une cuisine de rue vietnamienne faite maison, mijotée chaque jour à Toulouse. Les noms sont ceux du Vietnam — on vous raconte chaque plat en français juste en dessous.</p>
+    <!-- TÉLÉCHARGEMENT DE LA CARTE PDF — prêt, mais DÉSACTIVÉ volontairement.
+         Le PDF fourni (« rentrée 26 ») est un brouillon : il contient encore
+         « NOUVEAU / BLA BLA BLA » (p.2) et « ...mangues verte ??? » sur le
+         plateau. Un client qui télécharge ça, c'est pire que pas de PDF.
+         La tuyauterie est en place (compression 9,1 → 0,9 Mo via
+         tools/compresser-carte-pdf.mjs, style .carte-pdf) : dès réception de
+         la version définitive, relancer le script et décommenter ce bloc.
     <p class="carte-pdf">
       <a class="ink-link" href="../assets/carte-cho-via-he.pdf" target="_blank" rel="noopener" download>
         Télécharger la carte illustrée <span class="carte-pdf-poids">PDF · 0,9 Mo</span>
       </a>
     </p>
+    -->
   </div>
 </section>
 
@@ -246,49 +273,67 @@
 
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh bao (x1)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
+        <p class="menu-item-desc">Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny-Smith, oignon et soja.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Chả cốm (x3)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">8&nbsp;€</span></p>
+        <p class="menu-item-desc">Galette de poulet haché, mélangée avec du jeune riz vert récolté avant maturité (le <span lang="vi">cốm</span>) et différentes épices viet.</p>
+      </li>
+      <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Nem Chợ porc ou poulet (x3)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">9&nbsp;€</span></p>
-        <p class="menu-item-desc">Galette de riz, farce porc ou poulet, champignons, carottes, chou rave, pousses de soja et œufs, sauce nước mắm.</p>
+        <p class="menu-item-desc">Avec farce de porc ou poulet haché, champignons, carottes, chou rave, pousses de soja et œufs, sauce <span lang="vi">nước mắm</span>.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Gà chiên xù</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">9&nbsp;€</span></p>
+        <p class="menu-item-desc">Cuisse de poulet désossée, marinée avec des épices viet, panée au panko. Servie avec une sauce de piment au citron et à l'ail.</p>
+      </li>
+      <li class="menu-item menu-item--vege">
+        <p class="menu-item-head"><span class="menu-item-nom">Samoussas aux légumes frits (x5)</span><span class="menu-item-tag menu-item-tag--vege">végétarien</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
+      </li>
+      <li class="menu-item menu-item--vege">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tofu lắc saté</span><span class="menu-item-tag menu-item-tag--vege">végétarien</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
+        <p class="menu-item-desc">Tofu frit au saté maison et <span lang="vi">rau răm</span> (coriandre vietnamienne).</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Nem chua rán Hà Nội</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Bâtonnets de porc haché panés au panko, sauce mayonnaise épicée. <em>Cuisine de rue d'Hanoï.</em></p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Gỏi gà</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">13&nbsp;€</span></p>
-        <p class="menu-item-desc">Salade de poulet effiloché, oignons, carottes, pousses de soja et rau răm.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Samoussas aux légumes frits (x5)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tofu lắc saté</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
-        <p class="menu-item-desc">Tofu frit au saté maison et rau răm. <span class="menu-item-tag">végétarien</span></p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Chả cốm (x3)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
-        <p class="menu-item-desc">Boulettes de poulet, riz gluant au pandan frit.</p>
+        <p class="menu-item-desc">Plat de la cuisine de rue d'Hanoï : bouchées de porc croustillantes, préparées à base de porc et de couenne, servies avec sauce mayonnaise épicée et mangue verte marinée.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh khọt (x8)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Palets de farine de riz au lait de coco, crevettes, sauce nước mắm.</p>
+        <p class="menu-item-desc">Palets de farine de riz au lait de coco, crevettes, sauce <span lang="vi">nước mắm</span>.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh tráng trộn</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">13&nbsp;€</span></p>
-        <p class="menu-item-desc">Salade de feuilles de riz, œuf dur, poudre de crevette séchée, oignons frits, cacahuètes, mangue verte, bœuf séché, coriandre viet, piment, sauce soja braisé. <span class="menu-item-tag menu-item-tag--saigon">emblème de Saïgon</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Sa lát gỏi tôm</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">13&nbsp;€</span></p>
+        <p class="menu-item-desc">Salade vietnamienne aux crevettes, légumes croquants (carottes, papaye, mangue verte, oignons, pousses de soja) et herbes aromatiques, relevée d'une vinaigrette au <span lang="vi">nước mắm</span> et citron vert.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh bao (x1)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
-        <p class="menu-item-desc">Brioche vapeur farcie porc xá-xíu, sauce maison pomme Granny-Smith, oignon, soja.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh cuốn Hà Nội</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">14&nbsp;€</span></p>
-        <p class="menu-item-desc">Fines crêpes de riz vapeur, porc haché sauté aux champignons, giò (pâté vietnamien), coriandre, nước mắm.</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh cuốn Hà Nội</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">13&nbsp;€</span></p>
+        <p class="menu-item-desc">Fines crêpes de riz vapeur, garnies de porc haché sauté aux champignons, accompagnées de <span lang="vi">giò</span> (charcuterie vietnamienne au bœuf), coriandre et sauce <span lang="vi">nước mắm</span>.</p>
       </li>
     </ul>
   </div>
 </section>
 
-<!-- séparateur crayon -->
+<!-- ================= PLATEAU À PARTAGER ================= -->
+<section class="menu-section plateau-section" id="plateau" data-reveal aria-labelledby="plateau-title">
+  <div class="wrap">
+    <div class="plateau-card">
+      <div class="plateau-illus" aria-hidden="true">
+        <picture>
+          <source type="image/avif" srcset="../assets/illus/sriracha-480.avif" />
+          <img loading="lazy" decoding="async" src="../assets/illus/sriracha-480.webp" width="480" height="722" alt="" />
+        </picture>
+      </div>
+      <div class="plateau-body">
+        <p class="plateau-kicker handwritten">le plateau à partager</p>
+        <h2 class="menu-section-title" id="plateau-title" lang="vi">Mẹt Vỉa Hè<span class="fr" lang="fr">tout l'étal sur un plateau</span></h2>
+        <p class="plateau-desc">Plateau assortiment de tapas : <span lang="vi">gà chiên xù</span>, <span lang="vi">chả cốm</span>, <span lang="vi">nem chua rán</span>, <span lang="vi">nem chợ</span> au porc.</p>
+        <p class="plateau-prix">23&nbsp;€</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= MÓN CHÍNH / PLATS ================= -->
 <section class="menu-section" id="plats" data-reveal aria-labelledby="plats-title">
@@ -296,8 +341,8 @@
     <div class="menu-section-head">
       <div class="menu-section-illus" aria-hidden="true">
         <picture>
-          <source type="image/avif" srcset="../assets/illus/nouilles-480.avif" />
-          <img loading="lazy" decoding="async" src="../assets/illus/nouilles-480.webp" width="480" height="422" alt="" />
+          <source type="image/avif" srcset="../assets/illus/poulets-480.avif" />
+          <img loading="lazy" decoding="async" src="../assets/illus/poulets-480.webp" width="480" height="906" alt="" />
         </picture>
       </div>
       <div class="menu-section-titles">
@@ -307,27 +352,67 @@
 
     <ul class="menu-list">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bò-bún</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
-        <p class="menu-item-desc">Le bo bun de Saïgon : salade, crudités, fruits, bœuf à la citronnelle et saté, nem au porc, vermicelles de riz. <span class="menu-item-tag">option végétarienne</span><span class="menu-sub">Option végé : protéines de soja à la citronnelle, samoussas aux légumes.</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Xôi-mặn</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
+        <p class="menu-item-desc">Riz gluant avec <span lang="vi">thịt kho</span> (poitrine de porc mijotée pendant 4&nbsp;h dans une sauce caramélisée), servi avec des pickles de légumes.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò du Nord</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
-        <p class="menu-item-desc">Le pho du Nord : nouilles de riz, bouillon de viande aux épices, bœuf cru et cuit, herbes viet.</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cơm gà chiên</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
+        <p class="menu-item-desc">Riz blanc avec cuisse de poulet panée au panko, servi avec des pickles de légumes et sauce maison pomme Granny Smith, oignon et soja.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bò-bún</span><span class="menu-item-tag menu-item-tag--vege">option végétarienne</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
+        <p class="menu-item-desc">Salade, crudités, fruits, bœuf sauté à la citronnelle et saté, 2 nems au porc ou poulet, vermicelles de riz.<span class="menu-sub menu-sub--vege">Option végétarienne : protéines de soja à la citronnelle, 2 samoussas aux légumes.</span></p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bún chả Hà Nội</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
-        <p class="menu-item-desc">Le bun cha : ventrèche grillée parfumée, vermicelle de riz, nem, salade. <em>Plat emblématique de la capitale.</em></p>
+        <p class="menu-item-desc"><em>Plat emblématique de la cuisine de rue de la capitale.</em> Vermicelles de riz, poitrine de porc grillée parfumée, nem, salade et herbes fraîches.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Hủ tiếu trộn</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
+        <p class="menu-item-desc"><em>Plat ultra populaire dans le Sud du Vietnam.</em> Nouilles de riz garnies de crevettes, porc <span lang="vi">xá-xíu</span>, accompagnées d'herbes fraîches, salade, cacahuètes, ail frit et sauce maison. Recette sans bouillon.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tôm chiên</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
-        <p class="menu-item-desc">Gambas frites, sauce hải sản à la citronnelle, nouilles jaunes sautées.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Xôi-mặn</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
-        <p class="menu-item-desc">Riz gluant, porc au caramel, sauce soja braisée, pickles de légumes.</p>
+        <p class="menu-item-desc">Gambas frites, accompagnées de sa sauce <span lang="vi">hải sản</span> à la citronnelle, nouilles jaunes sautées avec des légumes viet.</p>
       </li>
     </ul>
     <p class="menu-section-note">Suppléments : bol de riz blanc 4&nbsp;€ · riz gluant 6&nbsp;€</p>
+  </div>
+</section>
+
+<!-- ================= PHỞ BÒ DU NORD — le plat signature ================= -->
+<section class="menu-section pho-section" id="pho" data-reveal aria-labelledby="pho-title">
+  <div class="wrap">
+    <div class="pho-intro">
+      <div class="pho-illus" aria-hidden="true">
+        <picture>
+          <source type="image/avif" srcset="../assets/illus/nouilles-480.avif" />
+          <img loading="lazy" decoding="async" src="../assets/illus/nouilles-480.webp" width="480" height="422" alt="" />
+        </picture>
+      </div>
+      <div class="pho-texte">
+        <p class="pho-kicker handwritten">le plat signature</p>
+        <h2 class="menu-section-title pho-title" id="pho-title" lang="vi">Phở bò du Nord<span class="fr" lang="fr">le bouillon mijoté 8 heures</span></h2>
+        <p class="pho-desc">Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8&nbsp;h, nouilles de riz et fines tranches de bœuf, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.</p>
+        <p class="pho-conseil">Le <span lang="vi">phở bò du Nord</span> se déguste avec un peu de vinaigre de riz à l'ail ou du citron pour une touche acidulée. Ajoutez un peu de piment frais ou de sriracha pour un goût relevé.</p>
+      </div>
+    </div>
+
+    <h3 class="menu-subhead pho-subhead">3 déclinaisons possibles</h3>
+    <ul class="menu-list pho-list">
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò tái</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
+        <p class="menu-item-desc">Bœuf cru (merlan) mariné avec des épices, gingembre, herbes viet.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò chín</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
+        <p class="menu-item-desc">Fine tranche de poitrine de bœuf cuit pendant 8&nbsp;h, herbes viet.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò tái chín</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">17&nbsp;€</span></p>
+        <p class="menu-item-desc">Bœuf cru et cuit, herbes viet.</p>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -348,19 +433,20 @@
 
     <ul class="menu-list">
       <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Kem bơ</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
+        <p class="menu-item-desc">Crème avocat, glace coco, poudre de coco grillée.</p>
+      </li>
+      <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Kem xôi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
-        <p class="menu-item-desc">Riz gluant au sésame servi chaud, lait de coco, glace vanille.</p>
+        <p class="menu-item-desc">Riz gluant au sésame. Servi chaud avec lait de coco, glace vanille.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bơ vơ</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7,50&nbsp;€</span></p>
-        <p class="menu-item-desc">Brioche perdue, glace vanille, crème au pandan.</p>
+        <p class="menu-item-desc">Brioche perdue, glace vanille, crème au pandan (feuille tropicale aux délicates notes de vanille et noisette).</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Kem bơ</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
-        <p class="menu-item-desc">Glace coco, crème avocat, poudre de coco grillée.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Glace &amp; sorbet (mangue, coco, vanille)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;/&nbsp;5&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Glace &amp; sorbet</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;/&nbsp;5&nbsp;/&nbsp;7&nbsp;€</span></p>
+        <p class="menu-item-desc">Mangue, coco, vanille.</p>
       </li>
     </ul>
   </div>
@@ -381,37 +467,39 @@
       </div>
     </div>
 
+    <!-- PRIX À CONFIRMER : la page « Giải khát Việt » du PDF rentrée 26 ne porte
+         aucun prix (janvier : 6 € pièce). Items affichés sans prix en attendant. -->
     <ul class="menu-list">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cà phê sữa đá</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
-        <p class="menu-item-desc">Café viet Robusta, lait concentré, glaçons.</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cà phê sữa đá</span></p>
+        <p class="menu-item-desc">Café Viet Robusta, lait concentré, glaçons.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Thé glacé maison</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
-        <p class="menu-item-desc"><span lang="vi">Trà đá</span> : thé vert jasmin, lime, menthe. <span lang="vi">Cam Sả</span> : thé orange, pêche, citronnelle.</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Trà đá</span></p>
+        <p class="menu-item-desc">Thé glacé maison : thé vert jasmin vietnamien, lime, menthe.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Trà tắc</span></p>
+        <p class="menu-item-desc">Thé glacé maison au kumquat et fruit de la passion.</p>
       </li>
     </ul>
 
     <h3 class="menu-subhead">Cocktails</h3>
+    <!-- PRIX À CONFIRMER : le PDF rentrée 26 ne porte qu'un seul chiffre (11)
+         sous le filet de la rubrique, sans alignement fiable sur les 3 cocktails
+         (janvier : 12 € pièce). Items affichés sans prix en attendant. -->
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Frais &amp; acidulé — téquila, fruit du dragon, basilic, bitter, lime, jus d'orange.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Exotique &amp; corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span></p>
         <p class="menu-item-desc">Doux &amp; sucré — gin, yuzu, basilic, lime, concombre, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Lady Gy</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
-        <p class="menu-item-desc">Fruité &amp; tonique — vodka, ginger beer, vanille, citron vert, framboises, St-Germain, Angostura.</p>
+        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span></p>
+        <p class="menu-item-desc">Fruité &amp; frais — téquila, fruits du dragon, Gimber, lime, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Cocktail du moment</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span></p>
+        <p class="menu-item-desc">Exotique &amp; corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.</p>
       </li>
     </ul>
 
@@ -420,9 +508,6 @@
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tám-Đi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
         <p class="menu-item-desc">Gin sans alcool, fruit de la passion, lime, yuzu, limonade.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Mocktail du moment</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">9&nbsp;€</span></p>
       </li>
     </ul>
 
@@ -433,43 +518,50 @@
       </li>
     </ul>
 
-    <h3 class="menu-subhead">Vins <span class="menu-subhead-hint">verre 12cl / bouteille 75cl</span></h3>
+    <h3 class="menu-subhead">Vins <span class="menu-subhead-hint">verre 12 cl / bouteille 75 cl</span></h3>
     <ul class="menu-list menu-list--2col menu-list--compact">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Cuvée des Galets — Côtes du Rhône <span class="menu-sub">rouge</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;24&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Demoiselle</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;23&nbsp;€</span></p>
+        <p class="menu-item-desc menu-item-cepage">Blanc moelleux — Domaine Laballe, Côtes de Gascogne</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Pinot Noir — Dom. Girard <span class="menu-sub">rouge</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">29&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Les Rassembleurs</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;24&nbsp;€</span></p>
+        <p class="menu-item-desc menu-item-cepage">Blanc sec — Chardonnay, Limoux</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Héritage G. Bertrand — Pic Saint Loup <span class="menu-sub">rouge</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">35&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Les Pieds dans le Sable</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;24&nbsp;€</span></p>
+        <p class="menu-item-desc menu-item-cepage">Rosé — Domaine de la Pointe, IGP Landes Capbreton</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Les Pieds dans le Sable — IGP Landes <span class="menu-sub">rosé</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;24&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Cuvée des Galets</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;24&nbsp;€</span></p>
+        <p class="menu-item-desc menu-item-cepage">Rouge — Les Vignerons d'Estezargues, Côtes du Rhône</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Demoiselle moelleux — Côtes de Gascogne <span class="menu-sub">blanc</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;23&nbsp;€</span></p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Les Rassembleurs — Chardonnay Limoux <span class="menu-sub">blanc</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;/&nbsp;24&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Héritage</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;/&nbsp;32&nbsp;€</span></p>
+        <p class="menu-item-desc menu-item-cepage">Rouge — Gérard Bertrand, Pic Saint Loup</p>
       </li>
     </ul>
 
     <h3 class="menu-subhead">Boissons fraîches</h3>
     <ul class="menu-list menu-list--2col menu-list--compact">
       <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Sirop à l'eau</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Canettes 33cl (Coca, zéro, Perrier, Oasis)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Jus ACE</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">4&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Perrier 1L</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Kombucha (citron-gingembre, pêche, hibiscus)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Limonade « shoot gingembre »</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Coca / Coca zéro / Perrier <span class="menu-sub">canette 33 cl</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Perrier 1 L</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Kombucha <span class="menu-sub">citron gingembre, pêche ou hibiscus</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">5&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Limonade façon « shoot gingembre »</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Jus litchi Maya</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Eau de coco Maya</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p></li>
     </ul>
 
     <h3 class="menu-subhead">Cafés &amp; thés chauds</h3>
+    <!-- PRIX À VALIDER : sur le PDF rentrée 26, la colonne de prix de cette rubrique
+         est décalée d'une ligne vers le haut. Lecture retenue (4 prix / 4 lignes,
+         identique à la carte de janvier) : 2 / 2,50 / 4,50 / 4,50. -->
     <ul class="menu-list menu-list--2col menu-list--compact">
       <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Café / déca / allongé</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">2&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Noisette</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">2,50&nbsp;€</span></p></li>
-      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Thé / tisane bio</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">4,50&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Café noisette</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">2,50&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Thé vert jasmin du Vietnam</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">4,50&nbsp;€</span></p></li>
+      <li class="menu-item"><p class="menu-item-head"><span class="menu-item-nom">Tisane bio immunité <span class="menu-sub">gingembre, sureau, thym, ginseng</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">4,50&nbsp;€</span></p></li>
     </ul>
   </div>
 </section>
