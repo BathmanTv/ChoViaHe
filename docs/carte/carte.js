@@ -38,10 +38,16 @@
       // eux-mêmes (dont les items ont leur propre stagger ci-dessous).
       var head = section.querySelectorAll(':scope > .wrap > *:not(.menu-list)');
       var items = head.length ? head : [section];
-      gsap.from(items, {
-        opacity: 0, y: 24, duration: 0.7, ease: 'power3.out', stagger: 0.06,
-        scrollTrigger: { trigger: section, start: 'top 85%', once: true }
-      });
+      // fromTo + immediateRender:false, jamais gsap.from() : avec un trigger
+      // `once`, un ScrollTrigger.refresh() ré-applique l'état de départ d'un
+      // `from` déjà joué et le bloc reste invisible définitivement.
+      gsap.fromTo(items,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06,
+          immediateRender: false, overwrite: 'auto',
+          scrollTrigger: { trigger: section, start: 'top 85%', once: true }
+        });
     });
 
     /* Stagger léger sur les items de menu : chaque liste se révèle une fois,
@@ -49,11 +55,13 @@
     gsap.utils.toArray('.menu-list').forEach(function (list) {
       var items = list.querySelectorAll(':scope > .menu-item');
       if (!items.length) return;
-      gsap.from(items, {
-        opacity: 0, y: 16, duration: 0.55, ease: 'power2.out',
-        stagger: 0.04,
-        scrollTrigger: { trigger: list, start: 'top 88%', once: true }
-      });
+      gsap.fromTo(items,
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.04,
+          immediateRender: false, overwrite: 'auto',
+          scrollTrigger: { trigger: list, start: 'top 88%', once: true }
+        });
     });
 
     document.querySelectorAll('[data-pencil]').forEach(function (sep) {

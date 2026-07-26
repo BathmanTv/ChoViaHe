@@ -116,18 +116,27 @@
       var items = kids.length ? kids : [section];
 
       // .gsap-ready (CSS) garde la section visible ; GSAP masque/révèle les enfants.
-      gsap.from(items, {
-        opacity: 0,
-        y: 24,
-        duration: 0.7,
-        ease: 'power3.out',
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 82%',
-          once: true            // joue une fois, puis reste visible (fail-to-visible)
-        }
-      });
+      // fromTo + immediateRender:false, JAMAIS gsap.from() ici : avec un
+      // ScrollTrigger `once`, un ScrollTrigger.refresh() (on en déclenche deux :
+      // fonts.ready et window.load) ré-applique l'état de départ d'un `from`
+      // déjà joué, alors que le trigger est mort — le bloc reste à opacity 0
+      // pour toujours. C'est ce qui laissait un grand vide avant le lexique.
+      gsap.fromTo(items,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          stagger: 0.08,
+          immediateRender: false,
+          overwrite: 'auto',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 82%',
+            once: true          // joue une fois, puis reste visible (fail-to-visible)
+          }
+        });
     });
 
     /* ---- Diptyque "le carnet… / …et le vrai" : reveal séquencé (émotion) ----
@@ -176,9 +185,39 @@
 
     /* ---- Recalcule après chargement des polices/images (pas de désalignement) ---- */
     if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
+      document.fonts.ready.then(function () { ScrollTrigger.refresh(); filetDeSecurite(); });
     }
-    window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+    window.addEventListener('load', function () {
+      ScrollTrigger.refresh();
+      filetDeSecurite();
+      setTimeout(filetDeSecurite, 2500);
+    });
+    // au cas où l'utilisateur scrolle vite avant que tout soit calé
+    window.addEventListener('scroll', debounce(filetDeSecurite, 400), { passive: true });
+  }
+
+  /* =======================================================
+     FILET DE SÉCURITÉ DES APPARITIONS
+     Un bloc resté invisible sur un site client, c'est du contenu perdu
+     sans que personne s'en aperçoive. Quoi qu'il arrive en amont (refresh
+     mal placé, trigger jamais franchi, CDN lent), tout élément déjà passé
+     sous le bas de l'écran doit être visible. On ne touche qu'aux éléments
+     encore à opacité ~0 : aucune animation en cours n'est cassée.
+     ======================================================= */
+  function debounce(fn, ms) {
+    var t;
+    return function () { clearTimeout(t); t = setTimeout(fn, ms); };
+  }
+
+  function filetDeSecurite() {
+    var marge = window.innerHeight * 1.2;
+    document.querySelectorAll('[data-reveal] .wrap > *, [data-reveal] .lieu-inner > *').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top > marge) return;                       // pas encore atteint : on laisse faire
+      if (parseFloat(getComputedStyle(el).opacity) > 0.05) return;  // déjà visible
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+    });
   }
 
   /* =======================================================
