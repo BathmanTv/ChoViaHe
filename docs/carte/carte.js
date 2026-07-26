@@ -153,6 +153,11 @@
      Rien ne charge avant le premier clic; fallback lien direct à 4s.
      ======================================================= */
   (function initZenchefLazy() {
+    /* MOBILE : pas d'overlay (il masque la barre Appeler / Itinéraire et ne se
+       referme pas programmatiquement) — on ouvre la page de réservation en
+       plein écran dans un nouvel onglet. Voir home.js pour le détail. */
+    if (window.matchMedia('(max-width: 780px), (pointer: coarse)').matches) return;
+
     function openWhenReady(fallbackHref, deadline) {
       if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
         window.ZenchefWidget.open();

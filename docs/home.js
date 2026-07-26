@@ -417,6 +417,17 @@
      Sans JS: les liens fonctionnent tels quels.
      ======================================================= */
   (function initZenchefLazy() {
+    /* MOBILE : PAS d'overlay. Vérifié en navigateur — le module Zenchef pose
+       son propre élément par-dessus notre barre et masque « Appeler » et
+       « Itinéraire » ; ni ZenchefWidget.close() ni #zc-action-close ne le
+       referment (le seul recours est sa croix interne). Sur petit écran on
+       ouvre donc la page de réservation dans un nouvel onglet : plein écran,
+       natif, et notre barre d'actions reste intacte au retour.
+       (Demande cliente : les boutons Appeler / Itinéraire doivent rester
+       visibles et utilisables en toutes circonstances.) */
+    var petitEcran = window.matchMedia('(max-width: 780px), (pointer: coarse)').matches;
+    if (petitEcran) return;   // les liens gardent leur comportement natif (_blank)
+
     function openWhenReady(fallbackHref, deadline) {
       if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
         window.ZenchefWidget.open();
