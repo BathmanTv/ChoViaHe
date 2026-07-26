@@ -946,7 +946,8 @@ h3 {
   align-items: start;
 }
 @media (min-width: 700px) {
-  .footer-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); }
+  /* infos | vélo | navigation */
+  .footer-grid { grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 0.7fr); }
 }
 .footer-wordmark {
   display: inline-block;
@@ -1011,12 +1012,13 @@ h3 {
   z-index: 2;
 }
 /* l'illustration d'Oriane habite le coin bas-droit du pied de page */
+/* Le vélo vit DANS la grille, juste à gauche du bloc « Le carnet ».
+   (Avant : posé en absolu en bas à droite — c'est-à-dire pile là où les
+   widgets tiers déposent leur bouton flottant, qui passait par-dessus.) */
 .footer-illus {
-  position: absolute;
-  right: clamp(0.5rem, 3vw, 2.5rem);
-  bottom: 0;
-  width: clamp(120px, 18vw, 230px);
-  z-index: 1;
+  width: clamp(110px, 20vw, 200px);
+  justify-self: center;
+  align-self: end;
   pointer-events: none;
   filter: drop-shadow(0 8px 14px rgba(30,26,23,0.14));
 }
@@ -1127,8 +1129,9 @@ h3 {
   .track-legend--hanoi { top: 5%; }
   .scooter { width: clamp(120px, 30vw, 170px); margin-left: 5%; }
   .scooter-track { min-height: clamp(150px, 34vw, 200px); padding-bottom: 4rem; }
-  .footer { padding-bottom: clamp(7rem, 30vw, 9rem); }
-  .footer-illus { width: clamp(110px, 30vw, 160px); }
+  /* le vélo étant maintenant dans le flux, plus besoin de lui réserver
+     une bande vide en bas du pied de page */
+  .footer-illus { width: clamp(96px, 26vw, 140px); justify-self: end; }
   .lexique-illus { width: clamp(56px, 14vw, 84px); }
 }
 @media (max-width: 420px) {

@@ -16,6 +16,11 @@ const footer = (p) => `<footer class="footer">
         </p>
       </div>
 
+      <div class="footer-illus" aria-hidden="true">
+        <img loading="lazy" decoding="async" src="${p}assets/illus/velo-480.webp" width="480" height="488" alt=""
+             srcset="${p}assets/illus/velo-480.webp 480w, ${p}assets/illus/velo-960.webp 960w" sizes="clamp(110px, 20vw, 200px)" />
+      </div>
+
       <nav class="footer-col footer-nav" aria-label="Pied de page">
         <p class="footer-nav-title">Le carnet</p>
         <ul>
@@ -28,11 +33,6 @@ const footer = (p) => `<footer class="footer">
       </nav>
     </div>
     <p class="footer-sign handwritten">Chợ Vỉa Hè · 8 rue de Metz, Toulouse</p>
-  </div>
-
-  <div class="footer-illus" aria-hidden="true">
-    <img loading="lazy" decoding="async" src="${p}assets/illus/velo-480.webp" width="480" height="488" alt=""
-         srcset="${p}assets/illus/velo-480.webp 480w, ${p}assets/illus/velo-960.webp 960w" sizes="clamp(120px, 18vw, 230px)" />
   </div>
 </footer>`;
 

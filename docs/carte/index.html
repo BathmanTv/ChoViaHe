@@ -240,19 +240,18 @@
     </h1>
     <p class="carte-annotation handwritten">tout ce qu'on rapporte de l'étal</p>
     <p class="carte-note">La carte du restaurant, comme au bord du trottoir : une cuisine de rue vietnamienne faite maison, mijotée chaque jour à Toulouse. Les noms sont ceux du Vietnam — on vous raconte chaque plat en français juste en dessous.</p>
-    <!-- TÉLÉCHARGEMENT DE LA CARTE PDF — prêt, mais DÉSACTIVÉ volontairement.
-         Le PDF fourni (« rentrée 26 ») est un brouillon : il contient encore
-         « NOUVEAU / BLA BLA BLA » (p.2) et « ...mangues verte ??? » sur le
-         plateau. Un client qui télécharge ça, c'est pire que pas de PDF.
-         La tuyauterie est en place (compression 9,1 → 0,9 Mo via
-         tools/compresser-carte-pdf.mjs, style .carte-pdf) : dès réception de
-         la version définitive, relancer le script et décommenter ce bloc.
+    <!-- ⚠️ AVANT LA BASCULE SUR choviahe.fr : remplacer le PDF par la version
+         DÉFINITIVE. Le fichier actuel est le brouillon « rentrée 26 » — il
+         contient encore « NOUVEAU / BLA BLA BLA » (p.2) et « ...mangues verte
+         ??? » sur le plateau. Acceptable tant que le site n'est partagé qu'avec
+         la cliente ; inacceptable en public.
+         Pour régénérer : déposer le nouveau PDF dans docs/carte/ puis lancer
+         node tools/compresser-carte-pdf.mjs (9,1 Mo → 0,9 Mo). -->
     <p class="carte-pdf">
       <a class="ink-link" href="../assets/carte-cho-via-he.pdf" target="_blank" rel="noopener" download>
         Télécharger la carte illustrée <span class="carte-pdf-poids">PDF · 0,9 Mo</span>
       </a>
     </p>
-    -->
   </div>
 </section>
 
@@ -594,6 +593,11 @@
         </p>
       </div>
 
+      <div class="footer-illus" aria-hidden="true">
+        <img loading="lazy" decoding="async" src="../assets/illus/velo-480.webp" width="480" height="488" alt=""
+             srcset="../assets/illus/velo-480.webp 480w, ../assets/illus/velo-960.webp 960w" sizes="clamp(110px, 20vw, 200px)" />
+      </div>
+
       <nav class="footer-col footer-nav" aria-label="Pied de page">
         <p class="footer-nav-title">Le carnet</p>
         <ul>
@@ -606,11 +610,6 @@
       </nav>
     </div>
     <p class="footer-sign handwritten">Chợ Vỉa Hè · 8 rue de Metz, Toulouse</p>
-  </div>
-
-  <div class="footer-illus" aria-hidden="true">
-    <img loading="lazy" decoding="async" src="../assets/illus/velo-480.webp" width="480" height="488" alt=""
-         srcset="../assets/illus/velo-480.webp 480w, ../assets/illus/velo-960.webp 960w" sizes="clamp(120px, 18vw, 230px)" />
   </div>
 </footer>
 
