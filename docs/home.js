@@ -34,13 +34,20 @@
      Les transitions entre sections sont désormais portées par les bandeaux
      photo pleine largeur. */
 
+  /* `motion-armed` (posé dans le <head>, avant le premier rendu) cache les
+     blocs à révéler. Il ne doit être levé QUE si GSAP ne prend pas la main —
+     sinon on annulerait l'animation. */
+  function desarmer() { document.documentElement.classList.remove('motion-armed'); }
+
   if (reduce) {
     // Mouvement réduit : rien ne bouge, tout est là.
+    desarmer();
     revealFallbackVisible();
   } else if (hasGSAP) {
     initMotion();
   } else if ('IntersectionObserver' in window) {
     // CDN motion KO mais IO dispo : reveals doux CSS-driven (comme le build de base).
+    desarmer();
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
@@ -50,8 +57,16 @@
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
     document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
   } else {
+    desarmer();
     revealFallbackVisible();
   }
+
+  /* Garde-fou ultime : si au bout de 3 s GSAP n'a pas pris la main (script
+     tombé, exception…), on lève l'état caché. Mieux vaut du contenu sans
+     animation que du contenu invisible. */
+  setTimeout(function () {
+    if (!document.documentElement.classList.contains('gsap-ready')) desarmer();
+  }, 3000);
 
   /* =======================================================
      2. MOTION GSAP (uniquement si hasGSAP && !reduce)
@@ -115,28 +130,23 @@
       var kids = section.querySelectorAll(':scope > .wrap > *, :scope > .lieu-inner > *');
       var items = kids.length ? kids : [section];
 
-      // .gsap-ready (CSS) garde la section visible ; GSAP masque/révèle les enfants.
-      // fromTo + immediateRender:false, JAMAIS gsap.from() ici : avec un
-      // ScrollTrigger `once`, un ScrollTrigger.refresh() (on en déclenche deux :
-      // fonts.ready et window.load) ré-applique l'état de départ d'un `from`
-      // déjà joué, alors que le trigger est mort — le bloc reste à opacity 0
-      // pour toujours. C'est ce qui laissait un grand vide avant le lexique.
-      gsap.fromTo(items,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-          stagger: 0.08,
-          immediateRender: false,
-          overwrite: 'auto',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 82%',
-            once: true          // joue une fois, puis reste visible (fail-to-visible)
-          }
-        });
+      // L'état caché vient du CSS (.gsap-ready …). On anime UNIQUEMENT vers
+      // l'état visible : pas de saut au démarrage (clignotement), et un
+      // ScrollTrigger.refresh() ne peut plus ré-appliquer un état de départ
+      // sur un tween déjà joué (ce qui laissait des blocs invisibles).
+      gsap.to(items, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'power3.out',
+        stagger: 0.08,
+        overwrite: 'auto',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 82%',
+          once: true            // joue une fois, puis reste visible (fail-to-visible)
+        }
+      });
     });
 
     /* ---- Diptyque "le carnet… / …et le vrai" : reveal séquencé (émotion) ----
@@ -153,8 +163,9 @@
       var tl = gsap.timeline({
         scrollTrigger: { trigger: dip, start: 'top 80%', once: true }
       });
-      tl.from(carnet, { opacity: 0, y: 26, duration: 0.85, ease: 'power3.out' }, 0)
-        .from(reel, { opacity: 0, y: 26, duration: 0.85, ease: 'power3.out' }, 0.15);
+      // état caché posé en CSS (.gsap-ready .voyages-diptyque .diptyque-item)
+      tl.to(carnet, { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out' }, 0)
+        .to(reel, { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out' }, 0.15);
     })();
 
     /* ---- Médaillons histoire (patron / famille) : reveal doux + tilt ----
@@ -189,11 +200,8 @@
     }
     window.addEventListener('load', function () {
       ScrollTrigger.refresh();
-      filetDeSecurite();
-      setTimeout(filetDeSecurite, 2500);
+      setTimeout(filetDeSecurite, 1200);
     });
-    // au cas où l'utilisateur scrolle vite avant que tout soit calé
-    window.addEventListener('scroll', debounce(filetDeSecurite, 400), { passive: true });
   }
 
   /* =======================================================
@@ -204,17 +212,16 @@
      sous le bas de l'écran doit être visible. On ne touche qu'aux éléments
      encore à opacité ~0 : aucune animation en cours n'est cassée.
      ======================================================= */
-  function debounce(fn, ms) {
-    var t;
-    return function () { clearTimeout(t); t = setTimeout(fn, ms); };
-  }
-
   function filetDeSecurite() {
-    var marge = window.innerHeight * 1.2;
     document.querySelectorAll('[data-reveal] .wrap > *, [data-reveal] .lieu-inner > *').forEach(function (el) {
+      // NE JAMAIS toucher un élément en cours d'animation : sinon on écrase
+      // l'opacité de départ pendant que GSAP l'anime → clignotement.
+      if (window.gsap && gsap.isTweening(el)) return;
       var r = el.getBoundingClientRect();
-      if (r.top > marge) return;                       // pas encore atteint : on laisse faire
-      if (parseFloat(getComputedStyle(el).opacity) > 0.05) return;  // déjà visible
+      // uniquement ce qui est ENTIÈREMENT passé au-dessus de l'écran : un bloc
+      // encore visible est soit déjà révélé, soit en train de l'être.
+      if (r.bottom > 0) return;
+      if (parseFloat(getComputedStyle(el).opacity) > 0.05) return;
       el.style.opacity = '1';
       el.style.transform = 'none';
     });

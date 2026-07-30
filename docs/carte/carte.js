@@ -26,7 +26,15 @@
   /* =======================================================
      1. REVEALS + tracé crayon
      ======================================================= */
+  /* `motion-armed` est posé dans le <head> avant le premier rendu : il ne se
+     lève que si GSAP ne prend pas la main (sinon on annule l'animation). */
+  function desarmer() { document.documentElement.classList.remove('motion-armed'); }
+  setTimeout(function () {
+    if (!document.documentElement.classList.contains('gsap-ready')) desarmer();
+  }, 3000);
+
   if (reduce) {
+    desarmer();
     revealVisible();
   } else if (hasGSAP) {
     var gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
@@ -38,16 +46,13 @@
       // eux-mêmes (dont les items ont leur propre stagger ci-dessous).
       var head = section.querySelectorAll(':scope > .wrap > *:not(.menu-list)');
       var items = head.length ? head : [section];
-      // fromTo + immediateRender:false, jamais gsap.from() : avec un trigger
-      // `once`, un ScrollTrigger.refresh() ré-applique l'état de départ d'un
-      // `from` déjà joué et le bloc reste invisible définitivement.
-      gsap.fromTo(items,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06,
-          immediateRender: false, overwrite: 'auto',
-          scrollTrigger: { trigger: section, start: 'top 85%', once: true }
-        });
+      // État caché porté par le CSS ; on n'anime que vers l'état visible
+      // (pas de saut au démarrage, et un refresh ne peut plus tout ré-cacher).
+      gsap.to(items, {
+        opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.06,
+        overwrite: 'auto',
+        scrollTrigger: { trigger: section, start: 'top 85%', once: true }
+      });
     });
 
     /* Stagger léger sur les items de menu : chaque liste se révèle une fois,
@@ -55,13 +60,11 @@
     gsap.utils.toArray('.menu-list').forEach(function (list) {
       var items = list.querySelectorAll(':scope > .menu-item');
       if (!items.length) return;
-      gsap.fromTo(items,
-        { opacity: 0, y: 16 },
-        {
-          opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.04,
-          immediateRender: false, overwrite: 'auto',
-          scrollTrigger: { trigger: list, start: 'top 88%', once: true }
-        });
+      gsap.to(items, {
+        opacity: 1, y: 0, duration: 0.55, ease: 'power2.out', stagger: 0.04,
+        overwrite: 'auto',
+        scrollTrigger: { trigger: list, start: 'top 88%', once: true }
+      });
     });
 
     document.querySelectorAll('[data-pencil]').forEach(function (sep) {
@@ -71,8 +74,23 @@
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(function () { ScrollTrigger.refresh(); });
     }
-    window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+    window.addEventListener('load', function () {
+      ScrollTrigger.refresh();
+      // filet : tout bloc entièrement remonté au-dessus de l'écran et encore
+      // invisible est forcé visible (jamais pendant une animation en cours).
+      setTimeout(function () {
+        document.querySelectorAll('[data-reveal] .wrap > *, .menu-list > .menu-item').forEach(function (el) {
+          if (window.gsap && gsap.isTweening(el)) return;
+          var r = el.getBoundingClientRect();
+          if (r.bottom > 0) return;
+          if (parseFloat(getComputedStyle(el).opacity) > 0.05) return;
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+      }, 1200);
+    });
   } else if ('IntersectionObserver' in window) {
+    desarmer();
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;

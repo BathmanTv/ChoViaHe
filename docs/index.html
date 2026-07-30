@@ -10,8 +10,17 @@
 <!-- STAGING GitHub Pages — RETIRER à la bascule OVH -->
 <meta name="robots" content="noindex" />
 
-<!-- retire .no-js au plus tôt pour éviter tout flash -->
-<script>document.documentElement.classList.remove('no-js');</script>
+<!-- Exécuté AVANT le premier rendu : retire .no-js, et arme l'état caché des
+     apparitions. Si on attendait le chargement de GSAP (differé) pour cacher
+     les blocs, la page s'afficherait visible puis tout disparaîtrait d'un
+     coup — c'est le clignotement. home.js retire `motion-armed` si GSAP ne
+     démarre pas, et un garde-fou le retire de toute façon au bout de 3 s. -->
+<script>
+  document.documentElement.classList.remove('no-js');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('motion-armed');
+  }
+</script>
 
 <!-- SEO / partage -->
 <link rel="canonical" href="https://www.choviahe.fr/" />

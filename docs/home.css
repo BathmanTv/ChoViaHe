@@ -265,15 +265,20 @@ h3 {
 .btn-cta--ink:hover, .btn-cta--ink:focus-visible { box-shadow: 0 9px 0 rgba(30,26,23,0.4); filter: none; }
 .btn-cta--ink:active { box-shadow: 0 3px 0 rgba(30,26,23,0.4); }
 
-/* lien secondaire "encre" — souligné qui se dessine + tache aquarelle */
-.ink-link {
+/* Lien secondaire "encre" — souligné qui se dessine + tache aquarelle.
+   [data-ink] reçoit exactement le même traitement : la navigation, les liens
+   du pied de page et « Télécharger la carte illustrée » partagent donc la
+   même animation de barre. */
+.ink-link,
+[data-ink] {
   position: relative;
   color: var(--encre);
   text-decoration: none;
   font-weight: 500;
   padding: 0.05rem 0.15rem;
 }
-.ink-link::after {
+.ink-link::after,
+[data-ink]::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: -2px;
@@ -283,7 +288,8 @@ h3 {
   transform-origin: left;
   transition: transform 0.4s var(--ease-out);
 }
-.ink-link::before {
+.ink-link::before,
+[data-ink]::before {
   content: "";
   position: absolute;
   inset: -6px -8px;
@@ -294,8 +300,10 @@ h3 {
   transform: scale(0.5);
   transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
 }
-.ink-link:hover::after, .ink-link:focus-visible::after { transform: scaleX(1); }
-.ink-link:hover::before, .ink-link:focus-visible::before { opacity: 1; transform: scale(1); }
+.ink-link:hover::after, .ink-link:focus-visible::after,
+[data-ink]:hover::after, [data-ink]:focus-visible::after { transform: scaleX(1); }
+.ink-link:hover::before, .ink-link:focus-visible::before,
+[data-ink]:hover::before, [data-ink]:focus-visible::before { opacity: 1; transform: scale(1); }
 
 /* =========================================================
    HEADER FIXE
@@ -311,6 +319,9 @@ h3 {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(30,26,23,0.10);
+  /* le bandeau doit être peint tout de suite, pas après le reste */
+  will-change: transform;
+  transform: translateZ(0);
 }
 .site-header .wrap {
   display: flex;
@@ -960,17 +971,21 @@ h3 {
   margin-bottom: 0.6rem;
 }
 .footer-infos p, .footer-infos address {
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.1rem;            /* resserré : les lignes d'infos se suivent */
   font-style: normal;
   color: var(--encre);
+  line-height: 1.5;
 }
+/* Les lignes cliquables (téléphone, Instagram) gardent une zone de tap de
+   44px, mais celle-ci est absorbée par des marges négatives : elle n'ajoute
+   plus d'écart visible entre les lignes. */
 .footer-infos a {
   color: var(--encre);
   text-decoration: none;
   border-bottom: 1.5px solid rgba(30,26,23,0.45);
   display: inline-block;
-  padding-block: 0.5rem;
-  margin-block: -0.5rem;
+  padding-block: 0.62rem;
+  margin-block: -0.55rem;
 }
 .footer-infos a:hover, .footer-infos a:focus-visible { border-bottom-color: var(--encre); }
 .footer-cta { margin-top: 1.2rem !important; }
@@ -993,13 +1008,13 @@ h3 {
   opacity: 0.72;
   margin: 0 0 0.6rem;
 }
-.footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+.footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; }
 .footer-nav a {
   color: var(--encre);
   text-decoration: none;
   display: inline-block;
-  padding-block: 0.5rem;
-  margin-block: -0.5rem;
+  padding-block: 0.62rem;
+  margin-block: -0.3rem;         /* zone de tap conservée, écart visuel réduit */
   border-bottom: 1.5px solid transparent;
 }
 .footer-nav a:hover, .footer-nav a:focus-visible { border-bottom-color: var(--encre); }
@@ -1077,6 +1092,18 @@ h3 {
 [data-reveal].is-in { opacity: 1; transform: none; }
 .no-js [data-reveal] { opacity: 1; transform: none; }
 .gsap-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
+.motion-armed [data-reveal] { opacity: 1; transform: none; transition: none; }
+/* L'ÉTAT CACHÉ EST PORTÉ PAR LE CSS et armé AVANT LE PREMIER RENDU par le
+   script inline du <head> (.motion-armed) : GSAP ne fait qu'animer VERS
+   l'état visible. Si l'état de départ était posé par GSAP (ou par une classe
+   ajoutée après chargement), la page s'afficherait visible puis les blocs
+   sauteraient à 0 → clignotement. */
+.motion-armed [data-reveal] > .wrap > *,
+.motion-armed [data-reveal] > .lieu-inner > * {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.motion-armed .voyages-diptyque .diptyque-item { opacity: 0; transform: translateY(26px); }
 .scooter.is-riding { will-change: transform; }
 
 /* =========================================================
@@ -1124,6 +1151,15 @@ h3 {
    Whitelist testée à 375px : .footer-illus (le pied de page lui réserve
    sa place par un padding-bottom dédié). */
 @media (max-width: 780px) {
+  /* Bandeau : fond OPAQUE et sans flou sur mobile. Le backdrop-filter oblige
+     le navigateur à recomposer le fond à chaque frame ; pendant que la barre
+     d'URL de Safari/Firefox se rétracte, le bandeau se repeint en retard et
+     semble « entrer » dans la barre du navigateur (signalé par la cliente). */
+  .site-header {
+    background: var(--papier);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
   .rail { width: 100%; }
   .marginalia { display: none; }
   .track-legend--hanoi { top: 5%; }

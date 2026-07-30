@@ -71,6 +71,13 @@
   padding: 0.15rem 0.6rem;
 }
 
+/* ---------- Apparitions au défilement ----------
+   home.css cache les enfants directs de .wrap dans les sections [data-reveal].
+   Sur la carte, la LISTE n'est pas animée (ce sont ses items qui le sont) :
+   il faut donc la ré-afficher, sinon toute la carte reste invisible. */
+.motion-armed [data-reveal] > .wrap > .menu-list { opacity: 1; transform: none; }
+.motion-armed .menu-list > .menu-item { opacity: 0; transform: translateY(16px); }
+
 /* ---------- Sections de la carte ---------- */
 .menu-section { padding-block: clamp(2.5rem, 7vw, 4.5rem); position: relative; z-index: 1; }
 .menu-section-head {

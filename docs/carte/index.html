@@ -10,8 +10,14 @@
 <!-- STAGING GitHub Pages — RETIRER à la bascule OVH -->
 <meta name="robots" content="noindex" />
 
-<!-- retire .no-js au plus tôt pour éviter tout flash -->
-<script>document.documentElement.classList.remove('no-js');</script>
+<!-- Avant le premier rendu : retire .no-js et arme l'état caché des apparitions
+     (sinon la page s'affiche visible puis tout disparaît = clignotement). -->
+<script>
+  document.documentElement.classList.remove('no-js');
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('motion-armed');
+  }
+</script>
 
 <link rel="canonical" href="https://www.choviahe.fr/carte/" />
 <meta property="og:type" content="restaurant.menu" />
@@ -32,8 +38,9 @@
 <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
 
 <!-- JSON-LD Menu complet — carte « rentrée 26 ».
-     Les items sans "offers" attendent une confirmation de prix par le restaurant
-     (cocktails et boissons viet : prix absents ou ambigus sur le PDF source). -->
+     Cocktails à 11 € : confirmé par la cliente le 27/07.
+     Restent sans "offers" : les boissons viet (cà phê sữa đá, trà đá, trà tắc),
+     dont aucun prix ne figure sur le PDF source — en attente de confirmation. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -129,9 +136,9 @@
       "@type": "MenuSection",
       "name": "Cocktails",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade." },
-        { "@type": "MenuItem", "name": "Dragon", "description": "Fruité & frais — téquila, fruits du dragon, Gimber, lime, limonade." },
-        { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier." }
+        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Dragon", "description": "Fruité & frais — téquila, fruits du dragon, Gimber, lime, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -489,15 +496,15 @@
          (janvier : 12 € pièce). Items affichés sans prix en attendant. -->
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
         <p class="menu-item-desc">Doux &amp; sucré — gin, yuzu, basilic, lime, concombre, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
         <p class="menu-item-desc">Fruité &amp; frais — téquila, fruits du dragon, Gimber, lime, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
         <p class="menu-item-desc">Exotique &amp; corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.</p>
       </li>
     </ul>
