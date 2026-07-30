@@ -830,14 +830,29 @@ h3 {
   margin-bottom: 0.5rem;
 }
 .info-block p, .info-block address { margin: 0 0 0.3rem; font-style: normal; }
+/* Liens du bloc contact : même barre qui se dessine que partout ailleurs.
+   Le trait fin permanent reste (le lien doit se voir sans survol) ; c'est la
+   barre épaisse framboise qui se déploie au survol. */
 .info-block a {
+  position: relative;
   color: var(--encre);
   text-decoration: none;
-  border-bottom: 1px solid var(--framboise);
+  border-bottom: 1px solid rgba(192,38,75,0.45);
   display: inline-block;
   padding-block: 0.55rem;
   margin-block: -0.55rem;
 }
+.info-block a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--framboise);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+}
+.info-block a:hover::after, .info-block a:focus-visible::after { transform: scaleX(1); }
 .info-block a:hover, .info-block a:focus-visible { color: var(--framboise-fonce); }
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
@@ -980,14 +995,28 @@ h3 {
    44px, mais celle-ci est absorbée par des marges négatives : elle n'ajoute
    plus d'écart visible entre les lignes. */
 .footer-infos a {
+  position: relative;
   color: var(--encre);
   text-decoration: none;
-  border-bottom: 1.5px solid rgba(30,26,23,0.45);
+  border-bottom: 1.5px solid rgba(30,26,23,0.35);
   display: inline-block;
   padding-block: 0.62rem;
   margin-block: -0.55rem;
 }
-.footer-infos a:hover, .footer-infos a:focus-visible { border-bottom-color: var(--encre); }
+/* barre qui se déploie — en encre, le framboise ne tient pas sur le jaune */
+.footer-infos a::after,
+.footer-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1.5px;
+  height: 2px;
+  background: var(--encre);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease-out);
+}
+.footer-infos a:hover::after, .footer-infos a:focus-visible::after,
+.footer-nav a:hover::after, .footer-nav a:focus-visible::after { transform: scaleX(1); }
 .footer-cta { margin-top: 1.2rem !important; }
 /* le CTA du pied de page est un bouton, pas un lien de liste : il ne doit
    hériter ni de la couleur encre ni du soulignement de .footer-infos a
@@ -1010,14 +1039,13 @@ h3 {
 }
 .footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; }
 .footer-nav a {
+  position: relative;
   color: var(--encre);
   text-decoration: none;
   display: inline-block;
   padding-block: 0.62rem;
   margin-block: -0.3rem;         /* zone de tap conservée, écart visuel réduit */
-  border-bottom: 1.5px solid transparent;
 }
-.footer-nav a:hover, .footer-nav a:focus-visible { border-bottom-color: var(--encre); }
 .footer-nav .nav-da { font-family: var(--f-hand); font-size: 1.15rem; }
 .footer-sign {
   color: var(--encre-doux);      /* 5.2:1 sur jaune */

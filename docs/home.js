@@ -128,7 +128,15 @@
       // On anime les enfants directs porteurs de texte (titre + blocs),
       // sinon la section entière — fondu doux, pas de bloc qui saute.
       var kids = section.querySelectorAll(':scope > .wrap > *, :scope > .lieu-inner > *');
-      var items = kids.length ? kids : [section];
+      // On EXCLUT les enfants qui portent eux-mêmes data-reveal : ils ont
+      // leur propre tween. Sans ça (.duo par exemple) l'élément est anime
+      // deux fois — le second tween, en overwrite, coupe le premier en cours
+      // et l'image sursaute.
+      var items = [];
+      Array.prototype.forEach.call(kids, function (el) {
+        if (!el.hasAttribute('data-reveal')) items.push(el);
+      });
+      if (!items.length) items = [section];
 
       // L'état caché vient du CSS (.gsap-ready …). On anime UNIQUEMENT vers
       // l'état visible : pas de saut au démarrage (clignotement), et un
