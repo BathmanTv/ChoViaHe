@@ -172,6 +172,20 @@
       document.documentElement.classList.toggle('sticky-active', visible);
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
+
+    /* Firefox Android place sa barre d'outils EN BAS, par-dessus les éléments
+       fixés : on remonte la nôtre de la hauteur réellement masquée. */
+    var vv = window.visualViewport;
+    if (vv) {
+      var placer = function () {
+        var masque = window.innerHeight - (vv.height + vv.offsetTop);
+        if (!isFinite(masque) || masque < 0 || masque > 240) masque = 0;
+        bar.style.setProperty('--vv-bas', Math.round(masque) + 'px');
+      };
+      placer();
+      vv.addEventListener('resize', placer);
+      vv.addEventListener('scroll', placer);
+    }
   })();
 
   /* =======================================================

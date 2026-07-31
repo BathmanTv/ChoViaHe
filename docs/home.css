@@ -1094,11 +1094,14 @@ h3 {
   backdrop-filter: blur(8px);
   border-top: 1px solid rgba(30,26,23,0.14);
   box-shadow: 0 -6px 18px rgba(30,26,23,0.12);
-  transform: translateY(110%);
+  /* --vv-bas : hauteur de la barre d'outils du navigateur qui recouvre le bas
+     de la fenêtre (Firefox Android la place EN BAS, par-dessus les éléments
+     fixés). Calculée en JS via l'API visualViewport ; 0 par défaut. */
+  transform: translateY(calc(110% - var(--vv-bas, 0px)));
   transition: transform 0.35s var(--ease-out);
 }
 .sticky-actions[hidden] { display: none; }
-.sticky-actions.is-visible { transform: translateY(0); }
+.sticky-actions.is-visible { transform: translateY(calc(-1 * var(--vv-bas, 0px))); }
 .sticky-btn {
   flex: 1 1 0;
   display: flex;

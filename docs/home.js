@@ -443,7 +443,33 @@
       document.documentElement.classList.toggle('sticky-active', visible);
     }, { threshold: 0, rootMargin: '-10% 0px 0px 0px' });
     coverIO.observe(cover);
+
+    suivreBarreNavigateur(bar);
   })();
+
+  /* =======================================================
+     BARRE D'OUTILS DU NAVIGATEUR MOBILE
+     Firefox Android (et Chrome en mode barre basse) place SA barre en bas de
+     l'écran, par-dessus tout élément en position fixe : notre barre
+     Réserver / Appeler / Itinéraire se retrouvait dessous, invisible.
+     `visualViewport` donne la zone réellement visible ; on en déduit la
+     hauteur masquée et on remonte la barre d'autant (--vv-bas).
+     ======================================================= */
+  function suivreBarreNavigateur(bar) {
+    var vv = window.visualViewport;
+    if (!vv) return;                       // navigateur ancien : comportement inchangé
+    var placer = function () {
+      var masque = window.innerHeight - (vv.height + vv.offsetTop);
+      // garde-fou : au-delà de 240px c'est un clavier virtuel ou un zoom,
+      // pas une barre d'outils — on ne bouge pas.
+      if (!isFinite(masque) || masque < 0 || masque > 240) masque = 0;
+      bar.style.setProperty('--vv-bas', Math.round(masque) + 'px');
+    };
+    placer();
+    vv.addEventListener('resize', placer);
+    vv.addEventListener('scroll', placer);
+    window.addEventListener('orientationchange', function () { setTimeout(placer, 250); });
+  }
 
   /* =======================================================
      7. LANTERNES — pause du balancement hors écran (D5)
