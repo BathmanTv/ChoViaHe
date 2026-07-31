@@ -4,6 +4,22 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Page envolée — Chợ Vỉa Hè</title>
+
+<!-- Cette page utilise des chemins absolus (/…), corrects une fois le site à
+     la racine de choviahe.fr. Sur GitHub Pages il vit dans /ChoViaHe/ : on
+     pose alors une <base> pour que styles et liens résolvent quand même.
+     Doit rester AVANT les <link> pour s'y appliquer. -->
+<script>
+  (function () {
+    var seg = location.pathname.match(/^\/([^/]+)\//);
+    if (location.hostname.indexOf('github.io') !== -1 && seg) {
+      var b = document.createElement('base');
+      b.href = '/' + seg[1] + '/';
+      document.head.appendChild(b);
+    }
+  })();
+</script>
+
 <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
 <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

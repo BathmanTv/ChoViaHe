@@ -378,12 +378,10 @@
 .carte-cta-final p { color: var(--encre-doux); max-width: 40ch; margin-inline: auto; }
 .carte-cta-final .btn-cta { margin-top: 1.2rem; font-size: 1.1rem; padding: 1rem 2rem; }
 
-/* infos dans le footer de la page carte */
-.footer-infos { font-size: 0.92rem; color: var(--encre-doux); }
-.footer-infos p { margin: 0 0 0.6rem; }
-.footer-infos strong { color: var(--encre); }
-.footer-infos a { color: var(--encre); border-bottom: 1px solid var(--framboise); text-decoration: none; }
-.footer-infos a:hover, .footer-infos a:focus-visible { color: var(--framboise); }
+/* Le pied de page est PARTAGÉ (défini dans home.css) : aucune surcharge ici,
+   sinon la page carte n'a pas le même visuel que le reste du site.
+   (Un ancien bloc remettait un trait framboise permanent sous les liens et
+   des interlignes différents — supprimé.) */
 
 /* allergies footnote */
 .carte-allergies {
