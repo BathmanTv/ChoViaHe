@@ -278,7 +278,7 @@ h3 {
   padding: 0.05rem 0.15rem;
 }
 .ink-link::after,
-[data-ink]::after {
+[data-ink]:not(.btn-cta)::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: -2px;
@@ -289,7 +289,7 @@ h3 {
   transition: transform 0.4s var(--ease-out);
 }
 .ink-link::before,
-[data-ink]::before {
+[data-ink]:not(.btn-cta)::before {
   content: "";
   position: absolute;
   inset: -6px -8px;
@@ -301,9 +301,15 @@ h3 {
   transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
 }
 .ink-link:hover::after, .ink-link:focus-visible::after,
-[data-ink]:hover::after, [data-ink]:focus-visible::after { transform: scaleX(1); }
+[data-ink]:not(.btn-cta):hover::after,
+[data-ink]:not(.btn-cta):focus-visible::after { transform: scaleX(1); }
 .ink-link:hover::before, .ink-link:focus-visible::before,
-[data-ink]:hover::before, [data-ink]:focus-visible::before { opacity: 1; transform: scale(1); }
+[data-ink]:not(.btn-cta):hover::before,
+[data-ink]:not(.btn-cta):focus-visible::before { opacity: 1; transform: scale(1); }
+
+/* Liens internes « Direction artistique » : masqués du site public.
+   La page reste accessible par son URL directe (…/da/) pour nos échanges. */
+.nav-da { display: none !important; }
 
 /* =========================================================
    HEADER FIXE
@@ -842,7 +848,7 @@ h3 {
   margin-block: -0.55rem;
 }
 /* barre au survol uniquement, calée sous le texte (et non sous la zone de tap) */
-.info-block a::after {
+.info-block a:not(.btn-cta)::after {
   content: "";
   position: absolute;
   left: 0; right: 0;
@@ -853,7 +859,8 @@ h3 {
   transform-origin: left;
   transition: transform 0.4s var(--ease-out);
 }
-.info-block a:hover::after, .info-block a:focus-visible::after { transform: scaleX(1); }
+.info-block a:not(.btn-cta):hover::after,
+.info-block a:not(.btn-cta):focus-visible::after { transform: scaleX(1); }
 .info-block a:hover, .info-block a:focus-visible { color: var(--framboise-fonce); }
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
@@ -1008,8 +1015,8 @@ h3 {
    encre, le framboise ne tient pas le contraste sur le jaune.
    `bottom` compense le padding de la zone de tap : sans ça la barre se pose
    ~10 px plus bas et vient barrer la ligne de texte suivante. */
-.footer-infos a::after,
-.footer-nav a::after {
+.footer-infos a:not(.btn-cta)::after,
+.footer-nav a:not(.btn-cta)::after {
   content: "";
   position: absolute;
   left: 0; right: 0;
@@ -1020,8 +1027,8 @@ h3 {
   transform-origin: left;
   transition: transform 0.4s var(--ease-out);
 }
-.footer-infos a:hover::after, .footer-infos a:focus-visible::after,
-.footer-nav a:hover::after, .footer-nav a:focus-visible::after { transform: scaleX(1); }
+.footer-infos a:not(.btn-cta):hover::after, .footer-infos a:not(.btn-cta):focus-visible::after,
+.footer-nav a:not(.btn-cta):hover::after, .footer-nav a:not(.btn-cta):focus-visible::after { transform: scaleX(1); }
 .footer-cta { margin-top: 1.2rem !important; }
 /* le CTA du pied de page est un bouton, pas un lien de liste : il ne doit
    hériter ni de la couleur encre ni du soulignement de .footer-infos a
