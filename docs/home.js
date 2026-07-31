@@ -428,7 +428,12 @@
   (function initStickyActions() {
     var bar = document.querySelector('[data-sticky-actions]');
     if (!bar) return;
-    var cover = document.querySelector('.couverture');
+    /* On observe le BOUTON « Réserver » du hero, pas toute la couverture :
+       la barre existe pour prendre le relais dès que ce bouton n'est plus à
+       l'écran. Observer la couverture entière la faisait apparaître beaucoup
+       trop tard sur mobile (le hero est très haut à cause de l'illustration :
+       il fallait scroller jusqu'au milieu de l'histoire). */
+    var cover = document.querySelector('.cover-actions') || document.querySelector('.couverture');
     if (!cover) return;
     if (!('IntersectionObserver' in window)) return; // sans IO : reste masquée
 

@@ -158,12 +158,14 @@
   (function initStickyActions() {
     var bar = document.querySelector('[data-sticky-actions]');
     if (!bar) return;
-    var cover = document.querySelector('.carte-header');
+    /* Repère = le titre de la carte, pas tout l'en-tête (qui inclut la note et
+       le lien PDF) : la barre doit prendre le relais tôt, comme sur la home. */
+    var cover = document.querySelector('.carte-title') || document.querySelector('.carte-header');
     if (!cover) return;
     if (!('IntersectionObserver' in window)) return;
 
     bar.hidden = false;
-    // Reste visible tout le long une fois l'en-tête passé (demande user).
+    // Reste visible tout le long une fois le repère passé (demande user).
     var coverIO = new IntersectionObserver(function (entries) {
       var visible = !entries[0].isIntersecting;
       bar.classList.toggle('is-visible', visible);
