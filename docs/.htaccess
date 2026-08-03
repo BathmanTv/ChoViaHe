@@ -1,0 +1,93 @@
+# =========================================================
+# Chợ Vỉa Hè — configuration serveur (OVH mutualisé, Apache)
+# À déposer à la racine du site, à côté de index.html.
+# =========================================================
+
+Options -MultiViews
+DirectoryIndex index.html
+
+# ---------------------------------------------------------
+# 1. UNE SEULE ADRESSE : https://www.choviahe.fr
+#    (OVH est derrière un proxy : on teste X-Forwarded-Proto,
+#     pas %{HTTPS} qui est souvent vide.)
+# ---------------------------------------------------------
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# http -> https
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
+
+# sans www -> www
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
+
+# ---------------------------------------------------------
+# 2. ANCIENNES URL WIX -> nouvelles pages (301 permanent)
+#    Sans ça, tout le référencement acquis part à la poubelle.
+# ---------------------------------------------------------
+RewriteRule ^menu/?$              /carte/ [R=301,L]
+RewriteRule ^copie-de-menu/?$     /carte/ [R=301,L]
+RewriteRule ^notre-histoire/?$    /#histoire [R=301,L]
+
+# Wix ajoute parfois un préfixe de langue
+RewriteRule ^(fr|en)/menu/?$           /carte/ [R=301,L]
+RewriteRule ^(fr|en)/notre-histoire/?$ /#histoire [R=301,L]
+
+# Résidus techniques Wix : on renvoie proprement à l'accueil
+RewriteRule ^_partials/          / [R=301,L]
+RewriteRule ^_api/              / [R=301,L]
+</IfModule>
+
+# ---------------------------------------------------------
+# 3. PAGE 404 maison
+# ---------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# ---------------------------------------------------------
+# 4. COMPRESSION (texte uniquement — images déjà compressées)
+# ---------------------------------------------------------
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+AddOutputFilterByType DEFLATE application/javascript application/json
+AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ---------------------------------------------------------
+# 5. CACHE NAVIGATEUR
+#    HTML court (mises à jour visibles vite), le reste long.
+# ---------------------------------------------------------
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/html                 "access plus 1 hour"
+ExpiresByType text/css                  "access plus 1 year"
+ExpiresByType application/javascript    "access plus 1 year"
+ExpiresByType image/webp                "access plus 1 year"
+ExpiresByType image/avif                "access plus 1 year"
+ExpiresByType image/png                 "access plus 1 year"
+ExpiresByType image/svg+xml             "access plus 1 year"
+ExpiresByType font/woff2                "access plus 1 year"
+ExpiresByType application/pdf           "access plus 1 week"
+</IfModule>
+
+# Types MIME qu'OVH ne sert pas toujours correctement
+<IfModule mod_mime.c>
+AddType image/avif   .avif
+AddType font/woff2   .woff2
+AddType application/manifest+json .webmanifest
+</IfModule>
+
+# ---------------------------------------------------------
+# 6. SÉCURITÉ minimale
+# ---------------------------------------------------------
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set X-Frame-Options "SAMEORIGIN"
+# HSTS : à décommenter SEULEMENT une fois le HTTPS confirmé stable
+# Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>
+
+# Pas de listing de répertoire
+Options -Indexes
