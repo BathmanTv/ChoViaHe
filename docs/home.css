@@ -862,7 +862,14 @@ h3 {
    du média qui porte la crédibilité), les avis sont des citations sur
    fond kraft, en écriture de carnet.
    ========================================================= */
-.presse { background: var(--papier-ombre); }
+/* PAS de fond plein : une bande --papier-ombre sur toute la largeur formait
+   un grand rectangle qui coupait la page et se lisait comme un cadre pose
+   par-dessus le reste. La section vit sur le meme papier que le reste, avec
+   les memes filets pointilles que la couverture et l'en-tete de la carte. */
+.presse {
+  border-top: 1px dashed rgba(30,26,23,0.18);
+  border-bottom: 1px dashed rgba(30,26,23,0.18);
+}
 .presse-kicker {
   color: var(--bleu);
   font-size: clamp(1.15rem, 4vw, 1.5rem);
