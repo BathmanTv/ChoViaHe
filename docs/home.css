@@ -934,6 +934,14 @@ h3 {
   color: var(--encre-doux);
   margin-left: 0.5rem;
 }
+.avis-lien {
+  margin: clamp(1rem, 3vw, 1.4rem) 0 0;
+  font-family: var(--f-hand);
+  font-size: 1.25rem;
+}
+.avis-lien a { color: var(--bleu-fonce); text-decoration: none; }
+.avis-lien a:hover,
+.avis-lien a:focus-visible { color: var(--framboise); }
 @media (min-width: 780px) {
   .presse-liste { grid-template-columns: 1fr 1fr; }
   .avis-grille { grid-template-columns: 1fr 1fr; }
