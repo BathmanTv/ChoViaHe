@@ -132,9 +132,13 @@
       // leur propre tween. Sans ça (.duo par exemple) l'élément est anime
       // deux fois — le second tween, en overwrite, coupe le premier en cours
       // et l'image sursaute.
+      // On exclut aussi les .marginalia : décorations absolues et aria-hidden,
+      // elles restent visibles en permanence (voir home.css, même règle).
       var items = [];
       Array.prototype.forEach.call(kids, function (el) {
-        if (!el.hasAttribute('data-reveal')) items.push(el);
+        if (el.hasAttribute('data-reveal')) return;
+        if (el.classList.contains('marginalia')) return;
+        items.push(el);
       });
       if (!items.length) items = [section];
 

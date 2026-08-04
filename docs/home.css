@@ -228,7 +228,7 @@ h3 {
 
 /* Sous ~380px la colonne est trop étroite pour que la justification
    tienne : on revient au fer à gauche plutôt que d'afficher des trous. */
-@media (max-width: 380px) {
+@media (max-width: 339px) {
   .prose p, .section-intro, .lede, .lieu-intro, .reserver-lead,
   .plat-desc, .lexique p, .info-block p, .ml-page p { text-align: left; }
 }
@@ -938,7 +938,7 @@ h3 {
   .presse-liste { grid-template-columns: 1fr 1fr; }
   .avis-grille { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 380px) {
+@media (max-width: 339px) {
   .avis blockquote p { text-align: left; }
 }
 
@@ -1265,8 +1265,13 @@ h3 {
    l'état visible. Si l'état de départ était posé par GSAP (ou par une classe
    ajoutée après chargement), la page s'afficherait visible puis les blocs
    sauteraient à 0 → clignotement. */
-.motion-armed [data-reveal] > .wrap > *,
-.motion-armed [data-reveal] > .lieu-inner > * {
+/* `:not(.marginalia)` — les illustrations de gouttière (verre de cà phê,
+   citrons, panier…) sont décoratives, en position absolue et aria-hidden.
+   Les faire apparaître avec le texte les faisait glisser de 24px à contre-
+   temps du stagger, juste à côté du titre : ça se lit comme un défaut
+   d'affichage, pas comme une apparition. Elles sont là dès le départ. */
+.motion-armed [data-reveal] > .wrap > *:not(.marginalia),
+.motion-armed [data-reveal] > .lieu-inner > *:not(.marginalia) {
   opacity: 0;
   transform: translateY(24px);
 }
