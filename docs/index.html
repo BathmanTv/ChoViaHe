@@ -431,10 +431,10 @@
      Pas de balisage schema.org Review ici : Google ignore (et sanctionne)
      les avis qu'un site publie sur lui-même. Les étoiles dans les résultats
      viennent de la fiche Google Business, pas d'ici. -->
-<section class="section presse" id="presse" data-reveal aria-labelledby="presse-title">
+<section class="section on-en-parle" id="on-en-parle" data-reveal aria-labelledby="on-en-parle-title">
   <div class="wrap">
     <p class="presse-kicker handwritten">on en parle</p>
-    <h2 id="presse-title">Ils sont passés nous voir</h2>
+    <h2 id="on-en-parle-title">Ils sont passés nous voir</h2>
 
     <ul class="presse-liste">
       <li class="presse-item">
@@ -450,6 +450,14 @@
         <p class="presse-titre">
           <a href="https://www.toulouscope.fr/2025/01/03/cho-via-he-cest-la-nouvelle-adresse-de-cuisine-de-rue-qui-depayse-aller-simple-vers-le-viet-nam-12387310.php" target="_blank" rel="noopener">
             « La nouvelle adresse de cuisine de rue qui dépayse : aller simple vers le Viêt Nam »
+          </a>
+        </p>
+      </li>
+      <li class="presse-item">
+        <p class="presse-media">Le Bonbon Toulouse</p>
+        <p class="presse-titre">
+          <a href="https://www.lebonbon.fr/toulouse/cuisine-du-monde/cho-via-he-restaurant-cuisine-vietnamienne-toulouse/" target="_blank" rel="noopener">
+            « De la cuisine de rue vietnamienne dans un cadre canon à Toulouse »
           </a>
         </p>
       </li>
@@ -519,20 +527,11 @@
       </div>
     </div>
 
-    <div class="presse" aria-labelledby="presse-title">
-      <h3 id="presse-title" class="comptoir-title handwritten">Ils en parlent</h3>
-      <blockquote class="presse-quote">
-        <p>«&nbsp;De la cuisine de rue vietnamienne dans un cadre canon à Toulouse.&nbsp;»</p>
-        <cite><a href="https://www.lebonbon.fr/toulouse/cuisine-du-monde/cho-via-he-restaurant-cuisine-vietnamienne-toulouse/" target="_blank" rel="noopener">Le Bonbon Toulouse</a></cite>
-      </blockquote>
-      <!-- AVIS GOOGLE — décommenter et remplir dès que la cliente a choisi 2-3 avis + la note.
-           Ajouter alors aggregateRating au JSON-LD Restaurant (ratingValue + reviewCount réels).
-      <blockquote class="presse-quote">
-        <p>« [texte de l'avis] »</p>
-        <cite>[Prénom] · avis Google ★★★★★</cite>
-      </blockquote>
-      -->
-    </div>
+    <!-- L'ancien bloc « Ils en parlent » (Le Bonbon Toulouse) vivait ici.
+         Il a été fusionné dans la section « On en parle », plus haut : deux
+         blocs presse sur la même page se faisaient concurrence, et tous deux
+         portaient la classe .presse et l'id presse-title — d'où le cadre qui
+         débordait sur celui-ci et un identifiant dupliqué dans le document. -->
 
     <div class="comptoir" aria-labelledby="comptoir-title">
       <h3 id="comptoir-title" class="comptoir-title handwritten">Questions du comptoir</h3>

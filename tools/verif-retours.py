@@ -32,6 +32,71 @@ def bloc(titre):
     print(f"\n{'=' * 68}\n{titre}\n{'=' * 68}")
 
 
+# Deux contrôles de structure, ajoutés après un bug réel : une nouvelle
+# section avait repris la classe ET l'id d'un bloc existant, si bien que ses
+# styles débordaient sur lui et que le document portait un id en double.
+JS_IDS_DOUBLONS = """(() => {
+  const vus = {}, doubles = [];
+  for (const el of document.querySelectorAll('[id]')) {
+    if (vus[el.id]) { if (!doubles.includes(el.id)) doubles.push(el.id); }
+    else vus[el.id] = 1;
+  }
+  return doubles;
+})()"""
+
+JS_CHEVAUCHEMENTS = """(() => {
+  // Éléments porteurs de texte, dans le flux (on ignore les décorations
+  // absolues et tout ce qui est aria-hidden : elles se superposent exprès).
+  const sel = 'h1, h2, h3, p, li, blockquote, figcaption, address, dt, dd';
+  // Un élément est « hors flux » si LUI ou un de ses ancêtres est en position
+  // absolute / fixed / sticky : l'en-tête fixe et la barre collante passent
+  // par-dessus le contenu, c'est voulu et ce n'est pas un chevauchement.
+  const horsFlux = el => {
+    for (let n = el; n && n !== document.body; n = n.parentElement) {
+      const pos = getComputedStyle(n).position;
+      if (pos === 'absolute' || pos === 'fixed' || pos === 'sticky') return true;
+    }
+    return false;
+  };
+  const els = [...document.querySelectorAll(sel)].filter(el => {
+    if (el.closest('[aria-hidden="true"], [hidden]')) return false;
+    if (horsFlux(el)) return false;
+    const st = getComputedStyle(el);
+    if (st.display === 'none' || st.visibility === 'hidden') return false;
+    if (parseFloat(st.opacity) < 0.05) return false;
+    const b = el.getBoundingClientRect();
+    return b.width > 4 && b.height > 4;
+  });
+  const out = [];
+  for (let i = 0; i < els.length; i++) {
+    for (let j = i + 1; j < els.length; j++) {
+      const A = els[i], B = els[j];
+      if (A.contains(B) || B.contains(A)) continue;   // imbrication normale
+      const a = A.getBoundingClientRect(), b = B.getBoundingClientRect();
+      const ox = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+      const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+      if (ox > 6 && oy > 6) {
+        const nom = e => e.tagName.toLowerCase() + (e.className ? '.' + String(e.className).split(' ')[0] : '');
+        out.push(`${nom(A)} x ${nom(B)} (${Math.round(ox)}x${Math.round(oy)}px)`);
+      }
+    }
+  }
+  return out.slice(0, 8);
+})()"""
+
+
+def controle_structure(page, nom):
+    """Doublons d'id + chevauchements de texte, sur la page entière."""
+    page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    page.wait_for_timeout(1500)          # laisse toutes les apparitions finir
+    page.evaluate("window.scrollTo(0, 0)")
+    page.wait_for_timeout(400)
+    doubles = page.evaluate(JS_IDS_DOUBLONS)
+    chevauche = page.evaluate(JS_CHEVAUCHEMENTS)
+    verif("Struct", f"Aucun identifiant en double ({nom})", not doubles, str(doubles))
+    verif("Struct", f"Aucun chevauchement de texte ({nom})", not chevauche, str(chevauche))
+
+
 with sync_playwright() as p:
     b = p.chromium.launch()
 
@@ -82,7 +147,7 @@ with sync_playwright() as p:
     verif(8, "Fourchette de prix retirée", not d["fourchette"])
     verif(11, "Titre lieu « Un lieu, vivant, vibrant »", "Un lieu" in d["titreLieu"] and "vibrant" in d["titreLieu"], d["titreLieu"])
     verif(11, "Accroche lieu « l'énergie qui pulse »", "pulse" in d["lieuIntro"], d["lieuIntro"][-40:])
-    verif(12, "2 articles de presse", d["presse"] == 2, str(d["presse"]))
+    verif(12, "3 articles de presse", d["presse"] == 3, str(d["presse"]))
     verif(12, "2 avis Google", d["avis"] == 2, str(d["avis"]))
     verif(13, "Horaires retirés du pied de page", not d["footHoraires"])
     verif(13, "Redite nom + adresse retirée", not d["footSign"])
@@ -108,6 +173,7 @@ with sync_playwright() as p:
               and not marg["anime"] and not apres["anime"])
     verif("Bug", "Le verre à côté de « il était une fois » ne saute plus",
           stable, f"opacité avant={marg['avant']} après={apres['opacite']} tween={apres['anime']}")
+    controle_structure(pc, "accueil PC")
     pc.close()
 
     # --- page carte, PC ---
@@ -141,6 +207,7 @@ with sync_playwright() as p:
     verif("—", "Carte complète (>40 plats)", c["nbPlats"] > 40, f"{c['nbPlats']} entrées")
     verif("—", "Aucun débordement (carte PC)", c["deborde"] <= 0, f"{c['deborde']}px")
     verif("—", "Aucune erreur JS (carte PC)", not errs_c, str(errs_c[:2]))
+    controle_structure(pcc, "carte PC")
     pcc.close()
 
     # =================================================================
@@ -206,7 +273,7 @@ with sync_playwright() as p:
         verif(1, f"Fond du carnet (mobile {w})", mm["fond"] == "rgb(241, 227, 201)", mm["fond"])
         verif(2, f"Paragraphes justifiés (mobile {w})", mm["justif"] == "justify", mm["justif"])
         verif(3, f"3 plats dans le teaser (mobile {w})", mm["nbPlats"] == 3, str(mm["nbPlats"]))
-        verif(12, f"Presse + avis présents (mobile {w})", mm["presse"] == 2 and mm["avis"] == 2)
+        verif(12, f"3 articles + 2 avis (mobile {w})", mm["presse"] == 3 and mm["avis"] == 2)
         verif(13, f"Horaires retirés du pied (mobile {w})", not mm["footHoraires"])
         verif("—", f"Burger seul, pas de nav bureau ({w})", mm["burger"] and not mm["navBureau"])
         verif("—", f"Aucun débordement horizontal ({w})", mm["deborde"] <= 0, f"{mm['deborde']}px")
@@ -230,6 +297,7 @@ with sync_playwright() as p:
         mo.wait_for_timeout(800)
         op = mo.eval_on_selector(".marg-cafe", "e => getComputedStyle(e).opacity")
         verif("Bug", f"Le verre reste stable (mobile {w})", float(op) > 0.5, f"opacité={op}")
+        controle_structure(mo, f"accueil mobile {w}")
         mo.close()
 
         # page carte en mobile
@@ -246,6 +314,7 @@ with sync_playwright() as p:
         verif(2, f"Descriptions justifiées (carte mobile {w})", cc["justif"] == "justify", cc["justif"])
         verif(1, f"Fond du carnet (carte mobile {w})", cc["fond"] == "rgb(241, 227, 201)", cc["fond"])
         verif("—", f"Aucun débordement (carte mobile {w})", cc["deborde"] <= 0, f"{cc['deborde']}px")
+        controle_structure(mc, f"carte mobile {w}")
         mc.close()
 
     b.close()

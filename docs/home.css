@@ -863,10 +863,12 @@ h3 {
    fond kraft, en écriture de carnet.
    ========================================================= */
 /* PAS de fond plein : une bande --papier-ombre sur toute la largeur formait
-   un grand rectangle qui coupait la page et se lisait comme un cadre pose
-   par-dessus le reste. La section vit sur le meme papier que le reste, avec
-   les memes filets pointilles que la couverture et l'en-tete de la carte. */
-.presse {
+   un grand rectangle qui coupait la page et se lisait comme un cadre posé
+   par-dessus le reste. La section vit sur le même papier que le reste, avec
+   les mêmes filets pointillés que la couverture et l'en-tête de la carte.
+   Classe .on-en-parle et NON .presse : ce nom était déjà pris par l'ancien
+   bloc de la section contact, mes styles débordaient donc sur lui. */
+.on-en-parle {
   border-top: 1px dashed rgba(30,26,23,0.18);
   border-bottom: 1px dashed rgba(30,26,23,0.18);
 }
@@ -950,7 +952,9 @@ h3 {
 .avis-lien a:hover,
 .avis-lien a:focus-visible { color: var(--framboise); }
 @media (min-width: 780px) {
-  .presse-liste { grid-template-columns: 1fr 1fr; }
+  /* auto-fit : 3 articles tiennent sur une ligne en grand écran, passent à 2
+     puis 1 en dessous, sans laisser d'item orphelin sur une ligne à lui. */
+  .presse-liste { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
   .avis-grille { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 339px) {
@@ -1013,24 +1017,10 @@ h3 {
 .marg-velo { width: clamp(110px, 17vw, 190px); bottom: 5%; right: 2%; opacity: 0.62; }
 .marg-poulets { width: clamp(76px, 11vw, 132px); top: 7%; left: 1%; opacity: 0.7; }
 
-/* Ils en parlent — presse + avis */
-.presse { margin-top: clamp(2.5rem, 6vw, 4rem); }
-.presse-quote {
-  margin: 0;
-  max-width: 46ch;
-  background: var(--papier-ombre);
-  border-radius: var(--r-card);
-  padding: 1.1rem 1.3rem;
-  box-shadow: var(--sh-card);
-}
-.presse-quote p {
-  font-family: var(--f-titre);
-  font-style: italic;
-  font-size: clamp(1.1rem, 2.6vw, 1.35rem);
-  margin: 0 0 0.5rem;
-}
-.presse-quote cite { font-style: normal; color: var(--encre-doux); font-size: 0.92rem; }
-.presse-quote cite a { color: var(--encre); border-bottom: 1px solid var(--framboise); text-decoration: none; }
+/* L'ancien bloc « Ils en parlent » (.presse / .presse-quote) vivait dans la
+   section contact. Il est fusionné dans la section « On en parle », plus
+   haut : ses styles sont supprimés. Le nom de classe .presse est libéré —
+   il entrait en collision avec la nouvelle section. */
 
 /* Questions du comptoir */
 .comptoir { margin-top: clamp(2.5rem, 6vw, 4rem); }
