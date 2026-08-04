@@ -13,8 +13,11 @@
      la cliente. Contrastes mesurés sur --papier :
      encre 12.6:1 · encre-doux 7.3:1 · framboise 4.3:1 (GROS TEXTE UNIQUEMENT)
      · framboise-fonce 5.3:1 · bleu 4.25:1 (gros texte / filets) · bleu-fonce 6.0:1 */
-  --papier: #EADCBD;
-  --papier-ombre: #DFCDA6;
+  /* Échantillonné dans le PDF de la carte rentrée 26 (page intérieure) :
+     #F1E3C9 est la couleur de fond dominante du carnet imprimé.
+     Outil de contrôle : node tools/pdf-bg-color.mjs */
+  --papier: #F1E3C9;
+  --papier-ombre: #E6D4B2;
   --encre: #1E1A17;
   --encre-doux: #4a423a;
 
@@ -198,6 +201,37 @@ h3 {
   font-size: clamp(1.15rem, 1rem + 0.9vw, 1.5rem);
 }
 .section-intro { color: var(--encre-doux); }
+
+/* =========================================================
+   PARAGRAPHES JUSTIFIÉS (demande cliente)
+   La justification sans césure creuse des « rivières » de blanc dès que
+   la colonne est étroite : `hyphens: auto` (le <html lang="fr"> fournit
+   le dictionnaire de coupure) et une limite de crénage évitent ça.
+   On ne justifie QUE le texte courant — jamais les légendes, les prix,
+   les titres ou les lignes manuscrites, qui restent alignés à gauche.
+   ========================================================= */
+.prose p,
+.section-intro,
+.lede,
+.lieu-intro,
+.reserver-lead,
+.plat-desc,
+.lexique p,
+.info-block p,
+.ml-page p {
+  text-align: justify;
+  text-align-last: left;   /* la dernière ligne ne s'étire pas */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
+
+/* Sous ~380px la colonne est trop étroite pour que la justification
+   tienne : on revient au fer à gauche plutôt que d'afficher des trous. */
+@media (max-width: 380px) {
+  .prose p, .section-intro, .lede, .lieu-intro, .reserver-lead,
+  .plat-desc, .lexique p, .info-block p, .ml-page p { text-align: left; }
+}
 
 /* Ouverture manuscrite des longs blocs : 2-3 lignes courtes, une par
    paragraphe — texture dans le texte sans changer la mise en page. */
@@ -490,7 +524,12 @@ h3 {
   line-height: 1.06;
   margin: 0 0 1.4rem;
   max-width: 15ch;
-  overflow-wrap: break-word;
+}
+/* « vietnamienne » est plus long que la colonne sur les tout petits écrans :
+   on n'autorise la coupure en plein mot QUE là, sinon le titre se casse en
+   « vietnami- / enne » dès qu'une fenêtre de bureau est réduite. */
+@media (max-width: 400px) {
+  .cover-title { overflow-wrap: break-word; }
 }
 .cover-actions {
   display: flex;
@@ -526,11 +565,16 @@ h3 {
 }
 
 /* Desktop : texte au rail gauche, stand géant qui file vers le bord droit.
-   Cible ~1000-1100px de large sur 1440-1600px de viewport. */
-@media (min-width: 1000px) {
+   Le seuil est 781px — le MÊME que celui du menu (burger en dessous).
+   Avant, le héros basculait à 1000px et la barre de navigation à 780px :
+   entre les deux on obtenait un menu de bureau posé sur un héros mobile,
+   les lanternes retombaient sur le bouton « Réserver » et la couverture
+   dépassait la hauteur de l'écran. C'est le bug des fenêtres non
+   maximisées (typiquement un Mac à ~900px de large). */
+@media (min-width: 781px) {
   .couverture .wrap {
     display: grid;
-    grid-template-columns: minmax(270px, 27vw) minmax(0, 1fr);
+    grid-template-columns: minmax(290px, 27vw) minmax(0, 1fr);
     column-gap: clamp(1rem, 2vw, 2rem);
     align-items: center;
     max-width: 1760px;
@@ -648,8 +692,13 @@ h3 {
   font-size: clamp(1.2rem, 3.5vw, 1.6rem);
   margin-top: 0.6rem;
 }
+/* La légende de droite est alignée à droite : elle suit la POSITION dans la
+   grille, pas la nature de l'image (l'ordre photo/dessin peut être inversé). */
 .duo-item--carnet figcaption { color: var(--framboise-fonce); }
-.duo-item--reel figcaption { color: var(--bleu-fonce); text-align: right; }
+.duo-item--reel figcaption { color: var(--bleu-fonce); }
+@media (min-width: 700px) {
+  .duo-item:last-child figcaption { text-align: right; }
+}
 
 /* =========================================================
    HISTOIRE (genèse + voyages fusionnées)
@@ -753,13 +802,8 @@ h3 {
   line-height: 1.1;
 }
 .plat-desc { margin: 0; color: var(--encre-doux); font-size: 0.98rem; }
-.carte-fourchette {
-  font-family: var(--f-corps);
-  font-weight: 600;
-  color: var(--encre);
-  font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.15rem);
-  margin: 0.4rem 0 0;
-}
+/* .carte-fourchette retirée (demande cliente) : les prix restent visibles
+   plat par plat sur /carte/ et dans le JSON-LD. */
 .carte-cta { margin-top: 1.5rem; }
 .marg-citrons { width: clamp(72px, 11vw, 128px); top: 8%; right: 1.5%; opacity: 0.9; }
 .marg-coriandre { width: clamp(60px, 9vw, 104px); bottom: 6%; left: 1%; opacity: 0.9; }
@@ -810,6 +854,92 @@ h3 {
   opacity: 0.85;
   filter: drop-shadow(0 6px 12px rgba(30,26,23,0.14));
   z-index: 3;
+}
+
+/* =========================================================
+   ON EN PARLE — presse + avis Google
+   Deux registres différents : la presse est une liste sobre (c'est le nom
+   du média qui porte la crédibilité), les avis sont des citations sur
+   fond kraft, en écriture de carnet.
+   ========================================================= */
+.presse { background: var(--papier-ombre); }
+.presse-kicker {
+  color: var(--bleu);
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  margin: 0 0 0.15rem;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+.presse-liste {
+  list-style: none;
+  margin: clamp(1.4rem, 4vw, 2.2rem) 0 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(0.9rem, 3vw, 1.4rem);
+}
+.presse-item {
+  border-left: 3px solid var(--framboise);
+  padding-left: clamp(0.8rem, 2.5vw, 1.1rem);
+}
+.presse-media {
+  margin: 0;
+  font-family: var(--f-corps);
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--framboise-fonce);
+}
+.presse-titre { margin: 0.25rem 0 0; font-size: clamp(1rem, 0.95rem + 0.4vw, 1.14rem); }
+.presse-titre a { color: var(--encre); text-decoration: none; }
+.presse-titre a:hover,
+.presse-titre a:focus-visible { color: var(--framboise); }
+
+.avis-grille {
+  display: grid;
+  gap: clamp(1rem, 3vw, 1.6rem);
+  margin-top: clamp(1.8rem, 5vw, 2.8rem);
+}
+.avis {
+  margin: 0;
+  background: color-mix(in srgb, var(--papier) 88%, #fff);
+  border: 1px solid rgba(30,26,23,0.12);
+  border-radius: var(--r-card);
+  box-shadow: var(--sh-card);
+  padding: clamp(1.1rem, 3.5vw, 1.6rem);
+}
+.avis blockquote { margin: 0; }
+.avis blockquote p {
+  margin: 0;
+  color: var(--encre);
+  font-size: clamp(0.98rem, 0.94rem + 0.3vw, 1.06rem);
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.avis blockquote p::before { content: '« '; }
+.avis blockquote p::after { content: ' »'; }
+.avis figcaption {
+  margin-top: 0.9rem;
+  font-family: var(--f-hand);
+  font-size: 1.2rem;
+  color: var(--bleu-fonce);
+}
+.avis-source {
+  font-family: var(--f-corps);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--encre-doux);
+  margin-left: 0.5rem;
+}
+@media (min-width: 780px) {
+  .presse-liste { grid-template-columns: 1fr 1fr; }
+  .avis-grille { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 380px) {
+  .avis blockquote p { text-align: left; }
 }
 
 /* =========================================================
@@ -1059,13 +1189,7 @@ h3 {
   margin-block: -0.3rem;         /* zone de tap conservée, écart visuel réduit */
 }
 .footer-nav .nav-da { font-family: var(--f-hand); font-size: 1.15rem; }
-.footer-sign {
-  color: var(--encre-doux);      /* 5.2:1 sur jaune */
-  font-size: 1.05rem;
-  margin: 2rem 0 0;
-  position: relative;
-  z-index: 2;
-}
+/* .footer-sign retiré : le nom et l'adresse étaient déjà juste au-dessus. */
 /* l'illustration d'Oriane habite le coin bas-droit du pied de page */
 /* Le vélo vit DANS la grille, juste à gauche du bloc « Le carnet ».
    (Avant : posé en absolu en bas à droite — c'est-à-dire pile là où les
@@ -1178,8 +1302,9 @@ h3 {
   .nav-overlay { display: none !important; }
 }
 
-/* Hero densifié sous 1000px : le haut du stand visible dès le 1er écran */
-@media (max-width: 999px) {
+/* Hero densifié sous 781px (même seuil que le burger) : le haut du stand
+   doit être visible dès le premier écran. */
+@media (max-width: 780px) {
   .couverture {
     padding-top: calc(var(--header-h) + clamp(1.5rem, 5vw, 3rem));
     padding-bottom: clamp(2.5rem, 7vw, 4rem);
@@ -1187,6 +1312,22 @@ h3 {
   .guirlande-top { display: none; }
   .lanternes-pendantes { top: var(--header-h); width: clamp(72px, 20vw, 130px); }
   .cover-stand figcaption { display: none; }
+}
+
+/* Fenêtre étroite mais en mode bureau (781-1100px) : la guirlande de gauche
+   et les lanternes de droite se rapprochent du logo et du bouton Réserver.
+   On les rétrécit et on les descend sous la barre pour qu'elles ne se
+   superposent jamais aux éléments cliquables. */
+@media (min-width: 781px) and (max-width: 1100px) {
+  .lanternes-pendantes {
+    top: calc(var(--header-h) + 0.5rem);
+    width: clamp(76px, 13vw, 130px);
+    right: 0.75rem;
+  }
+  .guirlande-top {
+    top: calc(var(--header-h) + 0.5rem);
+    width: min(30vw, 250px);
+  }
 }
 
 /* RÈGLE BINAIRE ≤780px : toute marginalia calée en % de bord est masquée

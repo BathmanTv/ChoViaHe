@@ -1,30 +1,48 @@
-// Rend la page 1 du PDF carte et échantillonne la couleur de fond dominante
+// Rend les pages 1-2 du PDF de la carte et échantillonne la couleur de fond
+// dominante — c'est elle qui doit servir de référence pour --papier.
+// Usage : node tools/pdf-bg-color.mjs [chemin.pdf]
 import { pdf } from 'pdf-to-img';
 import sharp from 'sharp';
-import { writeFileSync } from 'fs';
+import { writeFileSync, readdirSync } from 'fs';
+import { join } from 'path';
 
-const doc = await pdf('docs/carte/Copie de MAJ 01.26 CHO FR.pdf', { scale: 1.5 });
-let n = 0;
-for await (const page of doc) {
-  n++;
-  writeFileSync(`docs/carte/_pdf-page${n}.png`, page);
-  if (n >= 2) break;
+const arg = process.argv[2];
+const src = arg || join('img', readdirSync('img').find((f) => /rentr.*\.pdf$/i.test(f)));
+console.log('source :', src, '\n');
+
+const doc = await pdf(src, { scale: 1.5 });
+const pages = [];
+for await (const p of doc) {
+  pages.push(p);
+  if (pages.length >= 2) break;
 }
 
-const img = sharp('docs/carte/_pdf-page1.png');
-const { width, height } = await img.metadata();
-const raw = await img.raw().toBuffer();
-const ch = raw.length / (width * height); // 3 ou 4 canaux
-// échantillonne des zones de bord (fond) : 4 coins + bords médians
-const pts = [[20, 20], [width - 20, 20], [20, height - 20], [width - 20, height - 20], [width >> 1, 15], [15, height >> 1]];
-const hex = (r, g, b) => '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
-for (const [x, y] of pts) {
-  const i = (y * width + x) * ch;
-  console.log(`(${x},${y})`, hex(raw[i], raw[i + 1], raw[i + 2]));
+const hex = (r, g, b) => '#' + [r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+
+for (let n = 0; n < pages.length; n++) {
+  const out = `_pdf-page${n + 1}.png`;
+  writeFileSync(out, pages[n]);
+  const img = sharp(out);
+  const { width, height } = await img.metadata();
+  const raw = await img.raw().toBuffer();
+  const ch = raw.length / (width * height);
+
+  // Couleur la plus fréquente sur toute la page : le fond domine en surface.
+  const compte = new Map();
+  for (let y = 0; y < height; y += 3) {
+    for (let x = 0; x < width; x += 3) {
+      const i = (y * width + x) * ch;
+      const k = `${raw[i]},${raw[i + 1]},${raw[i + 2]}`;
+      compte.set(k, (compte.get(k) || 0) + 1);
+    }
+  }
+  const total = [...compte.values()].reduce((a, b) => a + b, 0);
+  const top = [...compte.entries()].sort((a, b) => b[1] - a[1]).slice(0, 4);
+
+  console.log(`page ${n + 1} (${width}x${height}) — couleurs dominantes :`);
+  for (const [k, c] of top) {
+    const [r, g, b] = k.split(',').map(Number);
+    console.log(`   ${hex(r, g, b)}  ${((c / total) * 100).toFixed(1)} %`);
+  }
+  console.log('');
 }
-// couleur moyenne d'une bande de bord haut (fond probable)
-let r = 0, g = 0, b = 0, c = 0;
-for (let y = 5; y < 40; y++) for (let x = 5; x < width - 5; x += 7) {
-  const i = (y * width + x) * ch; r += raw[i]; g += raw[i + 1]; b += raw[i + 2]; c++;
-}
-console.log('moyenne bande haute:', hex(Math.round(r / c), Math.round(g / c), Math.round(b / c)), `(${width}x${height})`);

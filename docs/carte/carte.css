@@ -52,6 +52,23 @@
   margin-top: 1rem;
   font-size: 0.98rem;
 }
+
+/* Paragraphes justifiés, même règle que sur l'accueil (voir home.css).
+   Les lignes de plat (nom … prix) ne sont JAMAIS justifiées : c'est le
+   pointillé qui fait la liaison, l'étirer casserait l'alignement des prix. */
+.carte-note,
+.menu-item-desc,
+.pho-desc,
+.pho-conseil {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+}
+@media (max-width: 380px) {
+  .carte-note, .menu-item-desc, .pho-desc, .pho-conseil { text-align: left; }
+}
 /* téléchargement de la carte illustrée (PDF compressé) */
 .carte-pdf { margin-top: 1.1rem; }
 .carte-pdf a {
@@ -262,36 +279,10 @@
    PLATEAU À PARTAGER — Mẹt Vỉa Hè
    Un seul item : il vaut une carte, pas une ligne de liste.
    ========================================================= */
-.plateau-card {
-  display: flex;
-  align-items: center;
-  gap: clamp(0.9rem, 3vw, 2rem);
-  background: var(--papier-ombre);
-  border: 1px solid rgba(30,26,23,0.14);
-  border-radius: var(--r-card);
-  box-shadow: var(--sh-card, 0 8px 20px rgba(30,26,23,0.10));
-  padding: clamp(1.1rem, 4vw, 2rem);
-}
-.plateau-illus {
-  flex: 0 0 auto;
-  width: clamp(60px, 16vw, 120px);
-  filter: drop-shadow(0 8px 14px rgba(30,26,23,0.14));
-}
-.plateau-illus img { width: 100%; height: auto; }
-.plateau-body { min-width: 0; }
-.plateau-kicker {
-  color: var(--bleu);
-  font-size: clamp(1.05rem, 3.4vw, 1.35rem);
-  margin: 0 0 0.1rem;
-  display: inline-block;
-  transform: rotate(-1.5deg);
-}
-.plateau-desc {
-  margin: 0.5rem 0 0;
-  color: var(--encre-doux);
-  font-size: clamp(0.94rem, 0.9rem + 0.25vw, 1.02rem);
-  max-width: 56ch;
-}
+/* Le plateau réutilise désormais la mise en page du phở (.pho-*) :
+   les styles de carte encadrée ont été supprimés, seul le prix reste
+   spécifique. Le dessin du plateau est plus étroit que celui du phở. */
+#plateau .pho-illus { width: clamp(80px, 22vw, 150px); }
 .plateau-prix {
   margin: 0.6rem 0 0;
   font-family: var(--f-corps);
