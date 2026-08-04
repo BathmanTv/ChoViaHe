@@ -9,8 +9,15 @@
 (function () {
   'use strict';
 
-  var HOSTS_IGNORES = ['localhost', '127.0.0.1', '[::1]'];
-  if (HOSTS_IGNORES.indexOf(location.hostname) !== -1) return;
+  /* On ne mesure QUE la production. Deux raisons :
+     1. le compte GoatCounter n'existe pas encore → chaque page de l'aperçu
+        GitHub Pages déclenchait une erreur 400 dans la console ;
+     2. une fois le compte créé, les relectures sur l'aperçu seraient
+        comptées comme du vrai trafic et fausseraient les chiffres.
+     Liste blanche plutôt que liste noire : un nouvel environnement de test
+     est ainsi exclu par défaut, sans qu'on ait à y penser. */
+  var HOTES_PROD = ['choviahe.fr', 'www.choviahe.fr'];
+  if (HOTES_PROD.indexOf(location.hostname) === -1) return;
 
   // charge count.js (async, non bloquant)
   var s = document.createElement('script');

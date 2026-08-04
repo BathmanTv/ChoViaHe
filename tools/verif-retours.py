@@ -20,7 +20,8 @@ try:
 except Exception:
     pass
 
-BASE = "http://localhost:4324"
+import os
+BASE = os.environ.get("SITE_URL", "http://localhost:4324").rstrip("/")
 resultats = []
 
 
