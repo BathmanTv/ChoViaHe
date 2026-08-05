@@ -5,9 +5,14 @@ import { PDFDocument } from 'pdf-lib';
 import sharp from 'sharp';
 import { readdirSync, writeFileSync, statSync } from 'fs';
 
-const dir = 'docs/carte';
-const src = `${dir}/${readdirSync(dir).find(f => f.endsWith('.pdf'))}`;
+// Source : la carte la plus récente déposée dans img/ (originaux lourds,
+// hors dépôt). On prend la version « -1 » quand elle existe : même contenu
+// que la version pleine résolution, trois fois plus légère à traiter.
+const SRC_ARG = process.argv[2];
+const candidats = readdirSync('img').map((f) => 'img/' + f).filter((f) => /Rentr.*Carte Cho.*.pdf$/i.test(f));
+const src = SRC_ARG || candidats.find((f) => /-1\.pdf$/i.test(f)) || candidats[0];
 const OUT = 'docs/assets/carte-cho-via-he.pdf';
+console.log('source :', src);
 
 const doc = await pdf(src, { scale: 2 });          // ~1680px de large, net à l'écran
 const out = await PDFDocument.create();

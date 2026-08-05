@@ -33,8 +33,7 @@
   --jaune: #F2B300;            /* encre sur jaune = 9.0:1 — JAMAIS de blanc */
   --rouge-neon: #E4002B;
 
-  /* Trame carnet (adoucie : le kraft porte déjà de la matière) */
-  --ligne-carnet: rgba(30, 90, 115, 0.07);
+  /* --ligne-carnet supprimé : le carnet de référence n'a pas de réglure. */
 
   /* Type */
   --f-titre: 'Lora', Georgia, serif;
@@ -119,18 +118,15 @@ body::after {
   background-size: 700px auto;
   mix-blend-mode: overlay;
 }
+/* PLUS DE LIGNES RÉGLÉES.
+   Le carnet de référence de la cliente (Fond Carte CHO.png) est du papier
+   vieilli SANS aucune réglure : c'est la trame de lignes qui donnait au site
+   un air de cahier d'écolier au lieu d'un carnet de voyage. La matière vient
+   désormais uniquement du grain de papier (body::after), extrait de ce même
+   carnet par tools/texture-carnet.mjs. */
 .section, .couverture {
   position: relative;
   z-index: 1;
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 31px,
-      var(--ligne-carnet) 31px,
-      var(--ligne-carnet) 32px
-    );
-  background-attachment: local;
 }
 
 /* ---------- CONTENEURS ---------- */
@@ -438,7 +434,6 @@ h3 {
   inset: 0;
   z-index: 1500;
   background: var(--papier);
-  background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 39px, var(--ligne-carnet) 39px, var(--ligne-carnet) 40px);
   display: flex;
   flex-direction: column;
   justify-content: center;

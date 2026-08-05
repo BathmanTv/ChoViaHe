@@ -4,6 +4,8 @@ img/
 *.log
 # Rendus temporaires du PDF de la carte (régénérables via tools/carte-rentree.mjs)
 _carte-p*.png
+_pdf-page*.png
+_carte-nouvelle.txt
 _carte-texte.txt
 _texture-brute.png
 docs/carte/*.pdf

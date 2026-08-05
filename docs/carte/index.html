@@ -37,10 +37,13 @@
 <link rel="icon" href="../favicon-16.png" type="image/png" sizes="16x16" />
 <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
 
-<!-- JSON-LD Menu complet — carte « rentrée 26 ».
-     Cocktails à 11 € : confirmé par la cliente le 27/07.
-     Restent sans "offers" : les boissons viet (cà phê sữa đá, trà đá, trà tắc),
-     dont aucun prix ne figure sur le PDF source — en attente de confirmation. -->
+<!-- JSON-LD Menu complet — source : « Rentrée 2026 Carte Cho.pdf », reçue le
+     05/08/2026. Tous les prix y figurent, plus aucun n'est en attente.
+     Écarts avec la version précédente, relevés page par page :
+       · Bánh khọt (x8) 12 € : retiré de la carte
+       · Cocktails Em Ơi / Dragon / Phở Mojito : 11 € -> 12 €
+       · Cà phê sữa đá et Thé glacé maison : 6 € (aucun prix auparavant)
+     La cliente annonce encore de légères retouches d'ici fin août. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -77,7 +80,6 @@
         { "@type": "MenuItem", "name": "Samoussas aux légumes frits (x5)", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Tofu lắc saté", "description": "Tofu frit au saté maison et rau răm (coriandre vietnamienne).", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Nem chua rán Hà Nội", "description": "Plat de la cuisine de rue d'Hanoï : bouchées de porc croustillantes, préparées à base de porc et de couenne, servies avec sauce mayonnaise épicée et mangue verte marinée.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bánh khọt (x8)", "description": "Palets de farine de riz au lait de coco, crevettes, sauce nước mắm.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Sa lát gỏi tôm", "description": "Salade vietnamienne aux crevettes, légumes croquants (carottes, papaye, mangue verte, oignons, pousses de soja) et herbes aromatiques, relevée d'une vinaigrette au nước mắm et citron vert.", "offers": { "@type": "Offer", "price": "13.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Bánh cuốn Hà Nội", "description": "Fines crêpes de riz vapeur, garnies de porc haché sauté aux champignons, accompagnées de giò (charcuterie vietnamienne au bœuf), coriandre et sauce nước mắm.", "offers": { "@type": "Offer", "price": "13.00", "priceCurrency": "EUR" } }
       ]
@@ -127,18 +129,18 @@
       "@type": "MenuSection",
       "name": "Giải khát Việt — Boissons viet",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Cà phê sữa đá", "description": "Café Viet Robusta, lait concentré, glaçons." },
-        { "@type": "MenuItem", "name": "Trà đá", "description": "Thé glacé maison : thé vert jasmin vietnamien, lime, menthe." },
-        { "@type": "MenuItem", "name": "Trà tắc", "description": "Thé glacé maison au kumquat et fruit de la passion." }
+        { "@type": "MenuItem", "name": "Cà phê sữa đá", "description": "Café Viet Robusta, lait concentré, glaçons.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Trà đá", "description": "Thé glacé maison : thé vert jasmin vietnamien, lime, menthe.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Trà tắc", "description": "Thé glacé maison au kumquat et fruit de la passion.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
       ]
     },
     {
       "@type": "MenuSection",
       "name": "Cocktails",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Dragon", "description": "Fruité & frais — téquila, fruits du dragon, Gimber, lime, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Dragon", "description": "Fruité & frais — téquila, fruits du dragon, Gimber, lime, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -256,7 +258,7 @@
          node tools/compresser-carte-pdf.mjs (9,1 Mo → 0,9 Mo). -->
     <p class="carte-pdf">
       <a class="ink-link" href="../assets/carte-cho-via-he.pdf" target="_blank" rel="noopener" download>
-        Télécharger la carte <span class="carte-pdf-poids">PDF · 0,9 Mo</span>
+        Télécharger la carte <span class="carte-pdf-poids">PDF · 1,2 Mo</span>
       </a>
     </p>
   </div>
@@ -305,10 +307,7 @@
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Nem chua rán Hà Nội</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
         <p class="menu-item-desc">Plat de la cuisine de rue d'Hanoï : bouchées de porc croustillantes, préparées à base de porc et de couenne, servies avec sauce mayonnaise épicée et mangue verte marinée.</p>
       </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh khọt (x8)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Palets de farine de riz au lait de coco, crevettes, sauce <span lang="vi">nước mắm</span>.</p>
-      </li>
+      <!-- Bánh khọt (x8) retiré : absent de la carte « Rentrée 2026 » du 05/08. -->
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Sa lát gỏi tôm</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">13&nbsp;€</span></p>
         <p class="menu-item-desc">Salade vietnamienne aux crevettes, légumes croquants (carottes, papaye, mangue verte, oignons, pousses de soja) et herbes aromatiques, relevée d'une vinaigrette au <span lang="vi">nước mắm</span> et citron vert.</p>
@@ -476,38 +475,33 @@
       </div>
     </div>
 
-    <!-- PRIX À CONFIRMER : la page « Giải khát Việt » du PDF rentrée 26 ne porte
-         aucun prix (janvier : 6 € pièce). Items affichés sans prix en attendant. -->
+    <!-- Prix relevés sur la carte « Rentrée 2026 » reçue le 05/08 : le café
+         glacé et le thé glacé maison sont à 6 € (la version précédente du PDF
+         ne portait aucun prix sur cette page). -->
     <ul class="menu-list">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cà phê sữa đá</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cà phê sữa đá</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
         <p class="menu-item-desc">Café Viet Robusta, lait concentré, glaçons.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Trà đá</span></p>
-        <p class="menu-item-desc">Thé glacé maison : thé vert jasmin vietnamien, lime, menthe.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Trà tắc</span></p>
-        <p class="menu-item-desc">Thé glacé maison au kumquat et fruit de la passion.</p>
+        <p class="menu-item-head"><span class="menu-item-nom">Thé glacé maison</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
+        <p class="menu-item-desc"><span lang="vi">Trà đá</span> : thé vert jasmin vietnamien, lime, menthe.<br />
+        <span lang="vi">Trà tắc</span> : thé glacé au kumquat et fruit de la passion.</p>
       </li>
     </ul>
 
     <h3 class="menu-subhead">Cocktails</h3>
-    <!-- PRIX À CONFIRMER : le PDF rentrée 26 ne porte qu'un seul chiffre (11)
-         sous le filet de la rubrique, sans alignement fiable sur les 3 cocktails
-         (janvier : 12 € pièce). Items affichés sans prix en attendant. -->
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
         <p class="menu-item-desc">Doux &amp; sucré — gin, yuzu, basilic, lime, concombre, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
         <p class="menu-item-desc">Fruité &amp; frais — téquila, fruits du dragon, Gimber, lime, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
         <p class="menu-item-desc">Exotique &amp; corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.</p>
       </li>
     </ul>
