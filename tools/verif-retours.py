@@ -133,6 +133,13 @@ with sync_playwright() as p:
         footSign: !!q('.footer-sign'),
         etal: (txt.match(/étal/gi) || []).length,
         deborde: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        // --- retours du 05/08 ---
+        legendeStand: !!q('.cover-stand figcaption'),
+        commeLaBas: /comme là-bas/i.test(txt),
+        // plus aucune trame de lignes réglées nulle part
+        lignes: [...document.querySelectorAll('.section, .couverture, .nav-overlay')]
+          .filter(el => /repeating-linear-gradient/.test(getComputedStyle(el).backgroundImage)).length,
+        texture: getComputedStyle(document.body, '::after').backgroundImage,
       };
     })()""")
 
@@ -155,6 +162,12 @@ with sync_playwright() as p:
     verif(15, "Menu : La carte en premier", d["nav"][0] == "La carte", str(d["nav"][:3]))
     verif("—", "Aucun débordement horizontal (PC)", d["deborde"] <= 0, f"{d['deborde']}px")
     verif("—", "Aucune erreur JavaScript (PC)", not errs_pc, str(errs_pc[:2]))
+    # --- retours du 05/08 ---
+    verif("05/08", "Légende sous l'illustration du stand retirée",
+          not d["legendeStand"] and not d["commeLaBas"], f"figcaption={d['legendeStand']}")
+    verif("05/08", "Plus aucune trame de lignes réglées", d["lignes"] == 0,
+          f"{d['lignes']} bloc(s) avec un dégradé répété")
+    verif("05/08", "Grain de papier toujours en place", "papier-tile" in d["texture"], d["texture"][:60])
 
     # --- retour « le verre saute » : la marginalia ne doit jamais être animée ---
     marg = pc.evaluate("""(() => {
@@ -196,6 +209,17 @@ with sync_playwright() as p:
         nav: [...document.querySelectorAll('.main-nav a')].map(a => a.textContent.trim()),
         nbPlats: document.querySelectorAll('.menu-item').length,
         deborde: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        // --- carte « Rentrée 2026 », validée par la cliente le 05/08 ---
+        khot: /khọt/.test(document.body.innerText),
+        prix: Object.fromEntries([...document.querySelectorAll('.menu-item')].map(li => {
+          const n = li.querySelector('.menu-item-nom'), p = li.querySelector('.menu-item-prix');
+          return [n ? n.textContent.trim() : '?', p ? p.textContent.replace(/\\u00a0/g, ' ').trim() : null];
+        })),
+        sansPrix: [...document.querySelectorAll('.menu-item')]
+          .filter(li => !li.querySelector('.menu-item-prix'))
+          .map(li => (li.querySelector('.menu-item-nom') || {}).textContent),
+        lignes: [...document.querySelectorAll('.section, .menu-section, .carte-header')]
+          .filter(el => /repeating-linear-gradient/.test(getComputedStyle(el).backgroundImage)).length,
       };
     })()""")
     verif(1, "Fond du carnet (page carte)", c["fond"] == "rgb(241, 227, 201)", c["fond"])
@@ -208,6 +232,22 @@ with sync_playwright() as p:
     verif("—", "Carte complète (>40 plats)", c["nbPlats"] > 40, f"{c['nbPlats']} entrées")
     verif("—", "Aucun débordement (carte PC)", c["deborde"] <= 0, f"{c['deborde']}px")
     verif("—", "Aucune erreur JS (carte PC)", not errs_c, str(errs_c[:2]))
+    # --- carte « Rentrée 2026 » ---
+    verif("05/08", "Bánh khọt retiré de la carte", not c["khot"])
+    verif("05/08", "Plus aucune trame de lignes (carte)", c["lignes"] == 0, str(c["lignes"]))
+    ATTENDUS = {
+        "Cà phê sữa đá": "6 €", "Thé glacé maison": "6 €",
+        "Em Ơi": "12 €", "Dragon": "12 €", "Phở Mojito": "12 €", "Tám-Đi": "11 €",
+        "Café / déca / allongé": "2 €", "Café noisette": "2,50 €",
+        "Thé vert jasmin du Vietnam": "4,50 €",
+        "Phở bò tái chín": "17 €", "Mẹt Vỉa Hè": None,   # prix hors .menu-item
+    }
+    for nom, attendu in ATTENDUS.items():
+        if attendu is None:
+            continue
+        reel = c["prix"].get(nom)
+        verif("05/08", f"Prix {nom} = {attendu}", reel == attendu, f"lu : {reel}")
+    verif("05/08", "Plus aucun plat sans prix", not c["sansPrix"], str(c["sansPrix"]))
     controle_structure(pcc, "carte PC")
     pcc.close()
 
