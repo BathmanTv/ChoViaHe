@@ -178,8 +178,6 @@
   transform: rotate(-2deg);
   margin-left: 0.3rem;
 }
-/* orange assombri: #E9531F sur papier = 3.4:1, échoue AA texte normal (QA #4) */
-.menu-item-tag--saigon { color: #C63A0F; }
 
 /* ---------- Code végétarien (repris de la carte imprimée) ----------
    Sur le PDF, les plats végétariens sont écrits en vert. En ligne on garde

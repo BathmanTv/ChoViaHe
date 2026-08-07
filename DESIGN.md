@@ -4,7 +4,7 @@ name: ChoViaHe-carnet-de-voyage
 description: Design system du site Chợ Vỉa Hè (restaurant de cuisine de rue vietnamienne, Toulouse). Concept — le site EST le carnet de voyage de la famille. V2 (retours cliente 07.2026) — le carnet passe de DISPOSITIF à MATIÈRE: plus de numéros de page, plus de séparateurs crayon, plus de mention "carnet de voyage"; à la place, le vrai papier kraft de la carte imprimée (texture échantillonnée), les illustrations d'Oriane et de grandes photos. Le jaune du lieu déménage de la section "Le Lieu" vers le PIED DE PAGE de toutes les pages. Feel motion calme et artisanal ("on feuillette"), jamais clinquant.
 
 colors:
-  # V2 — kraft échantillonné au pixel sur la carte imprimée (voir tools/extract-texture.mjs)
+  # V2 — kraft échantillonné au pixel sur la carte imprimée (voir tools/texture-carnet.mjs)
   papier: "#EADCBD"          # fond global kraft (V1 était #F7F2E9, ivoire froid)
   papier-ombre: "#DFCDA6"    # cartes, encarts
   encre: "#1E1A17"           # texte courant — 12.6:1 sur kraft

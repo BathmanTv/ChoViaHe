@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /da/
 
 Sitemap: https://www.choviahe.fr/sitemap.xml

@@ -15,7 +15,7 @@
      · framboise-fonce 5.3:1 · bleu 4.25:1 (gros texte / filets) · bleu-fonce 6.0:1 */
   /* Échantillonné dans le PDF de la carte rentrée 26 (page intérieure) :
      #F1E3C9 est la couleur de fond dominante du carnet imprimé.
-     Outil de contrôle : node tools/pdf-bg-color.mjs */
+     Extraction de la matière : node tools/texture-carnet.mjs */
   --papier: #F1E3C9;
   --papier-ombre: #E6D4B2;
   --encre: #1E1A17;
@@ -337,10 +337,6 @@ h3 {
 [data-ink]:not(.btn-cta):hover::before,
 [data-ink]:not(.btn-cta):focus-visible::before { opacity: 1; transform: scale(1); }
 
-/* Liens internes « Direction artistique » : masqués du site public.
-   La page reste accessible par son URL directe (…/da/) pour nos échanges. */
-.nav-da { display: none !important; }
-
 /* =========================================================
    HEADER FIXE
    ========================================================= */
@@ -388,13 +384,6 @@ h3 {
   text-decoration: none;
   font-weight: 500;
   font-size: 0.98rem;
-}
-.main-nav a.nav-da {
-  font-family: var(--f-hand);
-  color: var(--bleu-fonce);
-  font-size: 1.15rem;
-  transform: rotate(-3deg);
-  display: inline-block;
 }
 .header-cta {
   margin-left: auto;
@@ -452,7 +441,6 @@ h3 {
   text-decoration: none;
   font-size: clamp(1.9rem, 8vw, 2.8rem);
 }
-.nav-overlay a.nav-da { font-family: var(--f-hand); color: var(--bleu-fonce); font-size: clamp(1.4rem, 5vw, 1.8rem); }
 .nav-overlay .btn-cta { margin-top: 1rem; font-size: 1.2rem; }
 .overlay-close {
   position: absolute;
@@ -759,7 +747,6 @@ h3 {
 .marg-cafe { width: clamp(90px, 13vw, 150px); top: 5%; right: 1%; }
 .marg-baguette { width: clamp(70px, 10vw, 118px); bottom: 6%; left: 0.5%; }
 .marg-panier { width: clamp(80px, 11vw, 132px); top: 46%; right: 2%; opacity: 0.72; }
-.marg-drapeau { width: clamp(64px, 9vw, 108px); top: 24%; left: 1%; opacity: 0.78; }
 
 /* =========================================================
    CARTE (teaser)
@@ -797,8 +784,6 @@ h3 {
   line-height: 1.1;
 }
 .plat-desc { margin: 0; color: var(--encre-doux); font-size: 0.98rem; }
-/* .carte-fourchette retirée (demande cliente) : les prix restent visibles
-   plat par plat sur /carte/ et dans le JSON-LD. */
 .carte-cta { margin-top: 1.5rem; }
 .marg-citrons { width: clamp(72px, 11vw, 128px); top: 8%; right: 1.5%; opacity: 0.9; }
 .marg-coriandre { width: clamp(60px, 9vw, 104px); bottom: 6%; left: 1%; opacity: 0.9; }
@@ -1009,13 +994,7 @@ h3 {
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
 .horaires-list .jour { color: var(--encre-doux); }
-.marg-velo { width: clamp(110px, 17vw, 190px); bottom: 5%; right: 2%; opacity: 0.62; }
 .marg-poulets { width: clamp(76px, 11vw, 132px); top: 7%; left: 1%; opacity: 0.7; }
-
-/* L'ancien bloc « Ils en parlent » (.presse / .presse-quote) vivait dans la
-   section contact. Il est fusionné dans la section « On en parle », plus
-   haut : ses styles sont supprimés. Le nom de classe .presse est libéré —
-   il entrait en collision avec la nouvelle section. */
 
 /* Questions du comptoir */
 .comptoir { margin-top: clamp(2.5rem, 6vw, 4rem); }
@@ -1188,8 +1167,6 @@ h3 {
   padding-block: 0.62rem;
   margin-block: -0.3rem;         /* zone de tap conservée, écart visuel réduit */
 }
-.footer-nav .nav-da { font-family: var(--f-hand); font-size: 1.15rem; }
-/* .footer-sign retiré : le nom et l'adresse étaient déjà juste au-dessus. */
 /* l'illustration d'Oriane habite le coin bas-droit du pied de page */
 /* Le vélo vit DANS la grille, juste à gauche du bloc « Le carnet ».
    (Avant : posé en absolu en bas à droite — c'est-à-dire pile là où les
