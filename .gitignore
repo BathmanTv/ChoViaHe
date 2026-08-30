@@ -10,3 +10,5 @@ _carte-texte.txt
 _texture-brute.png
 docs/carte/*.pdf
 _backup/
+docs/.ignore
+docs/graft/
