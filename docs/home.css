@@ -89,14 +89,24 @@ p { margin: 0 0 1rem; }              /* 16px — base du rapport 5:1 */
 a { color: var(--framboise-fonce); } /* 5.3:1 sur kraft */
 ul, ol { margin: 0; }
 
-/* ---------- MATIÈRE : grain + texture kraft + trame carnet ----------
-   1) body::before  : micro-grain (multiply, très léger)
-   2) body::after   : TEXTURE RÉELLE extraite de la carte imprimée.
-      mix-blend-mode: overlay — le gris ~131/255 de la tuile est neutre,
-      il ne fait que moduler le kraft (jamais multiply : assombrirait tout).
-      Les deux couches sont en z-index 0 : elles n'atteignent que le papier,
-      pas les photos ni le pied de page jaune (opaques, au-dessus).
-   3) .section/.couverture : trame de lignes carnet, adoucie sur le kraft. */
+/* ---------- MATIÈRE DU PAPIER — deux couches ----------
+   Le papier ancien se lit à deux échelles. La première version n'en avait
+   qu'une, la plus fine, et le fond ressortait comme un aplat beige.
+
+   body::before — L'ÉCHELLE DE LA PAGE. Les taches, l'usure, les variations
+     larges du carnet de la cliente. Une seule image, jamais répétée, en
+     `cover` : c'est ce qui fait « vieux papier » plutôt que « fond beige ».
+     Une tuile ne peut pas porter ça — des taches qui se répètent tous les
+     700px se voient immédiatement.
+   body::after — L'ÉCHELLE DE LA FIBRE. Le grain, vu de près. Là une tuile
+     convient : le grain n'a pas d'accident unique à trahir.
+
+   Les deux images sont grises et centrées sur 128 ; en `overlay`, un pixel à
+   128 ne change rien, au-dessus éclaircit, en dessous assombrit. Jamais
+   `multiply`, qui assombrirait toute la page.
+   Les deux couches sont fixées et en z-index 0 : elles n'atteignent que le
+   papier, pas les photos ni le pied de page jaune, opaques et au-dessus.
+   Régénération : node tools/texture-carnet.mjs */
 body::before,
 body::after {
   content: "";
@@ -105,19 +115,26 @@ body::after {
   z-index: 0;
   pointer-events: none;
 }
+/* La page, EN COULEUR et sans mode de fusion. Voir le commentaire ci-dessus :
+   `overlay` divisait la modulation par dix sur un fond clair. --papier reste
+   la couleur de repli tant que l'image n'est pas chargée. */
 body::before {
-  opacity: 0.4;
-  background-image: radial-gradient(rgba(30,26,23,0.035) 1px, transparent 1.2px);
-  background-size: 3px 3px;
-  mix-blend-mode: multiply;
+  background-image: url('./assets/papier-fond.webp');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
+/* Le grain, en `multiply` : sur un fond clair il conserve son amplitude,
+   contrairement à `overlay`. Discret, c'est la couche du dessous qui porte
+   le caractère. */
 body::after {
-  opacity: 0.85;
+  opacity: 1;
   background-image: url('./assets/papier-tile.webp');
   background-repeat: repeat;
-  background-size: 700px auto;
-  mix-blend-mode: overlay;
+  background-size: 620px auto;
+  mix-blend-mode: multiply;
 }
+
 /* PLUS DE LIGNES RÉGLÉES.
    Le carnet de référence de la cliente (Fond Carte CHO.png) est du papier
    vieilli SANS aucune réglure : c'est la trame de lignes qui donnait au site
@@ -347,7 +364,7 @@ h3 {
   min-height: var(--header-h);
   display: flex;
   align-items: center;
-  background: color-mix(in srgb, var(--papier) 90%, transparent);
+  background: color-mix(in srgb, var(--papier) 82%, transparent);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(30,26,23,0.10);

@@ -1,86 +1,116 @@
-/* Extrait la matière papier de « Fond Carte CHO.png » — le carnet ancien qui
-   sert de référence à la cliente — et en fait une tuile répétable.
+/* Matière papier du site, extraite du carnet de référence (Fond Carte CHO.png).
 
-   Principe : la tuile est posée en mix-blend-mode: overlay par-dessus la
-   couleur --papier. Elle doit donc être GRISE et centrée sur 128 : un pixel
-   à 128 ne change rien, au-dessus éclaircit, en dessous assombrit. Si elle
-   n'est pas recentrée, elle assombrit ou délave toute la page.
+   POURQUOI DEUX COUCHES.
+   Le papier ancien se lit à deux échelles, et une seule ne suffit pas :
 
-   Le grain réel du carnet a un écart-type de ~2,5 : c'est très subtil. On ne
-   garde qu'une fraction de l'amplitude, sinon la matière se voit au lieu de
-   se sentir.
+     · à l'échelle de la PAGE : de larges variations douces, des taches, des
+       bords plus sombres. C'est ça qui dit « vieux carnet ». Une tuile qui se
+       répète ne peut pas le porter — soit elle est trop plate, soit on voit
+       la répétition.
+     · à l'échelle du POUCE : le grain de la fibre. Là une tuile convient.
+
+   La première version n'avait que la seconde couche, et pire : elle
+   sélectionnait automatiquement la zone la PLUS UNIFORME du carnet. Elle
+   jetait donc exactement ce qui faisait le caractère du papier. Résultat
+   mesuré : écart-type 1,5 contre 8,2 pour la référence — invisible.
+
+   Les deux sorties sont grises et centrées sur 128 : posées en
+   mix-blend-mode: overlay, un pixel à 128 ne change rien, au-dessus
+   éclaircit, en dessous assombrit.
 
    Usage : node tools/texture-carnet.mjs
 */
 import sharp from 'sharp';
 
 const SRC = 'img/Fond Carte CHO.png';
-const SORTIE = 'docs/assets/papier-tile.webp';
+const FOND = 'docs/assets/papier-fond.webp';   // couche « page »
+const GRAIN = 'docs/assets/papier-tile.webp';  // couche « fibre »
 
-// Zones de page propre, loin de la reliure, des bords et des grosses taches.
-const CANDIDATS = [
-  { left: 200, top: 150, width: 300, height: 220 },
-  { left: 180, top: 400, width: 340, height: 260 },
-  { left: 900, top: 380, width: 340, height: 280 },
-  { left: 880, top: 150, width: 300, height: 200 },
-];
+const hex = (v) => Math.round(v).toString(16).padStart(2, '0');
 
-// On retient la zone la plus uniforme : la matière, pas une tache.
-let meilleure = null;
-for (const z of CANDIDATS) {
-  const buf = await sharp(SRC).extract(z).png().toBuffer();
-  const st = await sharp(buf).greyscale().stats();
-  const sd = st.channels[0].stdev;
-  console.log(`zone ${z.left},${z.top}  écart-type ${sd.toFixed(2)}`);
-  if (!meilleure || sd < meilleure.sd) meilleure = { z, sd };
+/* Recentre une couche sur `cible` en conservant `ampli` fois son amplitude.
+   La valeur neutre dépend du mode de fusion :
+     · multiply -> neutre = 255 (blanc). Une tuile centrée sur 128 diviserait
+       la luminosité de la page par deux — c'est l'erreur qui a rendu le fond
+       gris au premier essai.
+     · overlay  -> neutre = 128, mais overlay écrase la modulation sur un
+       fond clair : on ne l'utilise plus ici. */
+async function centrer(buf, ampli, cible) {
+  const moyenne = (await sharp(buf).stats()).channels[0].mean;
+  return sharp(buf).linear(ampli, cible - ampli * moyenne).toColourspace('b-w').removeAlpha();
 }
-console.log('→ retenue :', JSON.stringify(meilleure.z), 'écart-type', meilleure.sd.toFixed(2), '\n');
 
+/* ---------------------------------------------------------------
+   1. COUCHE PAGE — la vraie page, EN COULEUR, sans mode de fusion
+
+   Première tentative : une couche grise en `mix-blend-mode: overlay`.
+   Elle ne pouvait pas marcher, et c'est arithmétique. Sur un fond clair
+   (#F1E3C9, canal rouge à 0,945) la formule overlay donne
+       résultat = 1 − 2 × (1 − 0,945) × (1 − source) = 1 − 0,11 × (1 − source)
+   soit une modulation divisée par ~10. Une texture d'écart-type 6 ressortait
+   à 0,7 niveau sur 255 : invisible, quelle que soit l'amplitude injectée.
+
+   On pose donc la page telle quelle, en couleur, opaque, en `cover`. C'est
+   exactement la matière du carnet, sans arithmétique de fusion.
+   On adoucit seulement les extrêmes : les coins très sombres du scan
+   feraient chuter le contraste du texte par endroits.
+   --------------------------------------------------------------- */
+const PAGE = { left: 70, top: 55, width: 640, height: 940 };
+
+const pageSrc = await sharp(SRC).extract(PAGE).png().toBuffer();
+const stSrc = (await sharp(pageSrc).greyscale().stats()).channels[0];
+console.log(`page source  : moyenne ${stSrc.mean.toFixed(1)}  écart-type ${stSrc.stdev.toFixed(2)}  min ${stSrc.min}`);
+
+// Aucun adoucissement : mesuré, les 0,1 % de pixels les plus sombres du crop
+// sont à 153/255, ce qui laisse au texte --encre un contraste de 6,1:1 —
+// au-dessus du seuil AA de 4,5:1. La matière passe donc telle quelle.
+const fond = await sharp(pageSrc)
+  .resize(1500, 2200, { fit: 'fill' })
+  .webp({ quality: 84 })
+  .toBuffer();
+await sharp(fond).toFile(FOND);
+
+const stFond = (await sharp(fond).greyscale().stats()).channels[0];
+console.log(`${FOND}`);
+console.log(`  1500x2200, ${(fond.length / 1024).toFixed(1)} Ko — moyenne ${stFond.mean.toFixed(1)}, écart-type ${stFond.stdev.toFixed(2)}, min ${stFond.min}
+`);
+
+/* ---------------------------------------------------------------
+   2. COUCHE GRAIN — la fibre, vue de près
+   Ici une tuile convient : le grain n'a pas d'accident unique. On prend
+   une zone propre, on miroite les 4 quadrants pour que les bords se
+   raccordent, et on reste discret : c'est la couche page qui porte le
+   caractère, celle-ci n'ajoute que du toucher.
+   --------------------------------------------------------------- */
 const COTE = 340;
+const GRAIN_AMPLI = 1.6;
+const GRAIN_CENTRE = 252;   // presque blanc : neutre pour `multiply`
 
-// Amplitude : calée pour retrouver exactement la force perçue de l'ancienne
-// tuile (écart-type mesuré 2,14). Seule la SOURCE change — on prend enfin la
-// matière du vrai carnet de référence, plus celle de la couverture imprimée.
-// En dessous la matière disparaît, au-dessus elle devient un bruit visible.
-// Le recentrage se fait sur la moyenne RÉELLE de la zone (~230 : du papier
-// clair), et non sur 128 : sinon la tuile ressort trop claire et délave la
-// page au lieu de la texturer.
-const AMPLI = 1.1;
-const zoneBuf = await sharp(SRC).extract(meilleure.z).greyscale().png().toBuffer();
-const moyenneSrc = (await sharp(zoneBuf).stats()).channels[0].mean;
-console.log(`moyenne de la zone source : ${moyenneSrc.toFixed(1)} → recentrée sur 128`);
-
-const patch = await sharp(zoneBuf)
-  .resize(COTE, COTE, { fit: 'fill' })
-  .linear(AMPLI, 128 - AMPLI * moyenneSrc)
-  .removeAlpha()
-  .toColourspace('b-w')
+const grainSrc = await sharp(SRC)
+  .extract({ left: 900, top: 380, width: 340, height: 280 })
+  .greyscale()
   .png()
   .toBuffer();
 
-// Miroir sur les 4 quadrants : les bords se raccordent, plus de couture
-// visible quand la tuile se répète.
+const patch = await (await centrer(grainSrc, GRAIN_AMPLI, GRAIN_CENTRE)).resize(COTE, COTE, { fit: 'fill' }).png().toBuffer();
 const [q2, q3, q4] = await Promise.all([
   sharp(patch).flop().png().toBuffer(),
   sharp(patch).flip().png().toBuffer(),
   sharp(patch).flop().flip().png().toBuffer(),
 ]);
 
-const tuile = await sharp({
-  create: { width: COTE * 2, height: COTE * 2, channels: 3, background: '#808080' },
-})
+const tuile = await sharp({ create: { width: COTE * 2, height: COTE * 2, channels: 3, background: '#F9F9F9' } })
   .composite([
     { input: patch, left: 0, top: 0 },
     { input: q2, left: COTE, top: 0 },
     { input: q3, left: 0, top: COTE },
     { input: q4, left: COTE, top: COTE },
   ])
-  .webp({ quality: 72 })
+  .webp({ quality: 76 })
   .toBuffer();
+await sharp(tuile).toFile(GRAIN);
 
-await sharp(tuile).toFile(SORTIE);
-
-const ctrl = await sharp(tuile).stats();
-console.log(`${SORTIE} — ${COTE * 2}x${COTE * 2}, ${(tuile.length / 1024).toFixed(1)} Ko`);
-console.log(`moyenne ${ctrl.channels[0].mean.toFixed(1)} (doit être proche de 128),`,
-  `écart-type ${ctrl.channels[0].stdev.toFixed(2)}`);
+const stGrain = (await sharp(tuile).stats()).channels[0];
+console.log(`${GRAIN}`);
+console.log(`  ${COTE * 2}x${COTE * 2}, ${(tuile.length / 1024).toFixed(1)} Ko — moyenne ${stGrain.mean.toFixed(1)}, écart-type ${stGrain.stdev.toFixed(2)}`);
+console.log(`\nréférence à égaler : écart-type 8,21 sur une page entière.`);
