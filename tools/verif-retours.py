@@ -140,6 +140,7 @@ with sync_playwright() as p:
         lignes: [...document.querySelectorAll('.section, .couverture, .nav-overlay')]
           .filter(el => /repeating-linear-gradient/.test(getComputedStyle(el).backgroundImage)).length,
         texture: getComputedStyle(document.body, '::after').backgroundImage,
+        fondPage: getComputedStyle(document.body, '::before').backgroundImage,
       };
     })()""")
 
@@ -168,6 +169,8 @@ with sync_playwright() as p:
     verif("05/08", "Plus aucune trame de lignes réglées", d["lignes"] == 0,
           f"{d['lignes']} bloc(s) avec un dégradé répété")
     verif("05/08", "Grain de papier toujours en place", "papier-tile" in d["texture"], d["texture"][:60])
+    verif("31/08", "Matière de la page (taches, usure) en place",
+          "papier-fond" in d["fondPage"], d["fondPage"][:60])
 
     # --- retour « le verre saute » : la marginalia ne doit jamais être animée ---
     marg = pc.evaluate("""(() => {

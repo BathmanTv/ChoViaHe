@@ -52,10 +52,14 @@ async function centrer(buf, ampli, cible) {
 
    On pose donc la page telle quelle, en couleur, opaque, en `cover`. C'est
    exactement la matière du carnet, sans arithmétique de fusion.
-   On adoucit seulement les extrêmes : les coins très sombres du scan
-   feraient chuter le contraste du texte par endroits.
    --------------------------------------------------------------- */
-const PAGE = { left: 70, top: 55, width: 640, height: 940 };
+/* Cadrage mesuré ligne par ligne sur le scan :
+     y 0-20     bord noir du scan
+     y 80       FILET ORNEMENTAL imprimé du carnet — c'est lui qui ressortait
+                en travers du haut du site, il faut passer en dessous
+     y 1008+    l'ombre du bord bas, puis le bord noir
+   On prend donc 95 -> 1000, largeur 640 pour rester loin de la reliure. */
+const PAGE = { left: 70, top: 95, width: 640, height: 905 };
 
 const pageSrc = await sharp(SRC).extract(PAGE).png().toBuffer();
 const stSrc = (await sharp(pageSrc).greyscale().stats()).channels[0];
@@ -64,15 +68,29 @@ console.log(`page source  : moyenne ${stSrc.mean.toFixed(1)}  écart-type ${stSr
 // Aucun adoucissement : mesuré, les 0,1 % de pixels les plus sombres du crop
 // sont à 153/255, ce qui laisse au texte --encre un contraste de 6,1:1 —
 // au-dessus du seuil AA de 4,5:1. La matière passe donc telle quelle.
+/* PIXELLISATION EN GRAND FORMAT.
+   Le scan source ne fait que 640 px de large. Étiré en `cover` sur un écran
+   de 2560, chaque pixel d'origine couvre 4 pixels d'écran : le bruit fin du
+   scan devient un damier visible.
+   La parade n'est pas plus de résolution — il n'y en a pas dans la source —
+   mais de RETIRER le détail fin avant d'agrandir. Cette couche ne doit
+   porter que les basses fréquences : les taches et la dérive de ton. Le
+   piqué vient de la couche de grain, elle rendue à 1:1.
+   Le flou est appliqué à la résolution source, avant l'agrandissement.
+
+   Corollaire : une fois floue, cette couche n'a plus rien à préserver. On
+   la stocke PETITE et on laisse le navigateur l'agrandir — le rendu est le
+   même qu'une image quatre fois plus lourde, pour un dixième du poids. */
 const fond = await sharp(pageSrc)
-  .resize(1500, 2200, { fit: 'fill' })
-  .webp({ quality: 84 })
+  .blur(1.6)
+  .resize(1100, 1560, { fit: 'fill', kernel: 'lanczos3' })
+  .webp({ quality: 74 })
   .toBuffer();
 await sharp(fond).toFile(FOND);
 
 const stFond = (await sharp(fond).greyscale().stats()).channels[0];
 console.log(`${FOND}`);
-console.log(`  1500x2200, ${(fond.length / 1024).toFixed(1)} Ko — moyenne ${stFond.mean.toFixed(1)}, écart-type ${stFond.stdev.toFixed(2)}, min ${stFond.min}
+console.log(`  1100x1560, ${(fond.length / 1024).toFixed(1)} Ko — moyenne ${stFond.mean.toFixed(1)}, écart-type ${stFond.stdev.toFixed(2)}, min ${stFond.min}
 `);
 
 /* ---------------------------------------------------------------
