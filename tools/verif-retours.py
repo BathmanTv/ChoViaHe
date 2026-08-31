@@ -234,13 +234,19 @@ with sync_playwright() as p:
     verif("—", "Aucune erreur JS (carte PC)", not errs_c, str(errs_c[:2]))
     # --- carte « Rentrée 2026 » ---
     verif("05/08", "Bánh khọt retiré de la carte", not c["khot"])
+    verif("31/08", "Bơ vơ retiré (remplacé par bánh trôi)", "Bơ vơ" not in c["prix"])
+    verif("31/08", "Dragon remplacé par Thăng Long", "Dragon" not in c["prix"] and "Thăng Long" in c["prix"])
     verif("05/08", "Plus aucune trame de lignes (carte)", c["lignes"] == 0, str(c["lignes"]))
+    # Relevés sur « Rentrée 2026 Carte Cho-2.pdf », version définitive du 31/08.
     ATTENDUS = {
         "Cà phê sữa đá": "6 €", "Thé glacé maison": "6 €",
-        "Em Ơi": "12 €", "Dragon": "12 €", "Phở Mojito": "12 €", "Tám-Đi": "11 €",
+        "Em Ơi": "12 €", "Thăng Long": "12 €", "Phở Mojito": "12 €",
+        "Tám-Đi": "10 €", "Đi Chợ": "10 €",
         "Café / déca / allongé": "2 €", "Café noisette": "2,50 €",
         "Thé vert jasmin du Vietnam": "4,50 €",
-        "Phở bò tái chín": "17 €", "Mẹt Vỉa Hè": None,   # prix hors .menu-item
+        "Phở gà": "16 €", "Phở bò tái chín": "17 €",
+        "Bánh trôi nước mè đen": "7 €",
+        "Chả cốm (x2)": "8 €",
     }
     for nom, attendu in ATTENDUS.items():
         if attendu is None:

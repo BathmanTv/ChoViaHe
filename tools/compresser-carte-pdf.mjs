@@ -6,11 +6,15 @@ import sharp from 'sharp';
 import { readdirSync, writeFileSync, statSync } from 'fs';
 
 // Source : la carte la plus récente déposée dans img/ (originaux lourds,
-// hors dépôt). On prend la version « -1 » quand elle existe : même contenu
-// que la version pleine résolution, trois fois plus légère à traiter.
+// hors dépôt). On retient le fichier le plus RÉCEMMENT modifié — et non un
+// suffixe fixe : la version « -1 » a été remplacée par « -2 », et coder le
+// « -1 » en dur a fait régénérer le PDF depuis l'ancienne carte.
 const SRC_ARG = process.argv[2];
-const candidats = readdirSync('img').map((f) => 'img/' + f).filter((f) => /Rentr.*Carte Cho.*.pdf$/i.test(f));
-const src = SRC_ARG || candidats.find((f) => /-1\.pdf$/i.test(f)) || candidats[0];
+const candidats = readdirSync('img')
+  .map((f) => 'img/' + f)
+  .filter((f) => /Rentr.*Carte Cho.*\.pdf$/i.test(f))
+  .sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs);
+const src = SRC_ARG || candidats[0];
 const OUT = 'docs/assets/carte-cho-via-he.pdf';
 console.log('source :', src);
 

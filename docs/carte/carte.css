@@ -296,10 +296,13 @@
    fond kraft foncé + filets framboise, puis 3 cartes de déclinaison.
    ========================================================= */
 .pho-section {
-  background: var(--papier-ombre);
+  /* Semi-transparent : depuis que le fond porte la matière du carnet, un
+     aplat opaque ferait un rectangle plat au milieu du papier — l'effet
+     patchwork que la cliente redoutait. */
+  background: color-mix(in srgb, var(--papier-ombre) 55%, transparent);
   border-block: 2px solid rgba(192,38,75,0.3);
 }
-.pho-section.menu-section:nth-of-type(even) { background: var(--papier-ombre); }
+.pho-section.menu-section:nth-of-type(even) { background: color-mix(in srgb, var(--papier-ombre) 55%, transparent); }
 .pho-intro {
   display: flex;
   align-items: flex-start;
@@ -350,7 +353,10 @@
 
 @media (min-width: 780px) {
   .pho-intro { flex-direction: row; align-items: center; }
-  .pho-list { grid-template-columns: repeat(3, 1fr); }
+  /* 4 déclinaisons depuis la carte du 31/08 (phở gà ajouté) : auto-fit plutôt
+     qu'un nombre fixe, pour qu'un ajout ou un retrait ne laisse jamais une
+     carte orpheline sur sa ligne. */
+  .pho-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 }
 
 /* ---------- CTA footer réserver ---------- */

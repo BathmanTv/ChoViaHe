@@ -37,15 +37,21 @@
 <link rel="icon" href="../favicon-16.png" type="image/png" sizes="16x16" />
 <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
 
-<!-- JSON-LD Menu complet — source : « Rentrée 2026 Carte Cho.pdf », reçue le
-     05/08/2026. Tous les prix y figurent, plus aucun n'est en attente.
-     Écarts avec la version précédente, relevés page par page et VALIDÉS
-     par la cliente le 05/08 :
-       · Bánh khọt (x8) 12 € : retiré de la carte
-       · Cocktails Em Ơi / Dragon / Phở Mojito : 11 € -> 12 €
-         (annule et remplace la confirmation orale du 27/07 à 11 €)
-       · Cà phê sữa đá et Thé glacé maison : 6 € (aucun prix auparavant)
-     La cliente annonce encore de légères retouches d'ici fin août. -->
+<!-- JSON-LD Menu complet — source : « Rentrée 2026 Carte Cho-2.pdf »,
+     version DÉFINITIVE reçue le 31/08/2026, relevée page par page.
+     Écarts avec la version du 05/08 :
+       · Phở gà 16 € : nouveau, la rubrique passe à 4 déclinaisons
+       · Bơ vơ 7,50 € remplacé par Bánh trôi nước mè đen 7 €
+       · Dragon remplacé par Thăng Long (sans Gimber)
+       · Đi Chợ 10 € : nouveau mocktail ; Tám-Đi passe de 11 à 10 €
+       · Chả cốm : (x3) -> (x2), prix inchangé
+       · Supplément nouilles jaunes sautées 6 € : nouveau
+       · Glace & sorbet -> Glaces (1, 2 ou 3 boules), + sésame noir
+       · Em Ơi : « doux & sucré » -> « doux & acidulé »
+       · Cơm gà chiên : pickles -> légumes viet
+       · Mẹt Vỉa Hè : + crudités
+       · Gà chiên xù et Hủ tiếu trộn : descriptions raccourcies
+     Prix identiques par ailleurs. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -76,9 +82,9 @@
       "name": "Món khai vị — Tapas vietnamiens",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Bánh bao (x1)", "description": "Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny-Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Chả cốm (x3)", "description": "Galette de poulet haché, mélangée avec du jeune riz vert récolté avant maturité (le cốm) et différentes épices viet.", "offers": { "@type": "Offer", "price": "8.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Chả cốm (x2)", "description": "Galette de poulet haché, mélangée avec du jeune riz vert récolté avant maturité (le cốm) et différentes épices viet.", "offers": { "@type": "Offer", "price": "8.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Nem Chợ porc ou poulet (x3)", "description": "Avec farce de porc ou poulet haché, champignons, carottes, chou rave, pousses de soja et œufs, sauce nước mắm.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Gà chiên xù", "description": "Cuisse de poulet désossée, marinée avec des épices viet, panée au panko. Servie avec une sauce de piment au citron et à l'ail.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Gà chiên xù", "description": "Cuisse de poulet désossée, marinée avec des épices viet, panée au panko.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Samoussas aux légumes frits (x5)", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Tofu lắc saté", "description": "Tofu frit au saté maison et rau răm (coriandre vietnamienne).", "suitableForDiet": "https://schema.org/VegetarianDiet", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Nem chua rán Hà Nội", "description": "Plat de la cuisine de rue d'Hanoï : bouchées de porc croustillantes, préparées à base de porc et de couenne, servies avec sauce mayonnaise épicée et mangue verte marinée.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
@@ -90,7 +96,7 @@
       "@type": "MenuSection",
       "name": "Plateau à partager",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Mẹt Vỉa Hè", "description": "Plateau assortiment de tapas : gà chiên xù, chả cốm, nem chua rán, nem chợ au porc.", "offers": { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Mẹt Vỉa Hè", "description": "Plateau assortiment de tapas : gà chiên xù, chả cốm, nem chua rán, nem chợ au porc et crudités.", "offers": { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -98,22 +104,24 @@
       "name": "Món chính — Plats",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Xôi-mặn", "description": "Riz gluant avec thịt kho (poitrine de porc mijotée pendant 4 h dans une sauce caramélisée), servi avec des pickles de légumes.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Cơm gà chiên", "description": "Riz blanc avec cuisse de poulet panée au panko, servi avec des pickles de légumes et sauce maison pomme Granny Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Cơm gà chiên", "description": "Riz blanc avec cuisse de poulet panée au panko, servi avec des légumes viet et sauce maison pomme Granny Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Bò-bún", "description": "Salade, crudités, fruits, bœuf sauté à la citronnelle et saté, 2 nems au porc ou poulet, vermicelles de riz. Option végétarienne : protéines de soja à la citronnelle, 2 samoussas aux légumes.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Bún chả Hà Nội", "description": "Plat emblématique de la cuisine de rue de la capitale : vermicelles de riz, poitrine de porc grillée parfumée, nem, salade et herbes fraîches.", "offers": { "@type": "Offer", "price": "15.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Hủ tiếu trộn", "description": "Plat ultra populaire dans le Sud du Vietnam : nouilles de riz garnies de crevettes, porc xá-xíu, accompagnées d'herbes fraîches, salade, cacahuètes, ail frit et sauce maison. Recette sans bouillon.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Hủ tiếu trộn", "description": "Plat ultra populaire dans le Sud du Vietnam : nouilles de riz garnies de crevettes, porc xá-xíu, accompagnées d'herbes fraîches, salade, cacahuètes, ail frit et sauce maison..", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Tôm chiên", "description": "Gambas frites, accompagnées de sa sauce hải sản à la citronnelle, nouilles jaunes sautées avec des légumes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Supplément — bol de riz blanc", "offers": { "@type": "Offer", "price": "4.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Supplément — riz gluant", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Supplément — riz gluant", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Supplément — nouilles jaunes sautées", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
       ]
     },
     {
       "@type": "MenuSection",
       "name": "Phở bò du Nord",
-      "description": "Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8 h, nouilles de riz et fines tranches de bœuf, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.",
+      "description": "Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8 h, nouilles de riz et fines tranches de viande, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.",
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Phở bò tái", "description": "Bœuf cru (merlan) mariné avec des épices, gingembre, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Phở bò chín", "description": "Fine tranche de poitrine de bœuf cuit pendant 8 h, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Phở gà", "description": "Poulet poché, bouillon de bœuf, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Phở bò tái chín", "description": "Bœuf cru et cuit, herbes viet.", "offers": { "@type": "Offer", "price": "17.00", "priceCurrency": "EUR" } }
       ]
     },
@@ -123,8 +131,8 @@
       "hasMenuItem": [
         { "@type": "MenuItem", "name": "Kem bơ", "description": "Crème avocat, glace coco, poudre de coco grillée.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Kem xôi", "description": "Riz gluant au sésame. Servi chaud avec lait de coco, glace vanille.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Bơ vơ", "description": "Brioche perdue, glace vanille, crème au pandan (feuille tropicale aux délicates notes de vanille et noisette).", "offers": { "@type": "Offer", "price": "7.50", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Glace & sorbet (mangue, coco, vanille)", "offers": [ { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } ] }
+        { "@type": "MenuItem", "name": "Bánh trôi nước mè đen", "description": "Boulettes fondantes de riz gluant au sésame noir, servies avec du lait de coco.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Glaces (1, 2 ou 3 boules) — coco, mangue, sésame noir, vanille", "offers": [ { "@type": "Offer", "price": "3.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "5.00", "priceCurrency": "EUR" }, { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } ] }
       ]
     },
     {
@@ -140,8 +148,8 @@
       "@type": "MenuSection",
       "name": "Cocktails",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & sucré — gin, yuzu, basilic, lime, concombre, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Dragon", "description": "Fruité & frais — téquila, fruits du dragon, Gimber, lime, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Em Ơi", "description": "Doux & acidulé — gin, yuzu, basilic, lime, concombre, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Thăng Long", "description": "Fruité & frais — téquila, fruits du dragon, lime, limonade.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Phở Mojito", "description": "Exotique & corsé — rhum ambré, citronnelle, anis étoilé, cannelle, gingembre, coriandre, lime, Perrier.", "offers": { "@type": "Offer", "price": "12.00", "priceCurrency": "EUR" } }
       ]
     },
@@ -149,7 +157,8 @@
       "@type": "MenuSection",
       "name": "Mocktails",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Tám-Đi", "description": "Gin sans alcool, fruit de la passion, lime, yuzu, limonade.", "offers": { "@type": "Offer", "price": "11.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Tám-Đi", "description": "Gin sans alcool, fruit de la passion, lime, yuzu, limonade.", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Đi Chợ", "description": "Gin sans alcool, pamplemousse, purée de coco, limonade.", "offers": { "@type": "Offer", "price": "10.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -258,7 +267,7 @@
          node tools/compresser-carte-pdf.mjs (9,1 Mo → 0,9 Mo). -->
     <p class="carte-pdf">
       <a class="ink-link" href="../assets/carte-cho-via-he.pdf" target="_blank" rel="noopener" download>
-        Télécharger la carte <span class="carte-pdf-poids">PDF · 1,2 Mo</span>
+        Télécharger la carte <span class="carte-pdf-poids">PDF · 1,3 Mo</span>
       </a>
     </p>
   </div>
@@ -285,7 +294,7 @@
         <p class="menu-item-desc">Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny-Smith, oignon et soja.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Chả cốm (x3)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">8&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Chả cốm (x2)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">8&nbsp;€</span></p>
         <p class="menu-item-desc">Galette de poulet haché, mélangée avec du jeune riz vert récolté avant maturité (le <span lang="vi">cốm</span>) et différentes épices viet.</p>
       </li>
       <li class="menu-item">
@@ -294,7 +303,7 @@
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Gà chiên xù</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">9&nbsp;€</span></p>
-        <p class="menu-item-desc">Cuisse de poulet désossée, marinée avec des épices viet, panée au panko. Servie avec une sauce de piment au citron et à l'ail.</p>
+        <p class="menu-item-desc">Cuisse de poulet désossée, marinée avec des épices viet, panée au panko.</p>
       </li>
       <li class="menu-item menu-item--vege">
         <p class="menu-item-head"><span class="menu-item-nom">Samoussas aux légumes frits (x5)</span><span class="menu-item-tag menu-item-tag--vege">végétarien</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
@@ -336,7 +345,7 @@
       <div class="pho-texte">
         <p class="pho-kicker handwritten">le plateau à partager</p>
         <h2 class="menu-section-title pho-title" id="plateau-title" lang="vi">Mẹt Vỉa Hè<span class="fr" lang="fr">tout le stand sur un plateau</span></h2>
-        <p class="pho-desc">Plateau assortiment de tapas : <span lang="vi">gà chiên xù</span>, <span lang="vi">chả cốm</span>, <span lang="vi">nem chua rán</span>, <span lang="vi">nem chợ</span> au porc.</p>
+        <p class="pho-desc">Plateau assortiment de tapas : <span lang="vi">gà chiên xù</span>, <span lang="vi">chả cốm</span>, <span lang="vi">nem chua rán</span>, <span lang="vi">nem chợ</span> au porc et crudités.</p>
         <p class="plateau-prix">23&nbsp;€</p>
       </div>
     </div>
@@ -365,7 +374,7 @@
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cơm gà chiên</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
-        <p class="menu-item-desc">Riz blanc avec cuisse de poulet panée au panko, servi avec des pickles de légumes et sauce maison pomme Granny Smith, oignon et soja.</p>
+        <p class="menu-item-desc">Riz blanc avec cuisse de poulet panée au panko, servi avec des légumes viet et sauce maison pomme Granny Smith, oignon et soja.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bò-bún</span><span class="menu-item-tag menu-item-tag--vege">option végétarienne</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
@@ -377,14 +386,14 @@
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Hủ tiếu trộn</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
-        <p class="menu-item-desc"><em>Plat ultra populaire dans le Sud du Vietnam.</em> Nouilles de riz garnies de crevettes, porc <span lang="vi">xá-xíu</span>, accompagnées d'herbes fraîches, salade, cacahuètes, ail frit et sauce maison. Recette sans bouillon.</p>
+        <p class="menu-item-desc"><em>Plat ultra populaire dans le Sud du Vietnam.</em> Nouilles de riz garnies de crevettes, porc <span lang="vi">xá-xíu</span>, accompagnées d'herbes fraîches, salade, cacahuètes, ail frit et sauce maison.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tôm chiên</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
         <p class="menu-item-desc">Gambas frites, accompagnées de sa sauce <span lang="vi">hải sản</span> à la citronnelle, nouilles jaunes sautées avec des légumes viet.</p>
       </li>
     </ul>
-    <p class="menu-section-note">Suppléments : bol de riz blanc 4&nbsp;€ · riz gluant 6&nbsp;€</p>
+    <p class="menu-section-note">Suppléments : bol de riz blanc 4&nbsp;€ · riz gluant 6&nbsp;€ · nouilles jaunes sautées 6&nbsp;€</p>
   </div>
 </section>
 
@@ -401,12 +410,12 @@
       <div class="pho-texte">
         <p class="pho-kicker handwritten">le plat signature</p>
         <h2 class="menu-section-title pho-title" id="pho-title" lang="vi">Phở bò du Nord<span class="fr" lang="fr">le bouillon mijoté 8 heures</span></h2>
-        <p class="pho-desc">Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8&nbsp;h, nouilles de riz et fines tranches de bœuf, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.</p>
+        <p class="pho-desc">Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8&nbsp;h, nouilles de riz et fines tranches de viande, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.</p>
         <p class="pho-conseil">Le <span lang="vi">phở bò du Nord</span> se déguste avec un peu de vinaigre de riz à l'ail ou du citron pour une touche acidulée. Ajoutez un peu de piment frais ou de sriracha pour un goût relevé.</p>
       </div>
     </div>
 
-    <h3 class="menu-subhead pho-subhead">3 déclinaisons possibles</h3>
+    <h3 class="menu-subhead pho-subhead">4 déclinaisons possibles</h3>
     <ul class="menu-list pho-list">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò tái</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
@@ -415,6 +424,10 @@
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò chín</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
         <p class="menu-item-desc">Fine tranche de poitrine de bœuf cuit pendant 8&nbsp;h, herbes viet.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở gà</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
+        <p class="menu-item-desc">Poulet poché, bouillon de bœuf, herbes viet.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò tái chín</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">17&nbsp;€</span></p>
@@ -449,12 +462,12 @@
         <p class="menu-item-desc">Riz gluant au sésame. Servi chaud avec lait de coco, glace vanille.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bơ vơ</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7,50&nbsp;€</span></p>
-        <p class="menu-item-desc">Brioche perdue, glace vanille, crème au pandan (feuille tropicale aux délicates notes de vanille et noisette).</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh trôi nước mè đen</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
+        <p class="menu-item-desc">Boulettes fondantes de riz gluant au sésame noir, servies avec du lait de coco.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Glace &amp; sorbet</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;/&nbsp;5&nbsp;/&nbsp;7&nbsp;€</span></p>
-        <p class="menu-item-desc">Mangue, coco, vanille.</p>
+        <p class="menu-item-head"><span class="menu-item-nom">Glaces <span class="menu-sub">(1, 2 ou 3 boules)</span></span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">3&nbsp;/&nbsp;5&nbsp;/&nbsp;7&nbsp;€</span></p>
+        <p class="menu-item-desc">Coco, mangue, sésame noir, vanille.</p>
       </li>
     </ul>
   </div>
@@ -494,11 +507,11 @@
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Em Ơi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Doux &amp; sucré — gin, yuzu, basilic, lime, concombre, limonade.</p>
+        <p class="menu-item-desc">Doux &amp; acidulé — gin, yuzu, basilic, lime, concombre, limonade.</p>
       </li>
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom">Dragon</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
-        <p class="menu-item-desc">Fruité &amp; frais — téquila, fruits du dragon, Gimber, lime, limonade.</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Thăng Long</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
+        <p class="menu-item-desc">Fruité &amp; frais — téquila, fruits du dragon, lime, limonade.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở Mojito</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">12&nbsp;€</span></p>
@@ -509,8 +522,12 @@
     <h3 class="menu-subhead">Mocktails</h3>
     <ul class="menu-list menu-list--compact">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tám-Đi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">11&nbsp;€</span></p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Tám-Đi</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
         <p class="menu-item-desc">Gin sans alcool, fruit de la passion, lime, yuzu, limonade.</p>
+      </li>
+      <li class="menu-item">
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Đi Chợ</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">10&nbsp;€</span></p>
+        <p class="menu-item-desc">Gin sans alcool, pamplemousse, purée de coco, limonade.</p>
       </li>
     </ul>
 
