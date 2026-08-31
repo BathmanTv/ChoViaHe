@@ -65,6 +65,43 @@ const pageSrc = await sharp(SRC).extract(PAGE).png().toBuffer();
 const stSrc = (await sharp(pageSrc).greyscale().stats()).channels[0];
 console.log(`page source  : moyenne ${stSrc.mean.toFixed(1)}  écart-type ${stSrc.stdev.toFixed(2)}  min ${stSrc.min}`);
 
+/* GARDE-FOU : aucune LIGNE imprimee dans le cadrage.
+   Le premier cadrage embarquait le filet ornemental du carnet, qui s'est
+   retrouve en travers du haut du site.
+
+   Le test doit distinguer un FILET d'un simple degrade : le papier
+   s'assombrit naturellement vers les bords, sur des centaines de rangees.
+   Un filet, lui, est un creux LOCAL et ETROIT. On compare donc chaque
+   rangee a la mediane de son voisinage (+/- 25 rangees), pas a la mediane
+   globale. On refuse la decoupe plutot que d'ecrire une image fautive. */
+{
+  const { width, height } = await sharp(pageSrc).metadata();
+  const brut = await sharp(pageSrc).greyscale().raw().toBuffer();
+  const rangees = [];
+  for (let y = 0; y < height; y++) {
+    let acc = 0;
+    for (let x = 0; x < width; x++) acc += brut[y * width + x];
+    rangees.push(acc / width);
+  }
+  const VOISINAGE = 25;
+  const SEUIL = 6;                    // niveaux sous le voisinage immediat
+  const fautives = [];
+  for (let y = VOISINAGE; y < height - VOISINAGE; y++) {
+    const autour = [];
+    for (let k = y - VOISINAGE; k <= y + VOISINAGE; k++) if (k !== y) autour.push(rangees[k]);
+    autour.sort((a, b) => a - b);
+    const local = autour[autour.length >> 1];
+    if (rangees[y] < local - SEUIL) fautives.push([y + PAGE.top, Math.round(rangees[y]), Math.round(local)]);
+  }
+  if (fautives.length) {
+    console.error('ARRET — le cadrage contient une ligne imprimee :');
+    for (const [y, v, l] of fautives.slice(0, 6)) console.error(`   ligne ${y} du scan : ${v} contre ${l} autour`);
+    console.error('Deplacer PAGE.top / PAGE.height pour passer au-dela.');
+    process.exit(1);
+  }
+  console.log('garde-fou    : aucune ligne imprimee dans le cadrage');
+}
+
 // Aucun adoucissement : mesuré, les 0,1 % de pixels les plus sombres du crop
 // sont à 153/255, ce qui laisse au texte --encre un contraste de 6,1:1 —
 // au-dessus du seuil AA de 4,5:1. La matière passe donc telle quelle.

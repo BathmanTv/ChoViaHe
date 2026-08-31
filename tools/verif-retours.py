@@ -295,6 +295,40 @@ with sync_playwright() as p:
         pg.close()
 
     # =================================================================
+    # GRANDS ÉCRANS — 1920 et 2560
+    # Ajouté après un défaut réel : le fond se pixellisait au-delà de 1280,
+    # et rien au-dessus de cette largeur n'était contrôlé. Une image de fond
+    # s'étire vers le HAUT ; son point de rupture est donc le plus grand
+    # écran, jamais le plus petit.
+    # =================================================================
+    bloc("GRANDS ÉCRANS — 1920 et 2560")
+    for w, h in [(1920, 1080), (2560, 1400)]:
+        gp = b.new_page(viewport={"width": w, "height": h})
+        errs_g = []
+        gp.on("console", lambda m: errs_g.append(m.text) if m.type == "error" else None)
+        gp.goto(BASE + "/", wait_until="networkidle")
+        gp.wait_for_timeout(1400)
+        g = gp.evaluate("""(() => {
+          const cs = getComputedStyle(document.body, '::before');
+          return {
+            deborde: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+            couv: Math.round(document.querySelector('.couverture').getBoundingClientRect().height),
+            fondPage: cs.backgroundImage,
+            fondTaille: cs.backgroundSize,
+            fondRepete: cs.backgroundRepeat,
+          };
+        })()""")
+        print(f"  {w}px : couverture={g['couv']}px  débordement={g['deborde']}px  fond={g['fondTaille']}/{g['fondRepete']}")
+        verif("Grand", f"Aucun débordement horizontal ({w}px)", g["deborde"] <= 0, f"{g['deborde']}px")
+        verif("Grand", f"Matière de la page présente ({w}px)", "papier-fond" in g["fondPage"])
+        verif("Grand", f"Fond en cover, jamais répété ({w}px)",
+              g["fondTaille"] == "cover" and g["fondRepete"] == "no-repeat",
+              f"{g['fondTaille']} / {g['fondRepete']}")
+        verif("Grand", f"Aucune erreur JS ({w}px)", not errs_g, str(errs_g[:2]))
+        controle_structure(gp, f"accueil {w}px")
+        gp.close()
+
+    # =================================================================
     # MOBILE — 390x844 (iPhone) + 360x740 (Android courant)
     # =================================================================
     bloc("MOBILE — 390 x 844 puis 360 x 740")
