@@ -113,23 +113,31 @@
 
   function focusables() { return overlay.querySelectorAll('a[href], button:not([disabled])'); }
 
+  // Même correctif que home.js : fermeture par setTimeout annulable, pas par
+  // transitionend (qui figeait le menu sur une réouverture rapide).
+  var fermeture = null;
   function openMenu() {
     if (!overlay) return;
+    clearTimeout(fermeture);
     lastFocus = document.activeElement;
     overlay.hidden = false;
     void overlay.offsetWidth;
     overlay.classList.add('is-open');
     burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Fermer le menu');
     document.body.style.overflow = 'hidden';
+    document.querySelectorAll('header, main, footer').forEach(function (el) { el.inert = true; });   // le reste de la page sort du balayage lecteur d'écran
     var f = focusables(); if (f.length) f[0].focus();
   }
   function closeMenu() {
     if (!overlay) return;
     overlay.classList.remove('is-open');
     burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Ouvrir le menu');
     document.body.style.overflow = '';
-    var done = function () { overlay.hidden = true; overlay.removeEventListener('transitionend', done); };
-    if (reduce) { done(); } else { overlay.addEventListener('transitionend', done); }
+    document.querySelectorAll('header, main, footer').forEach(function (el) { el.inert = false; });
+    clearTimeout(fermeture);
+    fermeture = setTimeout(function () { overlay.hidden = true; }, reduce ? 0 : 420);
     if (lastFocus) lastFocus.focus();
   }
 
@@ -137,7 +145,7 @@
     burger.addEventListener('click', openMenu);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
     document.addEventListener('keydown', function (e) {
-      if (overlay.hidden) return;
+      if (!overlay.classList.contains('is-open')) return;
       if (e.key === 'Escape') { closeMenu(); return; }
       if (e.key === 'Tab') {
         var f = focusables(); if (!f.length) return;

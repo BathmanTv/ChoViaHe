@@ -15,8 +15,11 @@ DirectoryIndex index.html
 RewriteEngine On
 
 # http -> https
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteCond %{HTTPS} !=on
+# Test POSITIF sur l'en-tête que pose le proxy OVH. Un test négatif combiné
+# (X-Forwarded-Proto absent ET HTTPS vide) redirigerait aussi les requêtes
+# déjà en TLS : boucle de 301 sur tout le site. En cas de doute, cette règle
+# échoue en OUVERT (pas de redirection), jamais en boucle.
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
 RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 
 # sans www -> www
@@ -27,13 +30,13 @@ RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 # 2. ANCIENNES URL WIX -> nouvelles pages (301 permanent)
 #    Sans ça, tout le référencement acquis part à la poubelle.
 # ---------------------------------------------------------
-RewriteRule ^menu/?$              /carte/ [R=301,L]
-RewriteRule ^copie-de-menu/?$     /carte/ [R=301,L]
-RewriteRule ^notre-histoire/?$    /#histoire [R=301,L]
+RewriteRule ^menu/?$              /carte/ [R=301,NC,L]
+RewriteRule ^copie-de-menu/?$     /carte/ [R=301,NC,L]
+RewriteRule ^notre-histoire/?$    /#histoire [R=301,NE,NC,L]
 
 # Wix ajoute parfois un préfixe de langue
-RewriteRule ^(fr|en)/menu/?$           /carte/ [R=301,L]
-RewriteRule ^(fr|en)/notre-histoire/?$ /#histoire [R=301,L]
+RewriteRule ^(fr|en)/menu/?$           /carte/ [R=301,NC,L]
+RewriteRule ^(fr|en)/notre-histoire/?$ /#histoire [R=301,NE,NC,L]
 
 # Résidus techniques Wix : on renvoie proprement à l'accueil
 RewriteRule ^_partials/          / [R=301,L]
@@ -50,7 +53,7 @@ ErrorDocument 404 /404.html
 # ---------------------------------------------------------
 <IfModule mod_deflate.c>
 AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
-AddOutputFilterByType DEFLATE application/javascript application/json
+AddOutputFilterByType DEFLATE application/javascript text/javascript application/json
 AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
@@ -63,6 +66,7 @@ ExpiresActive On
 ExpiresByType text/html                 "access plus 1 hour"
 ExpiresByType text/css                  "access plus 1 year"
 ExpiresByType application/javascript    "access plus 1 year"
+ExpiresByType text/javascript           "access plus 1 year"
 ExpiresByType image/webp                "access plus 1 year"
 ExpiresByType image/avif                "access plus 1 year"
 ExpiresByType image/png                 "access plus 1 year"

@@ -14,7 +14,7 @@
   overflow: hidden;
 }
 .carte-back {
-  display: inline-block;
+  display: inline-flex; align-items: center; min-height: 44px;   /* cible tactile */
   font-family: var(--f-hand);
   font-weight: 600;
   font-size: 1.25rem;
@@ -36,6 +36,14 @@
   display: block;
   font-size: 0.62em;
   color: var(--encre);
+}
+.carte-title-fr {
+  display: block;
+  font-family: var(--f-hand);
+  font-weight: 600;
+  font-size: 0.5em;
+  color: var(--bleu-fonce);
+  margin-top: 0.15em;
 }
 .carte-annotation {
   font-family: var(--f-hand);
@@ -69,6 +77,41 @@
 @media (max-width: 339px) {
   .carte-note, .menu-item-desc, .pho-desc, .pho-conseil { text-align: left; }
 }
+/* ---------- Sommaire collant sous l'en-tête ---------- */
+.carte-sommaire {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 900;
+  display: flex;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.35rem var(--pad-x);
+  background: color-mix(in srgb, var(--papier) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(30,26,23,0.10);
+}
+.carte-sommaire::-webkit-scrollbar { display: none; }
+.carte-sommaire a {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  font-family: var(--f-corps);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--encre);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.carte-sommaire a:hover,
+.carte-sommaire a:focus-visible { background: color-mix(in srgb, var(--framboise) 12%, transparent); color: var(--framboise-fonce); }
+/* le sommaire ajoute ~3rem sous l'en-tête : les ancres doivent s'arrêter en dessous */
+html { scroll-padding-top: calc(var(--header-h) + 3.4rem); }
+
 /* téléchargement de la carte illustrée (PDF compressé) */
 .carte-pdf { margin-top: 1.1rem; }
 .carte-pdf a {
@@ -121,7 +164,7 @@
 .menu-section-title .fr {
   display: block;
   font-family: var(--f-hand);
-  color: var(--bleu);
+  color: var(--bleu-fonce);   /* --bleu = 3,94:1 sur papier-ombre, échoue AA sous 24px */
   font-size: 0.5em;
   font-weight: 600;
   transform: rotate(-1.5deg);
@@ -153,7 +196,7 @@
   flex: 1 1 auto;
   min-width: 1.5rem;
   border-bottom: 1px dotted rgba(30,26,23,0.28);
-  transform: translateY(-0.25em);
+  transform: translateY(-0.1em);   /* -0.25em se lisait comme un barré, pas un filet */
 }
 .menu-item-prix {
   font-family: var(--f-corps);
@@ -229,7 +272,7 @@
 .menu-subhead-hint {
   font-family: var(--f-hand);
   font-weight: 600;
-  color: var(--bleu);
+  color: var(--bleu-fonce);
   font-size: 0.72em;
   margin-left: 0.3rem;
 }
@@ -249,17 +292,16 @@
 /* note bas de section (suppléments, précisions) */
 .menu-section-note {
   margin-top: 1.2rem;
-  font-family: var(--f-hand);
-  font-weight: 600;
-  color: var(--bleu);
-  font-size: 1.15rem;
-  transform: rotate(-1deg);
+  font-family: var(--f-corps);   /* des prix : jamais en écriture manuscrite (DESIGN.md) */
+  font-weight: 500;
+  color: var(--encre-doux);
+  font-size: 0.95rem;
 }
 
-/* alternance douce de fond entre sections pour rythmer la lecture */
-.menu-section:nth-of-type(even) {
-  background: rgba(255,255,255,0.32);
-}
+/* alternance douce de fond : classe explicite, pas nth-of-type — les
+   bandes du phở et du plateau (fond propre) cassaient le comptage et la
+   dernière rubrique, la plus longue, restait sans alternance. */
+.menu-section--alt { background: rgba(255,255,255,0.32); }
 
 /* ---------- desktop : 2 colonnes de plats sur les grosses sections ---------- */
 @media (min-width: 780px) {
@@ -282,6 +324,7 @@
    spécifique. Le dessin du plateau est plus étroit que celui du phở. */
 #plateau .pho-illus { width: clamp(80px, 22vw, 150px); }
 .plateau-prix {
+  text-align: right; max-width: 58ch;   /* aligné sur le bord droit de la description, comme les autres prix */
   margin: 0.6rem 0 0;
   font-family: var(--f-corps);
   font-weight: 600;
@@ -317,7 +360,7 @@
 .pho-illus img { width: 100%; height: auto; }
 .pho-texte { min-width: 0; }
 .pho-kicker {
-  color: var(--bleu);
+  color: var(--bleu-fonce);
   font-size: clamp(1.15rem, 4vw, 1.5rem);
   margin: 0 0 0.15rem;
   display: inline-block;
@@ -343,6 +386,11 @@
   margin-top: clamp(1.6rem, 5vw, 2.6rem);
 }
 .pho-list { display: grid; gap: clamp(0.6rem, 2vw, 1rem); }
+/* Dans une carte de ~200px, le pointillé + flex-wrap faisaient passer le
+   prix à la ligne sur deux cartes sur quatre (mesuré : décalage 36px contre
+   -4). Ici pas de pointillé : nom à gauche, prix à droite, une seule ligne. */
+.pho-list .menu-item-head { flex-wrap: nowrap; justify-content: space-between; gap: 0.5rem; }
+.pho-list .menu-item-lead { display: none; }
 .pho-list .menu-item {
   border-bottom: none;
   background: color-mix(in srgb, var(--papier) 82%, #fff);

@@ -7,8 +7,6 @@
 <meta name="description" content="La carte du Chợ Vỉa Hè à Toulouse : tapas viet, pho, bo bun, bún chả, desserts, cà phê et cocktails. Cuisine de rue du Vietnam faite maison, 8 rue de Metz." />
 <meta name="theme-color" content="#F1E3C9" />
 
-<!-- STAGING GitHub Pages — RETIRER à la bascule OVH -->
-
 <!-- Avant le premier rendu : retire .no-js et arme l'état caché des apparitions
      (sinon la page s'affiche visible puis tout disparaît = clignotement). -->
 <script>
@@ -25,13 +23,25 @@
 <meta property="og:description" content="Tapas vietnamiens, phở, bún chả, desserts et cocktails. La cuisine de rue du Vietnam à Toulouse." />
 <meta property="og:locale" content="fr_FR" />
 <meta property="og:url" content="https://www.choviahe.fr/carte/" />
-<meta property="og:image" content="https://www.choviahe.fr/assets/photos/28-cho-via-he-septembre25-lowres-28-960.webp" />
+<meta property="og:image" content="https://www.choviahe.fr/assets/og-choviahe.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="L'enseigne néon rouge du Chợ Vỉa Hè : cuisine de rue vietnamienne à Toulouse." />
+<meta property="og:site_name" content="Chợ Vỉa Hè" />
 <meta name="twitter:card" content="summary_large_image" />
 
 <!-- Fonts auto-hébergées (subsets latin+vietnamien) — perf + CNIL, plus de tiers Google -->
-<link rel="stylesheet" href="../fonts/fonts.css" />
-<link rel="stylesheet" href="../home.css" />
-<link rel="stylesheet" href="./carte.css" />
+<!-- Polices du premier écran, préchargées : sinon le titre attend HTML ->
+     fonts.css -> home.css, trois allers-retours, et se peint en Georgia avant
+     de se recomposer. Le CDN de GSAP/Lenis est pré-connecté pour la même
+     raison : quelques centaines de ms sur mobile. -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/lora-600-latin.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/lora-600-vietnamese.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/be-vietnam-pro-400-latin.woff2" />
+<link rel="stylesheet" href="../fonts/fonts.css?v=20260902" />
+<link rel="stylesheet" href="../home.css?v=20260902" />
+<link rel="stylesheet" href="./carte.css?v=20260902" />
 
 <link rel="icon" href="../favicon-32.png" type="image/png" sizes="32x32" />
 <link rel="icon" href="../favicon-16.png" type="image/png" sizes="16x16" />
@@ -67,7 +77,7 @@
     "servesCuisine": ["Vietnamese", "Street food"],
     "priceRange": "€€",
     "telephone": "+33562858392",
-    "acceptsReservations": "https://bookings.zenchef.com/results?rid=377642",
+    "acceptsReservations": true,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "8 rue de Metz",
@@ -205,6 +215,11 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+  { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://www.choviahe.fr/" },
+  { "@type": "ListItem", "position": 2, "name": "La Carte", "item": "https://www.choviahe.fr/carte/" } ] }
+</script>
 </head>
 <body>
 
@@ -233,7 +248,7 @@
 </header>
 
 <!-- overlay menu mobile -->
-<div class="nav-overlay" id="menu-overlay" hidden>
+<div class="nav-overlay" id="menu-overlay" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <button class="overlay-close" type="button" aria-label="Fermer le menu" data-close>×</button>
   <nav aria-label="Menu">
     <ul>
@@ -255,23 +270,31 @@
     <h1 class="carte-title" id="carte-title">
       <span class="viet" lang="vi">Nhật ký chuyến đi</span>
       La Carte
+      <span class="carte-title-fr">cuisine de rue vietnamienne à Toulouse</span>
     </h1>
     <p class="carte-annotation handwritten">tout ce qu'on rapporte du Vietnam</p>
     <p class="carte-note">La carte du restaurant, comme au bord du trottoir : une cuisine de rue vietnamienne faite maison, mijotée chaque jour à Toulouse. Les noms sont ceux du Vietnam — on vous raconte chaque plat en français juste en dessous.</p>
-    <!-- ⚠️ AVANT LA BASCULE SUR choviahe.fr : remplacer le PDF par la version
-         DÉFINITIVE. Le fichier actuel est le brouillon « rentrée 26 » — il
-         contient encore « NOUVEAU / BLA BLA BLA » (p.2) et « ...mangues verte
-         ??? » sur le plateau. Acceptable tant que le site n'est partagé qu'avec
-         la cliente ; inacceptable en public.
-         Pour régénérer : déposer le nouveau PDF dans docs/carte/ puis lancer
-         node tools/compresser-carte-pdf.mjs (9,1 Mo → 0,9 Mo). -->
+    <!-- PDF = version définitive du 31/08 (Rentrée 2026 Carte Cho-2). Pour une
+         future carte : déposer le PDF dans img/ et lancer
+         node tools/compresser-carte-pdf.mjs — il prend le plus récent. -->
     <p class="carte-pdf">
-      <a class="ink-link" href="../assets/carte-cho-via-he.pdf" target="_blank" rel="noopener" download>
+      <a class="ink-link" href="../assets/carte-cho-via-he.pdf" target="_blank" rel="noopener" download data-track="carte-pdf">
         Télécharger la carte <span class="carte-pdf-poids">PDF · 1,3 Mo</span>
       </a>
     </p>
   </div>
 </section>
+
+<!-- Sommaire collant : la carte fait 11 écrans de haut sur mobile, sans lui on
+     cherche « les cocktails » à l'aveugle. Ancres natives, aucun JS. -->
+<nav class="carte-sommaire" aria-label="Rubriques de la carte">
+  <a href="#tapas">Tapas</a>
+  <a href="#plateau">Plateau</a>
+  <a href="#plats">Plats</a>
+  <a href="#pho">Phở</a>
+  <a href="#desserts">Desserts</a>
+  <a href="#boissons">Boissons</a>
+</nav>
 
 <!-- ================= MÓN KHAI VỊ / TAPAS ================= -->
 <section class="menu-section" id="tapas" data-reveal aria-labelledby="tapas-title">
@@ -353,7 +376,7 @@
 </section>
 
 <!-- ================= MÓN CHÍNH / PLATS ================= -->
-<section class="menu-section" id="plats" data-reveal aria-labelledby="plats-title">
+<section class="menu-section menu-section--alt" id="plats" data-reveal aria-labelledby="plats-title">
   <div class="wrap">
     <div class="menu-section-head">
       <div class="menu-section-illus" aria-hidden="true">
@@ -367,7 +390,7 @@
       </div>
     </div>
 
-    <ul class="menu-list">
+    <ul class="menu-list menu-list--2col">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Xôi-mặn</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">15&nbsp;€</span></p>
         <p class="menu-item-desc">Riz gluant avec <span lang="vi">thịt kho</span> (poitrine de porc mijotée pendant 4&nbsp;h dans une sauce caramélisée), servi avec des pickles de légumes.</p>
@@ -452,7 +475,7 @@
       </div>
     </div>
 
-    <ul class="menu-list">
+    <ul class="menu-list menu-list--2col">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Kem bơ</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
         <p class="menu-item-desc">Crème avocat, glace coco, poudre de coco grillée.</p>
@@ -474,7 +497,7 @@
 </section>
 
 <!-- ================= GIẢI KHÁT VIỆT + BAR ================= -->
-<section class="menu-section" id="boissons" data-reveal aria-labelledby="boissons-title">
+<section class="menu-section menu-section--alt" id="boissons" data-reveal aria-labelledby="boissons-title">
   <div class="wrap">
     <div class="menu-section-head">
       <div class="menu-section-illus" aria-hidden="true">
@@ -491,7 +514,7 @@
     <!-- Prix relevés sur la carte « Rentrée 2026 » reçue le 05/08 : le café
          glacé et le thé glacé maison sont à 6 € (la version précédente du PDF
          ne portait aucun prix sur cette page). -->
-    <ul class="menu-list">
+    <ul class="menu-list menu-list--2col">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cà phê sữa đá</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
         <p class="menu-item-desc">Café Viet Robusta, lait concentré, glaçons.</p>
@@ -636,16 +659,16 @@
 <div class="sticky-actions" data-sticky-actions aria-label="Actions rapides" hidden>
   <a class="sticky-btn sticky-btn--book" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver</a>
   <a class="sticky-btn sticky-btn--call" href="tel:+33562858392">Appeler</a>
-  <a class="sticky-btn sticky-btn--route" href="https://www.google.com/maps/search/?api=1&amp;query=Ch%E1%BB%A3%20V%E1%BB%89a%20H%C3%A8%208%20rue%20de%20Metz%2031000%20Toulouse" target="_blank" rel="noopener">Itinéraire</a>
+  <a class="sticky-btn sticky-btn--route" href="https://www.google.com/maps/search/?api=1&amp;query=Ch%E1%BB%A3%20V%E1%BB%89a%20H%C3%A8%208%20rue%20de%20Metz%2031000%20Toulouse" data-track="itineraire" target="_blank" rel="noopener">Itinéraire</a>
 </div>
 
 <!-- Motion layer (CDN épinglé, defer). carte.js dégrade proprement (fallback IO). -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-<script src="./carte.js" defer></script>
+<script src="./carte.js?v=20260902" defer></script>
 
 <!-- Zenchef SDK — chargé À LA DEMANDE au premier clic Réserver (carte.js). Fallback = lien direct. -->
 <div class="zc-widget-config" data-restaurant="377642" data-hide-button="true" data-disable-gtm="true" data-disable-ga4="true"></div>
-<script src="../analytics.js" defer></script>
+<script src="../analytics.js?v=20260902" defer></script>
 </body>
 </html>

@@ -48,6 +48,17 @@ for (const rel of PUBLIQUES) {
   }
 }
 
+// --- versionnage des assets : ?v=AAAAMMJJ sur chaque CSS/JS ---
+// Le .htaccess met le CSS/JS en cache 1 an : sans ce jeton, un visiteur qui
+// revient après une mise à jour garderait l'ancienne feuille pendant un an.
+const jeton = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+for (const rel of [...PUBLIQUES, 'mentions-legales/index.html', '404.html']) {
+  const chemin = join(DOCS, rel);
+  const avant = readFileSync(chemin, 'utf8');
+  const apres = avant.replace(/\.(css|js)\?v=\d{8}/g, `.$1?v=${jeton}`);
+  if (avant !== apres) { writeFileSync(chemin, apres, 'utf8'); console.log(`  ?v=${jeton}   ${rel}`); modifs++; }
+}
+
 // --- sitemap : date du jour ---
 const jour = new Date().toISOString().slice(0, 10);
 const sm = join(DOCS, 'sitemap.xml');

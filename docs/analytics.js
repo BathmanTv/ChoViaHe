@@ -32,14 +32,24 @@
     }
   }
 
-  // Clics sortants qui comptent (l'action n°1 = réserver)
+  /* Clics sortants qui comptent (l'action n°1 = réserver).
+     Détection par attribut data-track explicite, jamais par sous-chaîne d'URL :
+     le lien du PDF contenait « carte » et celui des avis « google.com/maps »,
+     ce qui gonflait les deux métriques dès le premier jour. */
+  var LIBELLES = {
+    resa: 'Clic Réserver', tel: 'Clic Appeler', itineraire: 'Clic Itinéraire',
+    carte: 'Clic vers la carte', 'carte-pdf': 'Téléchargement du PDF', avis: 'Clic vers les avis Google'
+  };
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a') : null;
-    if (!a || !a.href) return;
-    if (a.href.indexOf('bookings.zenchef.com') !== -1) track('resa-clic', 'Clic Réserver');
-    else if (a.href.indexOf('tel:') === 0) track('tel-clic', 'Clic Appeler');
-    else if (a.href.indexOf('google.com/maps') !== -1) track('itineraire-clic', 'Clic Itinéraire');
-    else if (a.getAttribute('href') && a.getAttribute('href').indexOf('carte') !== -1) track('carte-clic', 'Clic vers la carte');
+    if (!a) return;
+    var quoi = a.getAttribute('data-track');
+    if (!quoi) {
+      if (a.href && a.href.indexOf('bookings.zenchef.com') !== -1) quoi = 'resa';
+      else if (a.href && a.href.indexOf('tel:') === 0) quoi = 'tel';
+      else return;
+    }
+    if (LIBELLES[quoi]) track(quoi + '-clic', LIBELLES[quoi]);
   }, { passive: true });
 
   // Réservation FINALISÉE dans le module Zenchef (la vraie conversion)

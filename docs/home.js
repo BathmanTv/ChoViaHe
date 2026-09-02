@@ -95,6 +95,7 @@
         touchMultiplier: 1
       });
       // UN SEUL RAF : Lenis piloté par le ticker GSAP.
+      window.choLenis = lenis;   // pour que le menu puisse le stopper (fenêtre étroite + souris)
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
       gsap.ticker.lagSmoothing(0);
@@ -102,7 +103,10 @@
 
     /* ---- Ancres : défilement doux vers les sections, offset header ---- */
     // Intercepte tous les liens d'ancrage internes (header, hero, footer).
-    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    // Le lien d'évitement est EXCLU : intercepté, il défilait vers #contenu
+    // (déjà en haut) sans déplacer le focus — le Tab suivant repartait dans la
+    // navigation, donc rien n'était évité.
+    document.querySelectorAll('a[href^="#"]:not(.skip-link)').forEach(function (a) {
       var href = a.getAttribute('href');
       if (!href || href === '#') return;              // faux liens gérés plus bas
       var target = document.getElementById(href.slice(1));
@@ -117,6 +121,13 @@
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
       });
+    });
+    var skip = document.querySelector('.skip-link');
+    if (skip) skip.addEventListener('click', function () {
+      var cible = document.getElementById('contenu');
+      if (!cible) return;
+      cible.setAttribute('tabindex', '-1');
+      cible.focus({ preventScroll: true });
     });
 
     /* ---- Reveals : opacity + translateY, stagger léger sur enfants ---- */
@@ -371,14 +382,24 @@
     return overlay.querySelectorAll('a[href], button:not([disabled])');
   }
 
+  /* Fermeture différée par un setTimeout ANNULABLE, pas par transitionend :
+     un transitionend posé à la fermeture se déclenchait aussi sur la
+     transition d'OUVERTURE si on rouvrait dans les 400 ms — et cachait un
+     menu déjà rouvert (page figée, Échap inopérant). Reproduit 4/4. */
+  var fermeture = null;
+
   function openMenu() {
     if (!overlay) return;
+    clearTimeout(fermeture);
     lastFocus = document.activeElement;
     overlay.hidden = false;
     void overlay.offsetWidth;               // reflow puis anime
     overlay.classList.add('is-open');
     burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Fermer le menu');
     document.body.style.overflow = 'hidden';
+    document.querySelectorAll('header, main, footer').forEach(function (el) { el.inert = true; });   // le reste de la page sort du balayage lecteur d'écran
+    if (window.choLenis) window.choLenis.stop();   // overflow:hidden n'arrête pas Lenis
     var f = focusables();
     if (f.length) f[0].focus();
   }
@@ -387,12 +408,12 @@
     if (!overlay) return;
     overlay.classList.remove('is-open');
     burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Ouvrir le menu');
     document.body.style.overflow = '';
-    var done = function () {
-      overlay.hidden = true;
-      overlay.removeEventListener('transitionend', done);
-    };
-    if (reduce) { done(); } else { overlay.addEventListener('transitionend', done); }
+    document.querySelectorAll('header, main, footer').forEach(function (el) { el.inert = false; });
+    if (window.choLenis) window.choLenis.start();
+    clearTimeout(fermeture);
+    fermeture = setTimeout(function () { overlay.hidden = true; }, reduce ? 0 : 420);
     if (lastFocus) lastFocus.focus();
   }
 
@@ -406,7 +427,7 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (overlay.hidden) return;
+      if (!overlay.classList.contains('is-open')) return;
       if (e.key === 'Escape') { closeMenu(); return; }
       if (e.key === 'Tab') {
         var f = focusables();
@@ -446,6 +467,9 @@
     var coverIO = new IntersectionObserver(function (entries) {
       var visible = !entries[0].isIntersecting;
       bar.classList.toggle('is-visible', visible);
+      // Tant que le grand « Réserver » du héros est à l'écran, celui de
+      // l'en-tête s'efface (tous écrans) : un seul bouton jaune à la fois.
+      document.documentElement.classList.toggle('hero-cta-visible', !visible);
       // D2 : quand la sticky bar est visible, on masque le CTA du header sur
       // mobile (CSS ≤780px .sticky-active .header-cta) pour éviter 3 « Réserver »
       // jaunes simultanés. Desktop inchangé (media query).
@@ -517,24 +541,38 @@
     var petitEcran = window.matchMedia('(max-width: 780px), (pointer: coarse)').matches;
     if (petitEcran) return;   // les liens gardent leur comportement natif (_blank)
 
-    function openWhenReady(fallbackHref, deadline) {
+    /* Un seul chemin d'ouverture à la fois : sans ce verrou, un SDK lent
+       pouvait ouvrir l'onglet de repli PUIS le module — deux fois la même
+       réservation. Le repli à 1,2 s : un bloqueur ou un réseau d'entreprise
+       qui filtre sdk.zenchef.com ne doit pas donner 4 s d'écran mort. */
+    var enCours = false;
+    function openWhenReady(bouton, fallbackHref, deadline) {
+      if (!enCours) return;
       if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
+        enCours = false; bouton.classList.remove('is-loading');
         window.ZenchefWidget.open();
         return;
       }
-      if (Date.now() > deadline) { window.open(fallbackHref, '_blank', 'noopener'); return; }
-      setTimeout(function () { openWhenReady(fallbackHref, deadline); }, 120);
+      if (Date.now() > deadline) {
+        enCours = false; bouton.classList.remove('is-loading');
+        window.open(fallbackHref, '_blank', 'noopener');
+        return;
+      }
+      setTimeout(function () { openWhenReady(bouton, fallbackHref, deadline); }, 100);
     }
     document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
+        if (enCours) return;
+        enCours = true;
+        a.classList.add('is-loading');
         if (!document.getElementById('zenchef-sdk')) {
           var js = document.createElement('script');
           js.id = 'zenchef-sdk';
           js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';
           document.head.appendChild(js);
         }
-        openWhenReady(a.href, Date.now() + 4000);
+        openWhenReady(a, a.href, Date.now() + 1200);
       });
     });
   })();

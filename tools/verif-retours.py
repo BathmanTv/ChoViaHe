@@ -295,6 +295,104 @@ with sync_playwright() as p:
         pg.close()
 
     # =================================================================
+    # AUDIT DU 02/09 — chaque correctif a son contrôle
+    # =================================================================
+    bloc("AUDIT 02/09 — correctifs")
+    au = b.new_page(viewport={"width": 390, "height": 844}, is_mobile=True, has_touch=True)
+    au.goto(BASE + "/", wait_until="networkidle"); au.wait_for_timeout(900)
+
+    # 1. menu : réouverture rapide ne fige plus la page (bug reproduit 4/4 avant)
+    au.click("[data-burger]"); au.wait_for_timeout(500)
+    au.click("#menu-overlay a[href='#histoire']"); au.wait_for_timeout(200)
+    au.click("[data-burger]"); au.wait_for_timeout(600)
+    m = au.evaluate("""() => { const o=document.getElementById('menu-overlay');
+      return {hidden:o.hidden, open:o.classList.contains('is-open'), ov:document.body.style.overflow}; }""")
+    verif("Audit", "Menu : réouverture rapide, le menu reste visible",
+          m["open"] and not m["hidden"], str(m))
+    au.keyboard.press("Escape"); au.wait_for_timeout(500)
+    m2 = au.evaluate("() => ({open:document.getElementById('menu-overlay').classList.contains('is-open'), ov:document.body.style.overflow})")
+    verif("Audit", "Menu : Échap referme et libère le défilement", not m2["open"] and m2["ov"] == "", str(m2))
+
+    # 2. analytics : les liens portent un data-track explicite
+    dt = au.evaluate("""() => ({
+      pdfOk: true,
+      avis: (document.querySelector('.avis-lien a')||{}).getAttribute ? document.querySelector('.avis-lien a').getAttribute('data-track') : null,
+      route: (document.querySelector('.sticky-btn--route')||{}).getAttribute ? document.querySelector('.sticky-btn--route').getAttribute('data-track') : null,
+      carte: (document.querySelector('.carte-cta a')||{}).getAttribute ? document.querySelector('.carte-cta a').getAttribute('data-track') : null,
+    })""")
+    verif("Audit", "Stats : avis / itinéraire / carte tracés explicitement",
+          dt["avis"] == "avis" and dt["route"] == "itineraire" and dt["carte"] == "carte", str(dt))
+
+    # 3. hauteurs d'images déclarées = réelles (ratio)
+    ratios = au.evaluate("""() => [...document.querySelectorAll('img[width][height]')]
+      .filter(i => i.naturalWidth && /poulets|panier-debout|velo/.test(i.currentSrc||i.src))
+      .map(i => ({src:(i.currentSrc||i.src).split('/').pop().slice(0,22), decl:(i.getAttribute('width')/i.getAttribute('height')).toFixed(2), reel:(i.naturalWidth/i.naturalHeight).toFixed(2)}))""")
+    verif("Audit", "Images : ratio déclaré = ratio réel",
+          all(abs(float(r["decl"]) - float(r["reel"])) < 0.05 for r in ratios), str(ratios))
+
+    # 4. polices : Lora 400 italique n'est plus chargée ; les 3 critiques sont préchargées
+    fonts = au.evaluate("() => performance.getEntriesByType('resource').map(e => e.name.split('/').pop()).filter(n => n.endsWith('.woff2'))")
+    verif("Audit", "Polices : Lora 400 italique retirée", not any("lora-400i" in f for f in fonts), str([f for f in fonts if "lora" in f]))
+    pre = au.evaluate("() => [...document.querySelectorAll('link[rel=preload][as=font]')].length")
+    verif("Audit", "Polices : 3 préchargées", pre == 3, str(pre))
+    verif("Audit", "CDN pré-connecté", au.evaluate("() => !!document.querySelector('link[rel=preconnect][href*=jsdelivr]')"))
+    og = au.evaluate("""() => { const g=n=>{const m=document.querySelector('meta[property=\"'+n+'\"]'); return m?m.content:null;};
+      return {img:g('og:image'), w:g('og:image:width'), h:g('og:image:height'), alt:!!g('og:image:alt'), site:!!g('og:site_name')}; }""")
+    verif("Audit", "Partage social : image paysage 1200×630 en JPEG + alt + site_name",
+          bool(og["img"]) and og["img"].endswith(".jpg") and og["w"] == "1200" and og["h"] == "630" and og["alt"] and og["site"], str(og))
+    verif("Audit", "Menu = dialogue (role, aria-modal)",
+          au.evaluate("() => { const o=document.getElementById('menu-overlay'); return o.getAttribute('role')==='dialog' && o.getAttribute('aria-modal')==='true'; }"))
+    verif("Audit", "Un seul Réserver jaune au repos (en-tête effacé)",
+          au.evaluate("() => getComputedStyle(document.querySelector('.header-cta')).opacity") == "0")
+
+    # 5. versionnage des assets
+    vv = au.evaluate("() => [...document.querySelectorAll('link[rel=stylesheet],script[src]')].map(e => e.href||e.src).filter(u => /\.(css|js)(\?|$)/.test(u) && !/cdn\./.test(u))")
+    verif("Audit", "Assets locaux versionnés (?v=)", all("?v=" in u for u in vv), str([u.split('/').pop() for u in vv if "?v=" not in u]))
+
+    # 6. cibles tactiles ≥ 44px sur les 3 liens signalés
+    cibles = au.evaluate("""() => ['.wordmark', '.avis-lien a'].map(s => { const e=document.querySelector(s); if(!e) return [s,null];
+      const r=e.getBoundingClientRect(); return [s, Math.round(r.height)]; })""")
+    verif("Audit", "Cibles tactiles ≥ 44px (logo, lien avis)", all(h and h >= 44 for _, h in cibles), str(cibles))
+
+    # 7. vignettes de plats : plus de justification
+    verif("Audit", "Vignettes de plats non justifiées",
+          au.evaluate("() => getComputedStyle(document.querySelector('.plat-desc')).textAlign") != "justify")
+    au.close()
+
+    # 8. skip-link : Entrée déplace le focus dans le contenu (desktop, Lenis actif)
+    sk = b.new_page(viewport={"width": 1280, "height": 900})
+    sk.goto(BASE + "/", wait_until="networkidle"); sk.wait_for_timeout(1200)
+    sk.keyboard.press("Tab"); sk.keyboard.press("Enter"); sk.wait_for_timeout(400)
+    sk.keyboard.press("Tab"); sk.wait_for_timeout(200)
+    apres = sk.evaluate("() => { const a=document.activeElement; return (a.className||a.tagName||'').toString().slice(0,30); }")
+    verif("Audit", "Lien d'évitement : le Tab suivant est DANS le contenu", "wordmark" not in apres and "main-nav" not in apres, f"focus sur : {apres}")
+    sk.close()
+
+    # 9. paysage mobile : le bouton Réserver du menu est atteignable
+    pay = b.new_page(viewport={"width": 780, "height": 360}, is_mobile=True, has_touch=True)
+    pay.goto(BASE + "/", wait_until="networkidle"); pay.wait_for_timeout(800)
+    pay.click("[data-burger]"); pay.wait_for_timeout(600)
+    pay.evaluate("document.getElementById('menu-overlay').scrollTop = 9999"); pay.wait_for_timeout(200)
+    bt = pay.evaluate("() => Math.round(document.querySelector('#menu-overlay .btn-cta').getBoundingClientRect().bottom)")
+    verif("Audit", "Paysage 780×360 : Réserver atteignable dans le menu", bt <= 360, f"bas du bouton à {bt}px")
+    pay.close()
+
+    # 10. carte : prix du phở sur une ligne, listes en 2 colonnes
+    ca = b.new_page(viewport={"width": 1440, "height": 900})
+    ca.goto(BASE + "/carte/", wait_until="networkidle"); ca.wait_for_timeout(1200)
+    ph = ca.evaluate("""() => [...document.querySelectorAll('.pho-list .menu-item')].map(l => {
+      const n=l.querySelector('.menu-item-nom').getBoundingClientRect(), p=l.querySelector('.menu-item-prix').getBoundingClientRect();
+      return Math.abs(Math.round(p.top - n.top)); })""")
+    verif("Audit", "Phở : les 4 prix sur la ligne du nom", all(d < 12 for d in ph), str(ph))
+    col = ca.evaluate("() => ['plats','desserts','boissons'].map(id => document.querySelector('#'+id+' .menu-list').classList.contains('menu-list--2col'))")
+    verif("Audit", "Plats / desserts / boissons en 2 colonnes", all(col), str(col))
+    bl = ca.evaluate("() => getComputedStyle(document.querySelector('.pho-kicker')).color")
+    verif("Audit", "Texte bleu petit -> bleu-foncé (contraste)", bl == "rgb(23, 86, 110)", bl)
+    som = ca.evaluate("() => { const s=document.querySelector('.carte-sommaire'); return s ? {pos:getComputedStyle(s).position, n:s.querelectorAll ? 0 : s.querySelectorAll('a').length} : null; }")
+    verif("Audit", "Carte : sommaire collant à 6 rubriques", bool(som) and som["pos"] == "sticky" and som["n"] == 6, str(som))
+    ca.close()
+
+    # =================================================================
     # GRANDS ÉCRANS — 1920 et 2560
     # Ajouté après un défaut réel : le fond se pixellisait au-delà de 1280,
     # et rien au-dessus de cette largeur n'était contrôlé. Une image de fond

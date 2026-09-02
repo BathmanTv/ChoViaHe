@@ -185,6 +185,8 @@ body::after {
   border-radius: 3px;
 }
 /* sur fond jaune (CTA, pied de page), le bleu tombe à ~3:1 → encre */
+/* le temps que le module de réservation se charge (voir home.js) */
+.btn-cta.is-loading { opacity: 0.72; cursor: progress; }
 .btn-cta:focus-visible,
 .sticky-btn--book:focus-visible,
 .footer :focus-visible { outline-color: var(--encre); }
@@ -204,7 +206,10 @@ h2 {
   font-family: var(--f-titre);
   font-weight: 600;
   color: var(--framboise);
-  font-size: clamp(1.8rem, 1.2rem + 3.2vw, 3rem);
+  /* plafond 2,5rem : mesuré, h2 (48px) et titre du lieu (54px) lisaient au
+     rang du H1 (56px). Le H1 garde 3,5rem — au-delà, « vietnamienne » ne
+     tient plus dans sa colonne. */
+  font-size: clamp(1.8rem, 1.2rem + 2.6vw, 2.5rem);
   letter-spacing: -0.01em;
 }
 h3 {
@@ -228,7 +233,6 @@ h3 {
 .lede,
 .lieu-intro,
 .reserver-lead,
-.plat-desc,
 .lexique p,
 .info-block p,
 .ml-page p {
@@ -243,7 +247,7 @@ h3 {
    tienne : on revient au fer à gauche plutôt que d'afficher des trous. */
 @media (max-width: 339px) {
   .prose p, .section-intro, .lede, .lieu-intro, .reserver-lead,
-  .plat-desc, .lexique p, .info-block p, .ml-page p { text-align: left; }
+  .lexique p, .info-block p, .ml-page p { text-align: left; }
 }
 
 /* Ouverture manuscrite des longs blocs : 2-3 lignes courtes, une par
@@ -387,6 +391,7 @@ h3 {
   text-decoration: none;
   line-height: 1;
   white-space: nowrap;
+  display: inline-flex; align-items: center; min-height: 44px;   /* cible tactile */
 }
 .main-nav { margin-left: auto; }
 .main-nav ul {
@@ -402,6 +407,9 @@ h3 {
   font-weight: 500;
   font-size: 0.98rem;
 }
+/* Un seul « Réserver » jaune à la fois : celui de l'en-tête disparaît tant
+   que celui du héros est visible (règle DESIGN.md, tous écrans). */
+.hero-cta-visible .header-cta { opacity: 0; pointer-events: none; transition: opacity 0.25s var(--ease-out); }
 .header-cta {
   margin-left: auto;
   display: inline-flex;
@@ -446,7 +454,10 @@ h3 {
   padding: var(--pad-x);
   transform: translateY(-100%);
   transition: transform 0.4s var(--ease-out);
+  overflow-y: auto;                 /* en paysage mobile (360px de haut) le
+  -webkit-overflow-scrolling: touch;   bouton Réserver passait sous le bord */
 }
+@media (max-height: 460px) { .nav-overlay { justify-content: flex-start; } }
 .nav-overlay[hidden] { display: none; }
 .nav-overlay.is-open { transform: translateY(0); }
 .nav-overlay ul { list-style: none; padding: 0; }
@@ -580,8 +591,7 @@ h3 {
     max-width: 1760px;
     padding-right: 0;              /* le stand file jusqu'au bord */
   }
-  .couverture .wrap > .cover-title,
-  .couverture .wrap > .cover-actions { grid-column: 1; }
+  .cover-col { grid-column: 1; grid-row: 1 / span 2; align-self: center; }
   .cover-actions { flex-direction: column; align-items: flex-start; }
   .cover-stand {
     grid-column: 2;
@@ -708,7 +718,8 @@ h3 {
 .prose p:last-child { margin-bottom: 0; }
 .histoire-punch {
   font-family: var(--f-titre);
-  font-style: italic;
+  /* en droit : l'italique Lora 400 coûtait 49 Ko (latin + vietnamien) pour
+     cette seule ligne. Le titre du lieu garde son italique, validé cliente. */
   font-size: clamp(1.25rem, 1rem + 1.3vw, 1.65rem);
   color: var(--encre);
   margin-block: clamp(1.5rem, 4vw, 2.5rem) 0;
@@ -800,11 +811,11 @@ h3 {
   margin: 0 0 0.2rem;
   line-height: 1.1;
 }
-.plat-desc { margin: 0; color: var(--encre-doux); font-size: 0.98rem; }
+.plat-desc { margin: 0; color: var(--encre-doux); font-size: 1rem; }
 .carte-cta { margin-top: 1.5rem; }
 .marg-citrons { width: clamp(72px, 11vw, 128px); top: 8%; right: 1.5%; opacity: 0.9; }
-.marg-coriandre { width: clamp(60px, 9vw, 104px); bottom: 6%; left: 1%; opacity: 0.9; }
-.marg-sriracha { width: clamp(60px, 8vw, 100px); top: 44%; left: 1.5%; opacity: 0.7; }
+.marg-coriandre { width: clamp(60px, 9vw, 104px); bottom: 6%; right: 1%; opacity: 0.9; }
+.marg-sriracha { width: clamp(60px, 8vw, 100px); top: 44%; right: 1.5%; opacity: 0.7; }
 
 /* =========================================================
    LE LIEU — même papier que le reste (le jaune est parti) ;
@@ -816,7 +827,7 @@ h3 {
   font-family: var(--f-titre);
   font-weight: 600;
   font-style: italic;
-  font-size: clamp(2rem, 1.2rem + 4.4vw, 3.4rem);
+  font-size: clamp(1.9rem, 1.2rem + 2.6vw, 2.5rem);
 }
 .lieu-intro { font-size: clamp(1.1rem, 1rem + 0.6vw, 1.35rem); color: var(--encre); }
 .lieu-bandeau { margin-block: clamp(1.75rem, 4vw, 2.75rem); }
@@ -870,7 +881,7 @@ h3 {
   border-bottom: 1px dashed rgba(30,26,23,0.18);
 }
 .presse-kicker {
-  color: var(--bleu);
+  color: var(--bleu-fonce);
   font-size: clamp(1.15rem, 4vw, 1.5rem);
   margin: 0 0 0.15rem;
   display: inline-block;
@@ -897,7 +908,9 @@ h3 {
   color: var(--framboise-fonce);
 }
 .presse-titre { margin: 0.25rem 0 0; font-size: clamp(1rem, 0.95rem + 0.4vw, 1.14rem); }
-.presse-titre a { color: var(--encre); text-decoration: none; }
+/* filet permanent discret : au tactile il n'y a pas de survol, sans lui les
+   trois articles se lisaient comme du texte mort */
+.presse-titre a { color: var(--encre); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
 .presse-titre a:hover,
 .presse-titre a:focus-visible { color: var(--framboise); }
 
@@ -908,6 +921,7 @@ h3 {
 }
 .avis {
   margin: 0;
+  display: flex; flex-direction: column;   /* signature calée en bas, quelle que soit la longueur */
   background: color-mix(in srgb, var(--papier) 88%, #fff);
   border: 1px solid rgba(30,26,23,0.12);
   border-radius: var(--r-card);
@@ -927,7 +941,7 @@ h3 {
 .avis blockquote p::before { content: '« '; }
 .avis blockquote p::after { content: ' »'; }
 .avis figcaption {
-  margin-top: 0.9rem;
+  margin-top: auto; padding-top: 0.9rem;
   font-family: var(--f-hand);
   font-size: 1.2rem;
   color: var(--bleu-fonce);
@@ -945,7 +959,7 @@ h3 {
   font-family: var(--f-hand);
   font-size: 1.25rem;
 }
-.avis-lien a { color: var(--bleu-fonce); text-decoration: none; }
+.avis-lien a { color: var(--bleu-fonce); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
 .avis-lien a:hover,
 .avis-lien a:focus-visible { color: var(--framboise); }
 @media (min-width: 780px) {
@@ -1011,7 +1025,7 @@ h3 {
 .horaires-list { list-style: none; padding: 0; }
 .horaires-list li { display: flex; justify-content: space-between; gap: 1rem; max-width: 22rem; padding: 0.15rem 0; }
 .horaires-list .jour { color: var(--encre-doux); }
-.marg-poulets { width: clamp(76px, 11vw, 132px); top: 7%; left: 1%; opacity: 0.7; }
+.marg-poulets { width: clamp(76px, 11vw, 132px); top: 7%; right: 1%; opacity: 0.7; }
 
 /* Questions du comptoir */
 .comptoir { margin-top: clamp(2.5rem, 6vw, 4rem); }
@@ -1040,7 +1054,7 @@ h3 {
   color: var(--framboise-fonce);
   margin-bottom: 0.4rem;
 }
-.comptoir-item dd { margin: 0; color: var(--encre-doux); font-size: 0.97rem; }
+.comptoir-item dd { margin: 0; color: var(--encre-doux); font-size: 1rem; }
 .comptoir-item dd a { color: var(--encre); border-bottom: 1px solid var(--framboise); text-decoration: none; }
 
 /* =========================================================
@@ -1101,13 +1115,20 @@ h3 {
 .footer .wrap { max-width: var(--wrap-max); }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.75rem 3rem;
+  /* mobile : infos sur toute la largeur, puis navigation et vélo côte à
+     côte — empilé, le vélo laissait 164px de jaune vide entre le bouton
+     et la liste. */
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "infos infos" "nav velo";
+  gap: 1.75rem 1.5rem;
   align-items: start;
 }
+.footer-infos { grid-area: infos; }
+.footer-nav   { grid-area: nav; }
+.footer-illus { grid-area: velo; align-self: end; }
 @media (min-width: 700px) {
   /* infos | vélo | navigation */
-  .footer-grid { grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 0.7fr); }
+  .footer-grid { grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 0.7fr); grid-template-areas: "infos velo nav"; }
 }
 .footer-wordmark {
   display: inline-block;
@@ -1169,10 +1190,9 @@ h3 {
   font-family: var(--f-corps);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--encre);
-  opacity: 0.72;
   margin: 0 0 0.6rem;
 }
 .footer-nav ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0; }

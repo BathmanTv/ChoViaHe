@@ -26,13 +26,13 @@
 <meta name="robots" content="noindex" />
 <meta name="theme-color" content="#F1E3C9" />
 
-<link rel="stylesheet" href="/fonts/fonts.css" />
+<link rel="stylesheet" href="/fonts/fonts.css?v=20260902" />
 
-<link rel="stylesheet" href="/home.css" />
+<link rel="stylesheet" href="/home.css?v=20260902" />
 
 <style>
   .err-page {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,6 +75,9 @@
     margin: 0 0 1.6rem;
   }
   .err-lead { color: var(--encre-doux); max-width: 32ch; margin: 0 auto 1.8rem; }
+  /* pas de barre collante sur cette page : pas de réserve en bas */
+  @media (max-width: 780px) { body { padding-bottom: 0; } }
+  .err-actions .ink-link { display: inline-flex; align-items: center; min-height: 44px; border-bottom: 1px solid color-mix(in srgb, currentColor 35%, transparent); }
   .err-actions {
     display: flex;
     flex-wrap: wrap;
@@ -99,7 +102,7 @@
   <div class="err-inner">
     <p class="err-code handwritten">404</p>
     <div class="err-illus" aria-hidden="true">
-      <img src="/assets/illus/velo-480.webp" width="480" height="360"
+      <img src="/assets/illus/velo-480.webp" width="480" height="487"
            srcset="/assets/illus/velo-480.webp 480w, /assets/illus/velo-960.webp 960w"
            sizes="clamp(140px, 42vw, 260px)" alt="" decoding="async"
            onerror="this.closest('.err-illus').style.display='none'" />
@@ -115,6 +118,29 @@
   </div>
 </main>
 
-<script src="/analytics.js" defer></script>
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-col footer-infos">
+        <a class="footer-wordmark viet" href="/" lang="vi">Chợ Vỉa Hè</a>
+        <address>8 rue de Metz — 31000 Toulouse</address>
+        <p><a href="tel:+33562858392">05 62 85 83 92</a></p>
+        <p><a href="https://www.instagram.com/choviahe.toulouse" target="_blank" rel="noopener">@choviahe.toulouse</a></p>
+      </div>
+      <nav class="footer-col footer-nav" aria-label="Pied de page">
+        <p class="footer-nav-title">Le carnet</p>
+        <ul>
+          <li><a href="/carte/">La carte</a></li>
+          <li><a href="/#histoire">L'histoire</a></li>
+          <li><a href="/#lieu">Le lieu</a></li>
+          <li><a href="/#contact">Contact</a></li>
+          <li><a href="/mentions-legales/">Mentions légales</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script src="/analytics.js?v=20260902" defer></script>
 </body>
 </html>
