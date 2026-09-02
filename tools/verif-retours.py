@@ -334,7 +334,7 @@ with sync_playwright() as p:
     fonts = au.evaluate("() => performance.getEntriesByType('resource').map(e => e.name.split('/').pop()).filter(n => n.endsWith('.woff2'))")
     verif("Audit", "Polices : Lora 400 italique retirée", not any("lora-400i" in f for f in fonts), str([f for f in fonts if "lora" in f]))
     pre = au.evaluate("() => [...document.querySelectorAll('link[rel=preload][as=font]')].length")
-    verif("Audit", "Polices : 3 préchargées", pre == 3, str(pre))
+    verif("Audit", "Polices : 3 préchargées (accueil)", pre == 3, str(pre))
     verif("Audit", "CDN pré-connecté", au.evaluate("() => !!document.querySelector('link[rel=preconnect][href*=jsdelivr]')"))
     og = au.evaluate("""() => { const g=n=>{const m=document.querySelector('meta[property=\"'+n+'\"]'); return m?m.content:null;};
       return {img:g('og:image'), w:g('og:image:width'), h:g('og:image:height'), alt:!!g('og:image:alt'), site:!!g('og:site_name')}; }""")
