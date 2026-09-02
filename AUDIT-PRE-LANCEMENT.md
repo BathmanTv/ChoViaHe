@@ -9,6 +9,39 @@ bug du menu reproduit, contrastes recalculés, écarts de pixels remesurés.
 desktop **99** ; accessibilité 100 et bonnes pratiques 100 partout. Le score SEO
 (66) ne tombe que sur `noindex`, qui est voulu en staging.
 
+---
+
+## État au 2 septembre, soir — appliqué
+
+Feu vert donné sur tout sauf le DNS (rendez-vous OVH) et l'illustration du plateau
+(aucune autre disponible). **122 modifications en quatre lots**, chacune avec son
+contrôle dans le harnais : **139/139**, en local et sur l'URL publique.
+Sauvegarde préalable : tag `avant-audit-2026-09-02` + archive.
+
+| Lighthouse mobile | avant | après |
+|---|---|---|
+| Accueil — performance | 78 | **87** |
+| Accueil — premier rendu (FCP) | 3,1 s | **1,8 s** |
+| Accueil — LCP | 4,0 s | 3,8 s |
+| Carte — performance | 94 | 92 |
+| Accessibilité / bonnes pratiques | 100 / 100 | 100 / 100 |
+
+Le premier rendu de l'accueil a été divisé par presque deux (polices préchargées,
+CDN pré-connecté). Le LCP bouge peu : il reste dominé par le rendu de la feuille
+de style sur 4G simulée, et le site n'a pas de build pour l'inliner — c'est le
+plafond de l'architecture statique, pas un défaut. La carte perd 2 points dans
+la marge d'erreur de Lighthouse ; son CLS est monté de 0,031 à 0,046 avec le
+sommaire collant (toujours « bon », seuil 0,1), corrigé par un préchargement de
+la graisse 600 que je n'ai pas remesuré — une ligne, l'effet serait noyé dans
+la variance.
+
+**Non fait, volontairement** : le Place ID Google (donnée cliente), le PDF avec
+couche texte (fichier source de la graphiste), l'illustration du plateau, la
+navigation sans JavaScript (marginal), et le masquage du « Réserver » collant près
+du bouton final — la cliente a demandé que la barre reste stable tout du long.
+
+---
+
 Deux colonnes dans tout ce qui suit :
 - **Mécanique** : correctif sans arbitrage, je l'applique sur un mot.
 - **Décision** : ça change quelque chose de visible ou ça dépend de la cliente.
