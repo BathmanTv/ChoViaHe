@@ -69,10 +69,14 @@ Ordre qui ne coupe jamais le site :
    le domaine.
 3. **Chez Wix, « Gérer les enregistrements DNS »** sur choviahe.fr :
    - ajouter le TXT `ovhcontrol` donné par OVH ;
-   - remplacer l'enregistrement **A** de `choviahe.fr` par l'IP OVH ;
+   - rubrique **A (Hôte)** : il y a **trois** lignes `choviahe.fr` (185.230.63.171,
+     .186 et .107). En modifier une avec l'IP OVH et **supprimer les deux autres** —
+     sinon une partie des visiteurs tomberait encore sur Wix ;
    - remplacer le **CNAME `www`** (aujourd'hui `cdn3.wixdns.net`) pour qu'il pointe vers
      l'hébergement OVH.
-   Si Wix refuse de modifier ces lignes tant que le domaine est « connecté » au site
+   Vérifié le 15/09 dans le compte : ces lignes sont bien modifiables (bouton « … »
+   sur chaque ligne, « Ajouter un enregistrement » pour le TXT).
+   Si Wix refuse malgré tout de modifier ces lignes tant que le domaine est « connecté » au site
    Wix, il faut d'abord le détacher (« Retirer de ce site ») — à faire juste avant, car
    l'ancien site cesse alors de répondre sur ce domaine.
 4. **Certificat SSL** : l'activer dans OVH une fois que le domaine pointe dessus
