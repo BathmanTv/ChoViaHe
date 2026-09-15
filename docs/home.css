@@ -617,7 +617,22 @@ h3 {
 .autres-adresses li { display: grid; gap: 0; }
 .info-block--autres p { text-align: left; }   /* colonne étroite : pas de justification */
 .info-block--autres strong { font-weight: 600; color: var(--encre); }
-.autres-nom { font-family: var(--f-titre); font-weight: 600; color: var(--framboise-fonce); font-size: 1.1em; }
+.autres-nom { font-family: var(--f-titre); font-weight: 600; font-size: 1.1em; }
+/* liens vers les deux autres adresses : filet permanent (pas de survol au tactile),
+   cible tactile 44px */
+.autres-nom a, .info-block--autres strong a {
+  color: var(--framboise-fonce);
+  /* soulignement sur le texte, pas border-bottom : la bordure se posait au bas
+     de la zone tactile de 44px et barrait la ligne suivante */
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  display: inline-flex; align-items: center; min-height: 44px;
+}
+.info-block--autres p { hyphens: manual; -webkit-hyphens: manual; }
+.autres-nom a:hover, .autres-nom a:focus-visible,
+.info-block--autres strong a:hover, .info-block--autres strong a:focus-visible { color: var(--framboise); }
 .autres-desc { color: var(--encre-doux); }
 
 /* =========================================================

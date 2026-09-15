@@ -38,7 +38,8 @@
      ce qui gonflait les deux métriques dès le premier jour. */
   var LIBELLES = {
     resa: 'Clic Réserver', tel: 'Clic Appeler', itineraire: 'Clic Itinéraire',
-    carte: 'Clic vers la carte', 'carte-pdf': 'Téléchargement du PDF', avis: 'Clic vers les avis Google'
+    carte: 'Clic vers la carte', 'carte-pdf': 'Téléchargement du PDF', avis: 'Clic vers les avis Google',
+    'cafe-bong': 'Clic vers Café Bống', 'bep-chay': 'Clic vers Bếp Chay'
   };
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a') : null;

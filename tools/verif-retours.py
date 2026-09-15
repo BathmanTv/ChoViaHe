@@ -357,7 +357,9 @@ with sync_playwright() as p:
     # 7. vignettes de plats : plus de justification
     ad = au.evaluate("""() => ({ histoire: document.querySelectorAll('#histoire .autres-adresses li').length,
       contact: !!document.querySelector('#contact .info-block--autres'),
-      herbes: !!document.querySelector('.plat-card img[src*="feuille-coriandre"]') })""")
+      herbes: !!document.querySelector('.plat-card img[src*="feuille-coriandre"]'),
+      liens: [...document.querySelectorAll('a[href*="cafe-bong.com"], a[href*="bep-chay.com"]')].filter(x => x.target === '_blank' && /noopener/.test(x.rel)).length })""")
+    verif("15/09", "Liens Café Bống et Bếp Chay (histoire + contact, nouvel onglet)", ad["liens"] == 4, str(ad))
     verif("15/09", "Autres adresses : dans l'histoire (2) et dans le contact",
           ad["histoire"] == 2 and ad["contact"], str(ad))
     verif("15/09", "4e carte : les herbes (feuille de coriandre)", ad["herbes"], str(ad))
