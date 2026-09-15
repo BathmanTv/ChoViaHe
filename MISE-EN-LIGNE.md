@@ -58,6 +58,24 @@ nslookup -type=NS choviahe.fr 1.1.1.1
 Tant que la réponse contient `wixdns.net`, on attend. Rien d'autre du plan ne
 peut démarrer avant. Point à traiter au rendez-vous OVH avec Elsa.
 
+**Relevé de la zone Wix le 15 septembre** (DNS public, sans connexion au compte) :
+
+| Enregistrement | Valeur actuelle | À faire chez OVH |
+|---|---|---|
+| NS | ns12 / ns13.wixdns.net | remplacer par les serveurs OVH |
+| A `choviahe.fr` | 3 IP Wix (185.230.63.x) | pointer vers l'IP de l'hébergement OVH |
+| CNAME `www` | cdn3.wixdns.net | pointer vers l'hébergement OVH |
+| MX | **aucun** | rien — l'e-mail est une adresse Gmail, pas sur le domaine |
+| TXT | **aucun** | rien à recopier ; seul le TXT Search Console sera ajouté |
+
+Bonne nouvelle : **aucun e-mail ni aucune vérification n'est attaché au domaine**. La
+bascule ne peut rien casser d'autre que le site lui-même, et Wix reste accessible le
+temps de vérifier.
+
+Pages de l'ancien site Wix, relevées sur sa page d'accueil : `/menu` et
+`/notre-histoire` (plus `/copie-de-menu`, connue). Les trois sont redirigées dans le
+`.htaccess`.
+
 **Retour arrière**, si quelque chose casse après la bascule : remettre les
 serveurs de noms Wix dans l'espace client OVH — même délai de propagation. D'où
 l'intérêt de garder Wix actif un mois.

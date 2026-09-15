@@ -147,7 +147,7 @@ with sync_playwright() as p:
     verif(1, "Fond couleur du carnet (#F1E3C9)", d["fond"] == "rgb(241, 227, 201)", d["fond"])
     verif(2, "Paragraphes justifiés (accueil)", d["justif"] == "justify", d["justif"])
     verif(2, "Avis justifiés", d["justifAvis"] == "justify", d["justifAvis"])
-    verif(3, "Carte bún chả retirée du teaser", d["nbPlats"] == 3 and not d["bunCha"],
+    verif(3, "Teaser : 4 plats (herbes ajoutées 15/09), sans bún chả", d["nbPlats"] == 4 and not d["bunCha"],
           f"{d['nbPlats']} plats, bún chả présent={d['bunCha']}")
     verif(5, "Titre carte « comme au Vietnam »", d["titreCarte"] == "La cuisine de rue, comme au Vietnam", d["titreCarte"])
     verif(5, "« étal » seulement dans le récit familial (2)", d["etal"] == 2, f"{d['etal']} occurrence(s)")
@@ -355,6 +355,12 @@ with sync_playwright() as p:
     verif("Audit", "Cibles tactiles ≥ 44px (logo, lien avis)", all(h and h >= 44 for _, h in cibles), str(cibles))
 
     # 7. vignettes de plats : plus de justification
+    ad = au.evaluate("""() => ({ histoire: document.querySelectorAll('#histoire .autres-adresses li').length,
+      contact: !!document.querySelector('#contact .info-block--autres'),
+      herbes: !!document.querySelector('.plat-card img[src*="feuille-coriandre"]') })""")
+    verif("15/09", "Autres adresses : dans l'histoire (2) et dans le contact",
+          ad["histoire"] == 2 and ad["contact"], str(ad))
+    verif("15/09", "4e carte : les herbes (feuille de coriandre)", ad["herbes"], str(ad))
     verif("Audit", "Vignettes de plats non justifiées",
           au.evaluate("() => getComputedStyle(document.querySelector('.plat-desc')).textAlign") != "justify")
     au.close()
@@ -454,7 +460,7 @@ with sync_playwright() as p:
         })()""")
         verif(1, f"Fond du carnet (mobile {w})", mm["fond"] == "rgb(241, 227, 201)", mm["fond"])
         verif(2, f"Paragraphes justifiés (mobile {w})", mm["justif"] == "justify", mm["justif"])
-        verif(3, f"3 plats dans le teaser (mobile {w})", mm["nbPlats"] == 3, str(mm["nbPlats"]))
+        verif(3, f"4 plats dans le teaser (mobile {w})", mm["nbPlats"] == 4, str(mm["nbPlats"]))
         verif(12, f"3 articles + 2 avis (mobile {w})", mm["presse"] == 3 and mm["avis"] == 2)
         verif(13, f"Horaires retirés du pied (mobile {w})", not mm["footHoraires"])
         verif("—", f"Burger seul, pas de nav bureau ({w})", mm["burger"] and not mm["navBureau"])

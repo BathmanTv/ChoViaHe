@@ -603,6 +603,23 @@ h3 {
   .cover-stand figcaption { padding-inline: 0; }
 }
 
+/* ---------- Les autres adresses de la famille (fin de l'histoire) ---------- */
+.autres-kicker {
+  color: var(--bleu-fonce);
+  font-size: clamp(1.15rem, 4vw, 1.5rem);
+  margin: clamp(1.5rem, 4vw, 2.5rem) 0 0.4rem;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+.autres-adresses { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+/* nom au-dessus, description dessous : sinon un nom tient sur la ligne et
+   l'autre passe à la ligne selon la largeur, et les deux ne se ressemblent plus */
+.autres-adresses li { display: grid; gap: 0; }
+.info-block--autres p { text-align: left; }   /* colonne étroite : pas de justification */
+.info-block--autres strong { font-weight: 600; color: var(--encre); }
+.autres-nom { font-family: var(--f-titre); font-weight: 600; color: var(--framboise-fonce); font-size: 1.1em; }
+.autres-desc { color: var(--encre-doux); }
+
 /* =========================================================
    MARGINALIA (illustrations d'Oriane dans la gouttière)
    ========================================================= */
