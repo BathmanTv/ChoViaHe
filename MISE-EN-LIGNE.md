@@ -27,7 +27,7 @@ visibilité en plus pendant la rentrée.
 
 **Encore en attente, côté cliente**
 
-- **Le domaine** — il est chez Wix, pas chez OVH : transfert à lancer (phase 0)
+- **Le domaine** — il reste chez Wix (décision du 15/09) : pointage DNS vers OVH (phase 0)
 - **La résiliation de Wix Premium** avant son renouvellement du 3 novembre 2026
 - Le compte GoatCounter (code `choviahe`)
 - Les accès à la fiche Google Business : Place ID pour relier le site à la fiche, note
@@ -53,35 +53,48 @@ partait du principe que choviahe.fr était déjà chez OVH. C'est faux :
 **3 novembre 2026**. Une fois le nouveau site en ligne, il ne sert plus à rien : à
 résilier avant cette date.
 
-### Deux chemins, un recommandé
+### Décision du 15 septembre : le domaine reste chez Wix
 
-**Recommandé — transférer le domaine chez OVH.** Un seul prestataire pour le domaine
-et l'hébergement, un seul accès, plus aucune dépendance au compte Wix. Pour un `.fr`,
-le transfert passe par le registre AFNIC et prend en général moins d'une journée ; il
-coûte le prix d'une année de domaine chez OVH, qui prolonge l'échéance.
+On ne transfère pas le domaine pour le moment. Le site est hébergé chez OVH, et on
+fait **pointer choviahe.fr depuis la zone DNS de Wix** vers cet hébergement. Rien ne
+bouge côté registraire, Wix continue de renouveler le domaine.
 
-Ordre sûr, pour que le site ne soit jamais coupé :
+Ordre qui ne coupe jamais le site :
 
-1. Prendre l'hébergement OVH et y déposer le site (phase 1). On le teste sur l'adresse
-   technique fournie par OVH. Wix continue de servir l'ancien site pendant ce temps.
-2. Dans Wix, sur le domaine : demander le **code de transfert** (code d'autorisation)
-   et vérifier que le domaine n'est pas verrouillé.
-3. Dans OVH : commander le **transfert de choviahe.fr** avec ce code, en choisissant
-   les serveurs de noms OVH et en pointant le domaine vers l'hébergement.
-4. À la fin du transfert, choviahe.fr affiche directement le nouveau site. On vérifie :
+1. **Hébergement OVH** : prendre l'offre, y déposer le site (phase 1), le tester sur
+   l'adresse technique fournie par OVH. Wix sert toujours l'ancien site.
+2. **Déclarer choviahe.fr dans l'hébergement OVH** (rubrique Multisite), en domaine
+   « externe ». OVH affiche alors deux valeurs à recopier chez Wix : l'**adresse IP**
+   de l'hébergement et un enregistrement **TXT `ovhcontrol`** qui prouve qu'on possède
+   le domaine.
+3. **Chez Wix, « Gérer les enregistrements DNS »** sur choviahe.fr :
+   - ajouter le TXT `ovhcontrol` donné par OVH ;
+   - remplacer l'enregistrement **A** de `choviahe.fr` par l'IP OVH ;
+   - remplacer le **CNAME `www`** (aujourd'hui `cdn3.wixdns.net`) pour qu'il pointe vers
+     l'hébergement OVH.
+   Si Wix refuse de modifier ces lignes tant que le domaine est « connecté » au site
+   Wix, il faut d'abord le détacher (« Retirer de ce site ») — à faire juste avant, car
+   l'ancien site cesse alors de répondre sur ce domaine.
+4. **Certificat SSL** : l'activer dans OVH une fois que le domaine pointe dessus
+   (Let's Encrypt a besoin que le domaine réponde depuis OVH).
+5. **Vérification** — tant que la réponse montre des adresses Wix, on attend :
 
 ```bash
-nslookup -type=NS choviahe.fr 8.8.8.8
+nslookup choviahe.fr 8.8.8.8
+nslookup www.choviahe.fr 8.8.8.8
 ```
 
-Tant que la réponse contient `wixdns.net`, le transfert n'est pas terminé.
+6. **Résiliation** : une fois le site stable sur OVH, résilier **uniquement « Forfait
+   Premium Light »** (renouvellement 3 novembre 2026). **Ne pas toucher à l'abonnement
+   « Domaine »** : c'est lui qui garde choviahe.fr.
 
-**Plus rapide mais moins propre — garder le domaine chez Wix** et y remplacer seulement
-les serveurs de noms par ceux d'OVH. Le site bascule en quelques heures, mais le domaine
-reste facturé par Wix chaque année et dépend de ce compte.
+**Retour arrière** : remettre chez Wix l'enregistrement A et le CNAME d'origine
+(3 IP 185.230.63.x et `cdn3.wixdns.net`). Tant que Premium n'est pas résilié, l'ancien
+site revient.
 
-**Retour arrière** : tant que Wix Premium est actif, l'ancien site existe toujours. En cas
-de problème, on repointe le domaine vers Wix le temps de corriger.
+**Plus tard, si on veut tout regrouper** : le menu du domaine Wix propose « Transférer
+en dehors de Wix ». Transfert d'un `.fr` vers OVH en moins d'une journée, quand le
+client le décidera.
 
 ## Phase 1 — L'hébergement
 
