@@ -27,7 +27,8 @@ visibilité en plus pendant la rentrée.
 
 **Encore en attente, côté cliente**
 
-- **Le DNS** — voir phase 0, c'est le point qui commande tout le calendrier
+- **Le domaine** — il est chez Wix, pas chez OVH : transfert à lancer (phase 0)
+- **La résiliation de Wix Premium** avant son renouvellement du 3 novembre 2026
 - Le compte GoatCounter (code `choviahe`)
 - Les accès à la fiche Google Business : Place ID pour relier le site à la fiche, note
   et nombre d'avis à afficher
@@ -35,54 +36,56 @@ visibilité en plus pendant la rentrée.
 
 ---
 
-## Phase 0 — Le DNS : à lancer cette semaine, avant tout le reste
+## Phase 0 — Le domaine est chez Wix : à régler avant tout le reste
 
-**Vérifié le 2 septembre : la zone DNS de choviahe.fr est chez Wix, pas chez
-OVH.** Les serveurs de noms actuels sont `ns12.wixdns.net` et `ns13.wixdns.net`.
-Le domaine est bien enregistré chez OVH, mais c'est Wix qui répond aux requêtes.
+**Corrigé le 15 septembre, vérifié dans le compte Wix et au registre `.fr`.** Le plan
+partait du principe que choviahe.fr était déjà chez OVH. C'est faux :
 
-Conséquence : avant de pouvoir poser le moindre enregistrement (le TXT de Search
-Console, le pointage vers l'hébergement), il faut **rendre la main à OVH** — dans
-l'espace client OVH, sur le domaine, remplacer les serveurs de noms Wix par ceux
-d'OVH. Cette re-délégation passe par le registre `.fr` et se propage plus
-lentement qu'un simple enregistrement : compter **jusqu'à 48 h**, parfois plus.
+| Élément | Constat |
+|---|---|
+| Registraire | **EPAG Domainservices** (le prestataire de domaines de Wix) |
+| Où il se gère | compte Wix choviahe.toulouse@gmail.com, rubrique Domaines |
+| Expiration | 19 juillet 2027 (renouvellement Wix prévu le 19 juin 2027) |
+| Serveurs de noms | ns12 / ns13.wixdns.net |
+| E-mail sur le domaine | aucun (MX vide) — rien à migrer |
 
-C'est pour ça qu'elle se lance **plusieurs jours avant** la date de bascule, et
-qu'on la vérifie depuis deux résolveurs publics avant de continuer :
+**Et un point d'argent :** l'abonnement **Wix Premium Light** se renouvelle le
+**3 novembre 2026**. Une fois le nouveau site en ligne, il ne sert plus à rien : à
+résilier avant cette date.
+
+### Deux chemins, un recommandé
+
+**Recommandé — transférer le domaine chez OVH.** Un seul prestataire pour le domaine
+et l'hébergement, un seul accès, plus aucune dépendance au compte Wix. Pour un `.fr`,
+le transfert passe par le registre AFNIC et prend en général moins d'une journée ; il
+coûte le prix d'une année de domaine chez OVH, qui prolonge l'échéance.
+
+Ordre sûr, pour que le site ne soit jamais coupé :
+
+1. Prendre l'hébergement OVH et y déposer le site (phase 1). On le teste sur l'adresse
+   technique fournie par OVH. Wix continue de servir l'ancien site pendant ce temps.
+2. Dans Wix, sur le domaine : demander le **code de transfert** (code d'autorisation)
+   et vérifier que le domaine n'est pas verrouillé.
+3. Dans OVH : commander le **transfert de choviahe.fr** avec ce code, en choisissant
+   les serveurs de noms OVH et en pointant le domaine vers l'hébergement.
+4. À la fin du transfert, choviahe.fr affiche directement le nouveau site. On vérifie :
 
 ```bash
 nslookup -type=NS choviahe.fr 8.8.8.8
-nslookup -type=NS choviahe.fr 1.1.1.1
 ```
 
-Tant que la réponse contient `wixdns.net`, on attend. Rien d'autre du plan ne
-peut démarrer avant. Point à traiter au rendez-vous OVH avec Elsa.
+Tant que la réponse contient `wixdns.net`, le transfert n'est pas terminé.
 
-**Relevé de la zone Wix le 15 septembre** (DNS public, sans connexion au compte) :
+**Plus rapide mais moins propre — garder le domaine chez Wix** et y remplacer seulement
+les serveurs de noms par ceux d'OVH. Le site bascule en quelques heures, mais le domaine
+reste facturé par Wix chaque année et dépend de ce compte.
 
-| Enregistrement | Valeur actuelle | À faire chez OVH |
-|---|---|---|
-| NS | ns12 / ns13.wixdns.net | remplacer par les serveurs OVH |
-| A `choviahe.fr` | 3 IP Wix (185.230.63.x) | pointer vers l'IP de l'hébergement OVH |
-| CNAME `www` | cdn3.wixdns.net | pointer vers l'hébergement OVH |
-| MX | **aucun** | rien — l'e-mail est une adresse Gmail, pas sur le domaine |
-| TXT | **aucun** | rien à recopier ; seul le TXT Search Console sera ajouté |
-
-Bonne nouvelle : **aucun e-mail ni aucune vérification n'est attaché au domaine**. La
-bascule ne peut rien casser d'autre que le site lui-même, et Wix reste accessible le
-temps de vérifier.
-
-Pages de l'ancien site Wix, relevées sur sa page d'accueil : `/menu` et
-`/notre-histoire` (plus `/copie-de-menu`, connue). Les trois sont redirigées dans le
-`.htaccess`.
-
-**Retour arrière**, si quelque chose casse après la bascule : remettre les
-serveurs de noms Wix dans l'espace client OVH — même délai de propagation. D'où
-l'intérêt de garder Wix actif un mois.
+**Retour arrière** : tant que Wix Premium est actif, l'ancien site existe toujours. En cas
+de problème, on repointe le domaine vers Wix le temps de corriger.
 
 ## Phase 1 — L'hébergement
 
-Le domaine `choviahe.fr` est déjà chez OVH. Il manque l'hébergement.
+Le domaine est encore chez Wix (voir phase 0). L'hébergement, lui, se prend chez OVH dès maintenant.
 
 - Prendre une offre **OVH Perso** (environ 6 €/mois). Le site est statique, il n'y a ni
   base de données ni code serveur : la plus petite offre suffit largement.
