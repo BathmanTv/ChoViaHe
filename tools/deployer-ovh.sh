@@ -15,7 +15,7 @@ grep -q "^machine $HOTE " ~/.netrc 2>/dev/null || { echo "Identifiants absents :
 LOGIN=$(awk -v h="$HOTE" '$1=="machine" && $2==h {print $4}' ~/.netrc)
 BASE="set sftp:auto-confirm yes; set net:max-retries 2; set net:timeout 30; set cmd:fail-exit yes"
 # .ovhconfig (réglages PHP d'OVH) et .well-known (validation SSL) ne viennent pas de nous : jamais supprimés.
-MIROIR="mirror -R --delete --parallel=4 --exclude-glob .ovhconfig --exclude .well-known/ $PROJ/dist-ovh/ www/"
+MIROIR="mirror -R --delete --no-perms --parallel=4 --exclude-glob .ovhconfig --exclude .well-known/ $PROJ/dist-ovh/ www/"
 
 case "${1:-}" in
   --go)    lftp -e "$BASE; $MIROIR --verbose; bye" "sftp://$LOGIN@$HOTE" ;;
