@@ -93,6 +93,11 @@
   border-bottom: 1px solid rgba(30,26,23,0.10);
 }
 .carte-sommaire::-webkit-scrollbar { display: none; }
+/* Centré quand tout tient (comme la nav de l'en-tête et le contenu) ; quand ça
+   déborde sur mobile, les marges auto tombent à 0 et la bande défile depuis
+   la gauche (justify-content: center couperait « Tapas » hors de portée). */
+.carte-sommaire a:first-child { margin-left: auto; }
+.carte-sommaire a:last-child { margin-right: auto; }
 .carte-sommaire a {
   flex: 0 0 auto;
   display: inline-flex;
