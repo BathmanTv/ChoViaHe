@@ -7,29 +7,23 @@ visibilité en plus pendant la rentrée.
 
 ---
 
-## Où on en est — 2 septembre
+## Où on en est — 18 septembre
 
-**Prêt et vérifié** (139 contrôles automatiques, PC et mobile, sur l'URL publique)
+**Le dossier de production est prêt : `dist-ovh/`** (fabriqué par `node tools/pre-prod.mjs`)
 
-- Les deux pages publiques, les mentions légales, la page 404 — avec pied de page partout
-- La carte définitive du 31/08 en HTML, 52 plats, tous les prix, un sommaire collant
-- Les données structurées : fiche restaurant avec action de réservation, carte plat par
-  plat, questions-réponses, fil d'Ariane. Adresse, téléphone et horaires identiques
-  partout
-- Images en AVIF + WebP, polices auto-hébergées et préchargées, image de partage
-  1200×630 pour WhatsApp, Facebook et LinkedIn
-- Mesure d'audience GoatCounter sans cookie, active uniquement sur choviahe.fr,
-  déclarée dans les mentions légales
-- Lighthouse : accessibilité 100, bonnes pratiques 100 sur toutes les pages
-- `.htaccess` OVH relu : redirections Wix (avec `NE` et `NC`), règle https qui ne peut
-  pas boucler, compression et cache, assets versionnés `?v=` pour que le cache d'un an
-  ne piège jamais une mise à jour
+- 11 Mo, 123 fichiers. Les pages publiques y sont indexables, `docs/` (l'aperçu GitHub)
+  reste invisible pour Google : pas de doublon.
+- 145 contrôles automatiques passés sur ce dossier, PC et mobile. Aucune image ni
+  ressource manquante sur 4 pages × 3 largeurs d'écran × 3 densités de pixels.
+- Carte du 18/09 (Phở : 2 déclinaisons), logo officiel en SVG, textes du teaser validés.
+- Mesure d'audience GoatCounter : compte créé, s'active seule sur choviahe.fr.
+- `.htaccess` : redirections des anciennes adresses Wix, https et www forcés
+  **uniquement sur choviahe.fr** (l'adresse technique OVH reste testable avant le DNS).
 
 **Encore en attente, côté cliente**
 
 - **Le domaine** — il reste chez Wix (décision du 15/09) : pointage DNS vers OVH (phase 0)
 - **La résiliation de Wix Premium** avant son renouvellement du 3 novembre 2026
-- Le compte GoatCounter (code `choviahe`)
 - Les accès à la fiche Google Business : Place ID pour relier le site à la fiche, note
   et nombre d'avis à afficher
 - ~~Le logo vectoriel~~ : reçu le 18/09 (.ai), intégré en SVG
@@ -113,9 +107,18 @@ Le domaine est encore chez Wix (voir phase 0). L'hébergement, lui, se prend che
 - Compter jusqu'à 24 h de propagation DNS. C'est la seule étape qu'on ne peut pas accélérer,
   d'où l'importance de la lancer tôt.
 
-Le transfert des fichiers se fait en FTP (identifiants fournis par OVH) : on envoie tout le
-contenu du dossier `docs/` à la racine de l'hébergement, **fichier `.htaccess` compris** —
-c'est un fichier caché, beaucoup de logiciels FTP ne l'affichent pas par défaut.
+Le transfert des fichiers se fait en FTP, avec FileZilla (identifiants fournis par OVH, à
+saisir soi-même, jamais dans une conversation) :
+
+1. `node tools/pre-prod.mjs` → fabrique `dist-ovh/`, doit finir par « Aucun bloquant ».
+2. FileZilla : Serveur `ftp.clusterXXX.hebergement.com` (indiqué par OVH), port 21.
+3. À droite, ouvrir le dossier **`www`** et supprimer la page d'attente d'OVH qui s'y trouve.
+4. À gauche, ouvrir `E:\Projets\ChoViaHe\dist-ovh`, **tout sélectionner** (Ctrl+A) et
+   glisser dans `www`. Le contenu, pas le dossier `dist-ovh` lui-même.
+5. Vérifier que **`.htaccess`** est bien arrivé : c'est un fichier caché. Dans FileZilla,
+   menu Serveur → « Forcer l'affichage des fichiers cachés ».
+6. Ouvrir l'adresse technique OVH (`choviahe.clusterXXX.hosting.ovh.net`) : le site doit
+   s'afficher. Wix sert toujours choviahe.fr à ce stade, personne ne voit rien.
 
 ---
 
@@ -123,16 +126,19 @@ c'est un fichier caché, beaucoup de logiciels FTP ne l'affichent pas par défau
 
 | Ordre | Action | Pourquoi cet ordre |
 |---|---|---|
-| 0 | Serveurs de noms passés à OVH et confirmés (phase 0) | `nslookup` ne renvoie plus `wixdns.net` |
-| 0bis | `git tag prod-AAAA-MM-JJ` sur le commit déployé | On sait exactement quelle version est en ligne |
-| 1 | `node tools/pre-prod.mjs` | Rend le site indexable, versionne les assets, signale les bloquants |
-| 2 | Relire ce que la commande affiche | Elle refuse de dire « OK » s'il reste un problème |
-| 3 | Envoyer les fichiers en FTP | Le site est en ligne mais Wix répond encore |
-| 4 | Vérifier sur son téléphone : réserver, appeler, itinéraire | Ce sont les 3 seules actions qui comptent |
-| 5 | Basculer le DNS de Wix vers OVH | À partir de là, le vrai site répond |
-| 6 | Tester les anciennes adresses Wix | Elles doivent rediriger, pas afficher une erreur |
-| 7 | Search Console (phase 3) | Google apprend l'existence du nouveau site |
-| 8 | Fiche Google Business (phase 4) | Le levier principal |
+| 1 | `node tools/pre-prod.mjs`, puis `git tag prod-AAAA-MM-JJ` | On sait exactement quelle version part en ligne |
+| 2 | Envoyer `dist-ovh/` en FTP (phase 1) | Le site existe chez OVH, Wix répond encore |
+| 3 | Tester sur l'adresse technique OVH | On voit le vrai site avant tout le monde |
+| 4 | OVH : Multisite → ajouter `choviahe.fr` et `www.choviahe.fr` (domaine externe) | OVH donne l'IP et le TXT `ovhcontrol` |
+| 5 | Wix : TXT `ovhcontrol`, 1 A modifié + 2 supprimés, CNAME `www` (phase 0) | À partir de là, le vrai site répond |
+| 6 | `nslookup` jusqu'à ne plus voir d'IP Wix, puis activer le SSL dans OVH | Let's Encrypt a besoin du DNS déjà basculé |
+| 7 | Sur téléphone : réserver, appeler, itinéraire, + anciennes adresses Wix | Les 3 actions qui comptent, et le référencement acquis |
+| 8 | Search Console (phase 3), fiche Google (phase 4) | Google apprend l'existence du nouveau site |
+| 9 | Résilier **Premium Light** seul, avant le 3 nov. | Plus rien ne sert chez Wix, sauf le domaine |
+
+**Si `http://` ne bascule pas en `https://`** après l'étape 6 : la règle du `.htaccess`
+échoue volontairement en ouvert (jamais de boucle). Dans ce cas, activer l'option
+« HTTPS » / redirection dans l'espace OVH du multisite, ou me le signaler.
 
 **Les anciennes adresses à tester après la bascule** — chacune doit atterrir sur le
 nouveau site sans page d'erreur :
@@ -222,8 +228,6 @@ sur le site, avec le balisage qui fait apparaître les étoiles dans Google.
 
 **La semaine du lancement**
 
-- Créer le compte de mesure d'audience sur `goatcounter.com` avec le code **`choviahe`**.
-  Le code du site est déjà en place et attend ce compte. Sans cookie, donc sans bandeau.
 - Vérifier depuis un vrai téléphone que les clics « Réserver », « Appeler » et
   « Itinéraire » sont bien comptés.
 
@@ -238,7 +242,6 @@ sur le site, avec le balisage qui fait apparaître les étoiles dans Google.
   Un client devant une porte close laisse un mauvais avis.
 - Regarder dans Search Console sur quelles recherches le site sort. Les surprises de ce
   rapport valent plus que toutes les suppositions.
-- Remplacer le PDF brouillon par la version définitive dès qu'elle existe.
 
 **Plus tard, si ça vaut le coup**
 
@@ -253,25 +256,22 @@ sur le site, avec le balisage qui fait apparaître les étoiles dans Google.
 Rien ici ne bloque la mise en ligne — le site peut partir sans. Mais chaque élément manquant
 est une occasion perdue.
 
-- Le PDF **définitif** de la carte (celui d'aujourd'hui contient des « BLA BLA BLA »)
-- Les trois prix manquants : cà phê sữa đá, trà đá, trà tắc
-- Confirmation de la colonne de prix des boissons chaudes (2 / 2,50 / 4,50 / 4,50)
 - Les accès à la fiche Google Business, ou une session de 30 minutes ensemble dessus
-- Le logo en version vectorielle
 - Le texte de l'histoire familiale, si elle veut compléter
 
 ---
 
 ## Les commandes
 
-Basculer en production :
+Fabriquer le dossier de production `dist-ovh/` (à renvoyer en FTP à chaque mise à jour) :
 
 ```bash
 node tools/pre-prod.mjs
 ```
 
-Revenir en staging (site invisible pour Google) :
+`docs/` n'est jamais modifié par cette commande : l'aperçu GitHub reste en noindex.
+Vérifier le dossier avant envoi (dans un autre terminal : `npx --yes serve dist-ovh -l 4325`) :
 
 ```bash
-node tools/pre-prod.mjs --revert
+SITE_URL="http://localhost:4325" python tools/verif-retours.py
 ```

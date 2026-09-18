@@ -19,11 +19,14 @@ RewriteEngine On
 # (X-Forwarded-Proto absent ET HTTPS vide) redirigerait aussi les requêtes
 # déjà en TLS : boucle de 301 sur tout le site. En cas de doute, cette règle
 # échoue en OUVERT (pas de redirection), jamais en boucle.
+# Limité à choviahe.fr : l'adresse technique OVH (*.hosting.ovh.net) n'est pas
+# redirigée, sinon impossible de tester le site avant le pointage DNS.
+RewriteCond %{HTTP_HOST} (^|\.)choviahe\.fr$ [NC]
 RewriteCond %{HTTP:X-Forwarded-Proto} =http
 RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 
 # sans www -> www
-RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteCond %{HTTP_HOST} ^choviahe\.fr$ [NC]
 RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 
 # ---------------------------------------------------------
