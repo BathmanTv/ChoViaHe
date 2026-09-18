@@ -32,7 +32,7 @@ visibilité en plus pendant la rentrée.
 - Le compte GoatCounter (code `choviahe`)
 - Les accès à la fiche Google Business : Place ID pour relier le site à la fiche, note
   et nombre d'avis à afficher
-- Le logo vectoriel
+- ~~Le logo vectoriel~~ : reçu le 18/09 (.ai), intégré en SVG
 
 ---
 
