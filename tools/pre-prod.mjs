@@ -60,9 +60,10 @@ for (const rel of PUBLIQUES) {
 }
 
 // Le .htaccess met CSS/JS/SVG en cache 1 an : le jeton force le rechargement.
+// Jeton à la minute : deux envois le même jour ne doivent pas partager le même ?v=.
 const jour = new Date().toISOString().slice(0, 10);
-const jeton = jour.replace(/-/g, '');
-for (const rel of PAGES) ecrire(rel, lire(rel).replace(/\.(css|js|svg)\?v=\d{8}/g, `.$1?v=${jeton}`));
+const jeton = new Date().toISOString().slice(0, 16).replace(/\D/g, '');   // AAAAMMJJhhmm (UTC)
+for (const rel of PAGES) ecrire(rel, lire(rel).replace(/\.(css|js|svg)\?v=\d{8,12}/g, `.$1?v=${jeton}`));
 console.log(`jeton       ?v=${jeton}`);
 
 ecrire('sitemap.xml', lire('sitemap.xml').replace(/<lastmod>[\d-]+<\/lastmod>/g, `<lastmod>${jour}</lastmod>`));
