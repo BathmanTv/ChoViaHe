@@ -10,7 +10,7 @@ Chaque ligne est un retour numéroté : on mesure dans le navigateur, on ne
 se fie jamais au fait qu'un fichier ait été édité. Sortie : OK / ECHEC.
 Code de sortie 1 s'il reste un échec.
 """
-import sys
+import sys, re
 from playwright.sync_api import sync_playwright
 
 # La console Windows est en cp1252 : sans ça, le moindre caractère vietnamien
@@ -247,7 +247,7 @@ with sync_playwright() as p:
         "Tám-Đi": "10 €", "Đi Chợ": "10 €",
         "Café / déca / allongé": "2 €", "Café noisette": "2,50 €",
         "Thé vert jasmin du Vietnam": "4,50 €",
-        "Phở gà": "16 €", "Phở bò tái chín": "17 €",
+        "Phở gà": "16 €", "Phở bò": "17 €",
         "Bánh trôi nước mè đen": "7 €",
         "Chả cốm (x2)": "8 €",
     }
@@ -363,6 +363,14 @@ with sync_playwright() as p:
     verif("15/09", "Autres adresses : dans l'histoire (2) et dans le contact",
           ad["histoire"] == 2 and ad["contact"], str(ad))
     verif("15/09", "4e carte : les herbes (feuille de coriandre)", ad["herbes"], str(ad))
+    au.evaluate("document.querySelector('.footer-wordmark').scrollIntoView()")   # logo du pied en lazy
+    au.wait_for_timeout(800)
+    t18 = au.evaluate("""() => ({ desc: [...document.querySelectorAll('.plat-desc')].map(p => p.textContent.trim()),
+      logos: [...document.querySelectorAll('.wordmark img, .footer-wordmark img')].map(i => i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().height > 0) })""")
+    verif("18/09", "Teaser : chaque phrase commence par un article, sans tiret cadratin",
+          all(re.match(r"(Le|La|Les) ", x) and "—" not in x for x in t18["desc"]), str(t18["desc"]))
+    verif("18/09", "Herbes : texte de la cliente", any(x.startswith("Les herbes viet donnent vie") for x in t18["desc"]), "")
+    verif("18/09", "Logo officiel (SVG) chargé en en-tête et pied de page", t18["logos"] == [True, True], str(t18["logos"]))
     verif("Audit", "Vignettes de plats non justifiées",
           au.evaluate("() => getComputedStyle(document.querySelector('.plat-desc')).textAlign") != "justify")
     au.close()
@@ -391,7 +399,7 @@ with sync_playwright() as p:
     ph = ca.evaluate("""() => [...document.querySelectorAll('.pho-list .menu-item')].map(l => {
       const n=l.querySelector('.menu-item-nom').getBoundingClientRect(), p=l.querySelector('.menu-item-prix').getBoundingClientRect();
       return Math.abs(Math.round(p.top - n.top)); })""")
-    verif("Audit", "Phở : les 4 prix sur la ligne du nom", all(d < 12 for d in ph), str(ph))
+    verif("Audit", "Phở : les 2 prix sur la ligne du nom", all(d < 12 for d in ph), str(ph))
     col = ca.evaluate("() => ['plats','desserts','boissons'].map(id => document.querySelector('#'+id+' .menu-list').classList.contains('menu-list--2col'))")
     verif("Audit", "Plats / desserts / boissons en 2 colonnes", all(col), str(col))
     bl = ca.evaluate("() => getComputedStyle(document.querySelector('.pho-kicker')).color")

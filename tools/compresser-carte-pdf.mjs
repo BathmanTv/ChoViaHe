@@ -12,7 +12,7 @@ import { readdirSync, writeFileSync, statSync } from 'fs';
 const SRC_ARG = process.argv[2];
 const candidats = readdirSync('img')
   .map((f) => 'img/' + f)
-  .filter((f) => /Rentr.*Carte Cho.*\.pdf$/i.test(f))
+  .filter((f) => /Carte Cho.*\.pdf$/i.test(f))
   .sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs);
 const src = SRC_ARG || candidats[0];
 const OUT = 'docs/assets/carte-cho-via-he.pdf';

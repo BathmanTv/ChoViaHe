@@ -48,8 +48,12 @@
 <link rel="icon" href="../favicon-16.png" type="image/png" sizes="16x16" />
 <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
 
-<!-- JSON-LD Menu complet — source : « Rentrée 2026 Carte Cho-2.pdf »,
-     version DÉFINITIVE reçue le 31/08/2026, relevée page par page.
+<!-- JSON-LD Menu complet — source : « 2026 Carte Cho.pdf », reçue le 18/09/2026,
+     relevée page par page. Écarts avec la version du 31/08 :
+       · Phở : 4 déclinaisons -> 2. Phở bò 17 € (tái + chín réunis), Phở gà 16 €
+       · Retouches de texte : Granny Smith, « Plateau d'assortiments », « Café viet
+         robusta », phrase allergies reformulée
+     Historique, version du 31/08/2026 (« Rentrée 2026 Carte Cho-2.pdf »).
      Écarts avec la version du 05/08 :
        · Phở gà 16 € : nouveau, la rubrique passe à 4 déclinaisons
        · Bơ vơ 7,50 € remplacé par Bánh trôi nước mè đen 7 €
@@ -92,7 +96,7 @@
       "@type": "MenuSection",
       "name": "Món khai vị — Tapas vietnamiens",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Bánh bao (x1)", "description": "Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny-Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Bánh bao (x1)", "description": "Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny Smith, oignon et soja.", "offers": { "@type": "Offer", "price": "7.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Chả cốm (x2)", "description": "Galette de poulet haché, mélangée avec du jeune riz vert récolté avant maturité (le cốm) et différentes épices viet.", "offers": { "@type": "Offer", "price": "8.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Nem Chợ porc ou poulet (x3)", "description": "Avec farce de porc ou poulet haché, champignons, carottes, chou rave, pousses de soja et œufs, sauce nước mắm.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Gà chiên xù", "description": "Cuisse de poulet désossée, marinée avec des épices viet, panée au panko.", "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "EUR" } },
@@ -107,7 +111,7 @@
       "@type": "MenuSection",
       "name": "Plateau à partager",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Mẹt Vỉa Hè", "description": "Plateau assortiment de tapas : gà chiên xù, chả cốm, nem chua rán, nem chợ au porc et crudités.", "offers": { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Mẹt Vỉa Hè", "description": "Plateau d'assortiments de tapas : gà chiên xù, chả cốm, nem chua rán, nem chợ au porc et crudités.", "offers": { "@type": "Offer", "price": "23.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -130,10 +134,8 @@
       "name": "Phở bò du Nord",
       "description": "Soupe traditionnelle du Nord du Vietnam au bouillon de bœuf mijoté pendant 8 h, nouilles de riz et fines tranches de viande, garnie de ciboule et d'herbes fraîches (coriandre, coriandre longue), poivre noir.",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Phở bò tái", "description": "Bœuf cru (merlan) mariné avec des épices, gingembre, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Phở bò chín", "description": "Fine tranche de poitrine de bœuf cuit pendant 8 h, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Phở gà", "description": "Poulet poché, bouillon de bœuf, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } },
-        { "@type": "MenuItem", "name": "Phở bò tái chín", "description": "Bœuf cru et cuit, herbes viet.", "offers": { "@type": "Offer", "price": "17.00", "priceCurrency": "EUR" } }
+        { "@type": "MenuItem", "name": "Phở bò", "description": "Bœuf cru (merlan) mariné avec des épices, gingembre et bœuf cuit (pendant 8 h), bouillon de bœuf, herbes viet.", "offers": { "@type": "Offer", "price": "17.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Phở gà", "description": "Poulet poché, bouillon de bœuf, herbes viet.", "offers": { "@type": "Offer", "price": "16.00", "priceCurrency": "EUR" } }
       ]
     },
     {
@@ -150,7 +152,7 @@
       "@type": "MenuSection",
       "name": "Giải khát Việt — Boissons viet",
       "hasMenuItem": [
-        { "@type": "MenuItem", "name": "Cà phê sữa đá", "description": "Café Viet Robusta, lait concentré, glaçons.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
+        { "@type": "MenuItem", "name": "Cà phê sữa đá", "description": "Café viet robusta, lait concentré, glaçons.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Trà đá", "description": "Thé glacé maison : thé vert jasmin vietnamien, lime, menthe.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } },
         { "@type": "MenuItem", "name": "Trà tắc", "description": "Thé glacé maison au kumquat et fruit de la passion.", "offers": { "@type": "Offer", "price": "6.00", "priceCurrency": "EUR" } }
       ]
@@ -229,7 +231,7 @@
 <!-- ================= HEADER FIXE (partagé) ================= -->
 <header class="site-header" id="haut">
   <div class="wrap">
-    <a class="wordmark" href="../"><span class="viet" lang="vi">Chợ Vỉa Hè</span></a>
+    <a class="wordmark" href="../"><img src="../assets/logo-nom.svg?v=20260915" width="768" height="217" alt="Chợ Vỉa Hè" /></a>
 
     <nav class="main-nav" aria-label="Navigation principale">
       <ul>
@@ -274,7 +276,7 @@
       <span class="carte-title-fr">cuisine de rue vietnamienne à Toulouse</span>
     </h1>
     <p class="carte-annotation handwritten">tout ce qu'on rapporte du Vietnam</p>
-    <p class="carte-note">La carte du restaurant, comme au bord du trottoir : une cuisine de rue vietnamienne faite maison, mijotée chaque jour à Toulouse. Les noms sont ceux du Vietnam — on vous raconte chaque plat en français juste en dessous.</p>
+    <p class="carte-note">La carte du restaurant, comme au bord du trottoir : une cuisine de rue vietnamienne faite maison, mijotée chaque jour à Toulouse. Les noms sont ceux du Vietnam, on vous raconte chaque plat en français juste en dessous.</p>
     <!-- PDF = version définitive du 31/08 (Rentrée 2026 Carte Cho-2). Pour une
          future carte : déposer le PDF dans img/ et lancer
          node tools/compresser-carte-pdf.mjs — il prend le plus récent. -->
@@ -315,7 +317,7 @@
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Bánh bao (x1)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">7&nbsp;€</span></p>
-        <p class="menu-item-desc">Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny-Smith, oignon et soja.</p>
+        <p class="menu-item-desc">Brioche vietnamienne cuite à la vapeur, farcie de porc xá-xíu, sauce maison pomme Granny Smith, oignon et soja.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Chả cốm (x2)</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">8&nbsp;€</span></p>
@@ -369,7 +371,7 @@
       <div class="pho-texte">
         <p class="pho-kicker handwritten">le plateau à partager</p>
         <h2 class="menu-section-title pho-title" id="plateau-title" lang="vi">Mẹt Vỉa Hè<span class="fr" lang="fr">tout le stand sur un plateau</span></h2>
-        <p class="pho-desc">Plateau assortiment de tapas : <span lang="vi">gà chiên xù</span>, <span lang="vi">chả cốm</span>, <span lang="vi">nem chua rán</span>, <span lang="vi">nem chợ</span> au porc et crudités.</p>
+        <p class="pho-desc">Plateau d'assortiments de tapas : <span lang="vi">gà chiên xù</span>, <span lang="vi">chả cốm</span>, <span lang="vi">nem chua rán</span>, <span lang="vi">nem chợ</span> au porc et crudités.</p>
         <p class="plateau-prix">23&nbsp;€</p>
       </div>
     </div>
@@ -439,23 +441,15 @@
       </div>
     </div>
 
-    <h3 class="menu-subhead pho-subhead">4 déclinaisons possibles</h3>
+    <h3 class="menu-subhead pho-subhead">2 déclinaisons possibles</h3>
     <ul class="menu-list pho-list">
       <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò tái</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
-        <p class="menu-item-desc">Bœuf cru (merlan) mariné avec des épices, gingembre, herbes viet.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò chín</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
-        <p class="menu-item-desc">Fine tranche de poitrine de bœuf cuit pendant 8&nbsp;h, herbes viet.</p>
+        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">17&nbsp;€</span></p>
+        <p class="menu-item-desc">Bœuf cru (merlan) mariné avec des épices, gingembre et bœuf cuit (pendant 8&nbsp;h), bouillon de bœuf, herbes viet.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở gà</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">16&nbsp;€</span></p>
         <p class="menu-item-desc">Poulet poché, bouillon de bœuf, herbes viet.</p>
-      </li>
-      <li class="menu-item">
-        <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Phở bò tái chín</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">17&nbsp;€</span></p>
-        <p class="menu-item-desc">Bœuf cru et cuit, herbes viet.</p>
       </li>
     </ul>
   </div>
@@ -518,7 +512,7 @@
     <ul class="menu-list menu-list--2col">
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom" lang="vi">Cà phê sữa đá</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
-        <p class="menu-item-desc">Café Viet Robusta, lait concentré, glaçons.</p>
+        <p class="menu-item-desc">Café viet robusta, lait concentré, glaçons.</p>
       </li>
       <li class="menu-item">
         <p class="menu-item-head"><span class="menu-item-nom">Thé glacé maison</span><span class="menu-item-lead" aria-hidden="true"></span><span class="menu-item-prix">6&nbsp;€</span></p>
@@ -610,7 +604,7 @@
   </div>
 </section>
 
-<p class="carte-allergies">Nous nous adaptons à vos allergies et restrictions alimentaires.</p>
+<p class="carte-allergies">Allergies ou restrictions alimentaires&nbsp;? Merci de nous en informer lors de votre commande.</p>
 
 <!-- ================= CTA RÉSERVER ================= -->
 <section class="carte-cta-final" aria-labelledby="carte-cta-title">
@@ -628,7 +622,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-col footer-infos">
-        <a class="footer-wordmark viet" href="../" lang="vi">Chợ Vỉa Hè</a>
+        <a class="footer-wordmark" href="../"><img loading="lazy" src="../assets/logo-complet.svg?v=20260915" width="768" height="285" alt="Chợ Vỉa Hè, cuisine de rue vietnamienne" /></a>
         <address>8 rue de Metz — 31000 Toulouse</address>
         <p><a href="tel:+33562858392">05 62 85 83 92</a></p>
         <p><a href="https://www.instagram.com/choviahe.toulouse" target="_blank" rel="noopener">@choviahe.toulouse</a></p>
