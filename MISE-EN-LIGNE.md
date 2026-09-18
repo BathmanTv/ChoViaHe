@@ -220,7 +220,9 @@ directement au formulaire d'avis, et répondre à **tous** les avis, y compris l
 Le volume et la fraîcheur comptent plus que la note.
 
 Quand il y aura une dizaine d'avis, on ajoutera la note et deux ou trois témoignages
-sur le site, avec le balisage qui fait apparaître les étoiles dans Google.
+sur le site. Pas de balisage d'étoiles : Google ne les affiche plus pour les avis
+publiés par le restaurant lui-même, et le signale comme une tentative de manipulation.
+Les étoiles viennent de la fiche Google Business, nulle part ailleurs.
 
 ---
 

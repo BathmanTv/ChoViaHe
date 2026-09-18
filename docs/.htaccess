@@ -1,20 +1,52 @@
 # =========================================================
 # Chợ Vỉa Hè — configuration serveur (OVH mutualisé, Apache)
+# Version du 18/09/2026 (audit Hermes + CSP testée avec le module Zenchef).
+# Banc d'essai Apache : tools/banc-htaccess.sh
 # À déposer à la racine du site, à côté de index.html.
 # =========================================================
 
 Options -MultiViews
 DirectoryIndex index.html
 
-# ---------------------------------------------------------
-# 1. UNE SEULE ADRESSE : https://www.choviahe.fr
-#    (OVH est derrière un proxy : on teste X-Forwarded-Proto,
-#     pas %{HTTPS} qui est souvent vide.)
-# ---------------------------------------------------------
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# http -> https
+# ---------------------------------------------------------
+# 1. ANCIENNES URL WIX -> nouvelles pages (301 permanent)
+#    Placées EN PREMIER : sinon un visiteur venant de http://choviahe.fr/menu
+#    (l'adresse la plus fréquente dans les vieux liens et sur Google) reçoit
+#    301 vers https://www.choviahe.fr/menu, puis encore 301 : deux sauts
+#    au lieu d'un seul.
+#    Cibles EN DUR en https:// : OVH termine le TLS sur son proxy, Apache
+#    se croit en http et fabriquerait sinon des Location en http://.
+# ---------------------------------------------------------
+RewriteRule ^menu/?$              https://www.choviahe.fr/carte/ [R=301,NC,L]
+RewriteRule ^copie-de-menu/?$     https://www.choviahe.fr/carte/ [R=301,NC,L]
+RewriteRule ^notre-histoire/?$    https://www.choviahe.fr/#histoire [R=301,NE,NC,L]
+
+# Wix ajoute parfois un préfixe de langue
+RewriteRule ^(fr|en)/menu/?$           https://www.choviahe.fr/carte/ [R=301,NC,L]
+RewriteRule ^(fr|en)/notre-histoire/?$ https://www.choviahe.fr/#histoire [R=301,NE,NC,L]
+
+# Résidus techniques Wix : on renvoie proprement à l'accueil
+RewriteRule ^_partials/          https://www.choviahe.fr/ [R=301,L]
+RewriteRule ^_api/              https://www.choviahe.fr/ [R=301,L]
+
+# Dossiers sans slash final : Apache ajouterait le slash tout seul, mais avec
+# un Location en http:// (même cause que ci-dessus).
+RewriteRule ^(carte|mentions-legales)$   https://www.choviahe.fr/$1/ [R=301,L]
+
+# /index.html répond 200 en double de / : deux adresses pour une même page.
+RewriteCond %{THE_REQUEST} \s/+(.+?/)?index\.html[\s?] [NC]
+RewriteRule ^ https://www.choviahe.fr/%1 [R=301,L]
+
+# ---------------------------------------------------------
+# 2. UNE SEULE ADRESSE : https://www.choviahe.fr
+#    (OVH est derrière un proxy : on teste X-Forwarded-Proto,
+#     pas %{HTTPS} qui est souvent vide.)
+# ---------------------------------------------------------
+
+# http -> https, et sans www -> www en une seule fois
 # Test POSITIF sur l'en-tête que pose le proxy OVH. Un test négatif combiné
 # (X-Forwarded-Proto absent ET HTTPS vide) redirigerait aussi les requêtes
 # déjà en TLS : boucle de 301 sur tout le site. En cas de doute, cette règle
@@ -25,29 +57,13 @@ RewriteCond %{HTTP_HOST} (^|\.)choviahe\.fr$ [NC]
 RewriteCond %{HTTP:X-Forwarded-Proto} =http
 RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 
-# sans www -> www
+# https sans www -> https avec www
 RewriteCond %{HTTP_HOST} ^choviahe\.fr$ [NC]
 RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
-
-# ---------------------------------------------------------
-# 2. ANCIENNES URL WIX -> nouvelles pages (301 permanent)
-#    Sans ça, tout le référencement acquis part à la poubelle.
-# ---------------------------------------------------------
-RewriteRule ^menu/?$              /carte/ [R=301,NC,L]
-RewriteRule ^copie-de-menu/?$     /carte/ [R=301,NC,L]
-RewriteRule ^notre-histoire/?$    /#histoire [R=301,NE,NC,L]
-
-# Wix ajoute parfois un préfixe de langue
-RewriteRule ^(fr|en)/menu/?$           /carte/ [R=301,NC,L]
-RewriteRule ^(fr|en)/notre-histoire/?$ /#histoire [R=301,NE,NC,L]
-
-# Résidus techniques Wix : on renvoie proprement à l'accueil
-RewriteRule ^_partials/          / [R=301,L]
-RewriteRule ^_api/              / [R=301,L]
 </IfModule>
 
 # ---------------------------------------------------------
-# 3. PAGE 404 maison
+# 3. PAGE 404 MAISON
 # ---------------------------------------------------------
 ErrorDocument 404 /404.html
 
@@ -86,14 +102,24 @@ AddType application/manifest+json .webmanifest
 </IfModule>
 
 # ---------------------------------------------------------
-# 6. SÉCURITÉ minimale
+# 6. SÉCURITÉ
 # ---------------------------------------------------------
 <IfModule mod_headers.c>
 Header always set X-Content-Type-Options "nosniff"
 Header always set Referrer-Policy "strict-origin-when-cross-origin"
 Header always set X-Frame-Options "SAMEORIGIN"
-# HSTS : à décommenter SEULEMENT une fois le HTTPS confirmé stable
-# Header always set Strict-Transport-Security "max-age=31536000"
+Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()"
+# CSP : bloque tout script/iframe venant d'ailleurs que des sources listées.
+# 'unsafe-inline' reste nécessaire (la page a des scripts en ligne) : c'est une
+# protection contre l'injection externe, pas contre tout.
+# Testée le 18/09 dans un navigateur, module Zenchef ouvert et GoatCounter actif :
+# zéro violation. Le module Zenchef charge sa feuille de style depuis
+# sdk.zenchef.com : sans elle dans style-src, il disparaît. Tout nouveau service
+# tiers (carte Google intégrée, widget Instagram...) devra être ajouté ici.
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://gc.zgo.at https://sdk.zenchef.com; style-src 'self' 'unsafe-inline' https://sdk.zenchef.com; img-src 'self' data: https://choviahe.goatcounter.com; font-src 'self'; connect-src 'self' https://choviahe.goatcounter.com; frame-src https://bookings.zenchef.com https://sdk.zenchef.com; form-action 'self' https://bookings.zenchef.com; base-uri 'self'; object-src 'none'"
+# HSTS : à garder commenté jusqu'à ce que le HTTPS soit confirmé stable sur
+# les deux adresses (sans www et avec www). Ensuite, décommenter.
+# Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 # Pas de listing de répertoire
