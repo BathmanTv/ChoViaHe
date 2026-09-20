@@ -95,6 +95,10 @@ ExpiresByType application/pdf           "access plus 1 week"
 </IfModule>
 
 # Types MIME qu'OVH ne sert pas toujours correctement
+# Sans ça, llms.txt et robots.txt partent en text/plain sans encodage déclaré :
+# les diacritiques vietnamiens s'affichent en charabia chez qui suppose du latin-1.
+AddDefaultCharset UTF-8
+
 <IfModule mod_mime.c>
 AddType image/avif   .avif
 AddType font/woff2   .woff2
