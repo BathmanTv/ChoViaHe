@@ -15,33 +15,33 @@ RewriteEngine On
 # 1. ANCIENNES URL WIX -> nouvelles pages (301 permanent)
 #    Placées EN PREMIER : sinon un visiteur venant de http://choviahe.fr/menu
 #    (l'adresse la plus fréquente dans les vieux liens et sur Google) reçoit
-#    301 vers http://www.choviahe.fr/menu, puis encore 301 : deux sauts
+#    301 vers https://www.choviahe.fr/menu, puis encore 301 : deux sauts
 #    au lieu d'un seul.
 #    Cibles EN DUR en https:// : OVH termine le TLS sur son proxy, Apache
 #    se croit en http et fabriquerait sinon des Location en http://.
 # ---------------------------------------------------------
-RewriteRule ^menu/?$              http://www.choviahe.fr/carte/ [R=301,NC,L]
-RewriteRule ^copie-de-menu/?$     http://www.choviahe.fr/carte/ [R=301,NC,L]
-RewriteRule ^notre-histoire/?$    http://www.choviahe.fr/#histoire [R=301,NE,NC,L]
+RewriteRule ^menu/?$              https://www.choviahe.fr/carte/ [R=301,NC,L]
+RewriteRule ^copie-de-menu/?$     https://www.choviahe.fr/carte/ [R=301,NC,L]
+RewriteRule ^notre-histoire/?$    https://www.choviahe.fr/#histoire [R=301,NE,NC,L]
 
 # Wix ajoute parfois un préfixe de langue
-RewriteRule ^(fr|en)/menu/?$           http://www.choviahe.fr/carte/ [R=301,NC,L]
-RewriteRule ^(fr|en)/notre-histoire/?$ http://www.choviahe.fr/#histoire [R=301,NE,NC,L]
+RewriteRule ^(fr|en)/menu/?$           https://www.choviahe.fr/carte/ [R=301,NC,L]
+RewriteRule ^(fr|en)/notre-histoire/?$ https://www.choviahe.fr/#histoire [R=301,NE,NC,L]
 
 # Résidus techniques Wix : on renvoie proprement à l'accueil
-RewriteRule ^_partials/          http://www.choviahe.fr/ [R=301,L]
-RewriteRule ^_api/              http://www.choviahe.fr/ [R=301,L]
+RewriteRule ^_partials/          https://www.choviahe.fr/ [R=301,L]
+RewriteRule ^_api/              https://www.choviahe.fr/ [R=301,L]
 
 # Dossiers sans slash final : Apache ajouterait le slash tout seul, mais avec
 # un Location en http:// (même cause que ci-dessus).
-RewriteRule ^(carte|mentions-legales)$   http://www.choviahe.fr/$1/ [R=301,L]
+RewriteRule ^(carte|mentions-legales)$   https://www.choviahe.fr/$1/ [R=301,L]
 
 # /index.html répond 200 en double de / : deux adresses pour une même page.
 RewriteCond %{THE_REQUEST} \s/+(.+?/)?index\.html[\s?] [NC]
-RewriteRule ^ http://www.choviahe.fr/%1 [R=301,L]
+RewriteRule ^ https://www.choviahe.fr/%1 [R=301,L]
 
 # ---------------------------------------------------------
-# 2. UNE SEULE ADRESSE : http://www.choviahe.fr
+# 2. UNE SEULE ADRESSE : https://www.choviahe.fr
 #    (OVH est derrière un proxy : on teste X-Forwarded-Proto,
 #     pas %{HTTPS} qui est souvent vide.)
 # ---------------------------------------------------------
@@ -53,16 +53,13 @@ RewriteRule ^ http://www.choviahe.fr/%1 [R=301,L]
 # échoue en OUVERT (pas de redirection), jamais en boucle.
 # Limité à choviahe.fr : l'adresse technique OVH (*.hosting.ovh.net) n'est pas
 # redirigée, sinon impossible de tester le site avant le pointage DNS.
-# TEMPORAIRE 21/09 01h30 : redirection https désactivée le temps qu'OVH rattache
-# le certificat Let's Encrypt au vhost. Sans ça, le visiteur reçoit une alerte de
-# sécurité. À RÉACTIVER dès que http://www.choviahe.fr répond 200.
-#RewriteCond %{HTTP_HOST} (^|\.)choviahe\.fr$ [NC]
-#RewriteCond %{HTTP:X-Forwarded-Proto} =http
-#RewriteRule ^(.*)$ http://www.choviahe.fr/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} (^|\.)choviahe\.fr$ [NC]
+RewriteCond %{HTTP:X-Forwarded-Proto} =http
+RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 
 # https sans www -> https avec www
 RewriteCond %{HTTP_HOST} ^choviahe\.fr$ [NC]
-RewriteRule ^(.*)$ http://www.choviahe.fr/$1 [R=301,L]
+RewriteRule ^(.*)$ https://www.choviahe.fr/$1 [R=301,L]
 </IfModule>
 
 # ---------------------------------------------------------
