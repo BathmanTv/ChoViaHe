@@ -1,0 +1,31 @@
+# Photo DNS choviahe.fr avant bascule — 2026-09-20T22:52Z
+## NS
+choviahe.fr	nameserver = ns12.wixdns.net
+choviahe.fr	nameserver = ns13.wixdns.net
+## A
+Nom :    choviahe.fr
+Addresses:  185.230.63.186
+	  185.230.63.171
+	  185.230.63.107
+## AAAA
+Nom :    choviahe.fr
+## MX
+choviahe.fr
+	primary name server = ns12.wixdns.net
+	responsible mail addr = support.wix.com
+	serial  = 2024071908
+	refresh = 10800 (3 hours)
+	retry   = 3600 (1 hour)
+	expire  = 1209600 (14 days)
+	default TTL = 3600 (1 hour)
+## TXT
+choviahe.fr
+	primary name server = ns12.wixdns.net
+	responsible mail addr = support.wix.com
+	serial  = 2024071908
+	refresh = 10800 (3 hours)
+	retry   = 3600 (1 hour)
+	expire  = 1209600 (14 days)
+	default TTL = 3600 (1 hour)
+## www (CNAME)
+www.choviahe.fr	canonical name = cdn3.wixdns.net
