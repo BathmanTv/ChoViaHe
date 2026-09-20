@@ -373,6 +373,17 @@ with sync_playwright() as p:
     verif("18/09", "Logo officiel (SVG) chargé en en-tête et pied de page", t18["logos"] == [True, True], str(t18["logos"]))
     verif("Audit", "Vignettes de plats non justifiées",
           au.evaluate("() => getComputedStyle(document.querySelector('.plat-desc')).textAlign") != "justify")
+    # 8bis. conformité légale (checklist LCEN/RGPD du 20/09) : mentions complètes + llms.txt
+    au.goto(BASE + "/mentions-legales/", wait_until="networkidle")
+    ml = au.evaluate("() => document.body.innerText")
+    manque = [x for x in ["930 959 663", "RCS Toulouse", "SARL", "OVH", "09 72 10 10 07",
+                          "GoatCounter", "Zenchef", "CNIL", "rectification", "Elsa GLEIZES"] if x not in ml]
+    verif("20/09", "Mentions légales : éditeur, hébergeur, droits RGPD, CNIL", not manque, f"manque : {manque}")
+    verif("20/09", "Aucun bandeau cookies (le site n'en dépose aucun)",
+          au.evaluate("() => !document.querySelector('[id*=cookie i], [class*=cookie i], [class*=consent i]')"))
+    lt = au.goto(BASE + "/llms.txt")
+    verif("20/09", "llms.txt servi en texte, avec adresse et horaires",
+          lt.status == 200 and "8 rue de Metz" in lt.text() and "12h00–14h30" in lt.text(), str(lt.status))
     au.close()
 
     # 8. skip-link : Entrée déplace le focus dans le contenu (desktop, Lenis actif)

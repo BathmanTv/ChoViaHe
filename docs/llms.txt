@@ -1,0 +1,31 @@
+# Chợ Vỉa Hè — restaurant vietnamien à Toulouse
+
+> Cuisine de rue vietnamienne faite maison, au 8 rue de Metz à Toulouse (quartier
+> Esquirol). Tapas vietnamiens, phở bò du Nord mijoté 8 heures, bún chả, bánh cuốn,
+> desserts et cocktails. Réservation en ligne ou par téléphone.
+
+## Informations pratiques
+
+- Adresse : 8 rue de Metz, 31000 Toulouse, France (métro Esquirol, ligne A)
+- Téléphone : 05 62 85 83 92 (+33 5 62 85 83 92)
+- E-mail : choviahe.toulouse@gmail.com
+- Horaires : du mardi au samedi, 12h00–14h30 et 19h00–22h30. Fermé dimanche et lundi.
+- Réservation : https://bookings.zenchef.com/results?rid=377642
+- Instagram : https://www.instagram.com/choviahe.toulouse
+- Options végétariennes disponibles ; allergies et restrictions alimentaires prises en compte.
+
+## Pages
+
+- [Accueil](https://www.choviahe.fr/) : le lieu, l'histoire familiale, les plats phares, questions fréquentes.
+- [La carte](https://www.choviahe.fr/carte/) : carte complète en HTML avec tous les prix (tapas, plats, phở, desserts, boissons, cocktails). Version PDF illustrée téléchargeable sur la même page.
+- [Mentions légales](https://www.choviahe.fr/mentions-legales/) : éditeur, hébergeur, données personnelles.
+
+## Autres adresses de la famille, à Toulouse
+
+- Café Bống, salon de thé et coffee shop : https://www.cafe-bong.com/
+- Bếp Chay, cuisine vietnamienne végétarienne et vegan : https://bep-chay.com/
+
+## Notes
+
+- Les données structurées (schema.org Restaurant, Menu, FAQPage) sont intégrées aux pages.
+- Les avis et la note du restaurant sont sur sa fiche Google Business, pas sur ce site.
