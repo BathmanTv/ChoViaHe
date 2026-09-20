@@ -113,6 +113,13 @@
       if (!target) return;
       a.addEventListener('click', function (e) {
         e.preventDefault();
+        // #haut est porté par l'en-tête, qui est en position fixe : viser sa
+        // position ne remonte que de la hauteur du bandeau. On vise le haut réel.
+        if (href === '#haut') {
+          if (lenis) lenis.scrollTo(0, { duration: 1.1 });
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
         if (lenis) {
           lenis.scrollTo(target, { offset: -HEADER_OFFSET, duration: 1.1 });
         } else {

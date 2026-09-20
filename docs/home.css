@@ -68,7 +68,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+  /* PAS de scroll-behavior: smooth. Lenis l'interdit : il repositionne le scroll
+     image par image, et le navigateur ré-animait CHAQUE repositionnement —
+     deux lissages empilés, ~2 s de retard à la molette sous Chrome (Firefox
+     beaucoup moins). Les ancres restent douces : c'est home.js qui les anime. */
   scroll-padding-top: calc(var(--header-h) + 0.5rem);
 }
 body {
@@ -1419,7 +1422,6 @@ h3 {
    REDUCED MOTION — tout statique
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;

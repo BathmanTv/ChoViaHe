@@ -363,6 +363,14 @@ with sync_playwright() as p:
     verif("15/09", "Autres adresses : dans l'histoire (2) et dans le contact",
           ad["histoire"] == 2 and ad["contact"], str(ad))
     verif("15/09", "4e carte : les herbes (feuille de coriandre)", ad["herbes"], str(ad))
+    # 21/09 : le logo doit ramener tout en haut. #haut est sur l'en-tête FIXE :
+    # viser sa position ne remontait que de la hauteur du bandeau (64 px).
+    au.evaluate("window.scrollTo(0, 4000)"); au.wait_for_timeout(1500)
+    au.evaluate("document.querySelector('.wordmark').click()"); au.wait_for_timeout(2500)
+    verif("21/09", "Le logo ramène en haut de page", au.evaluate("window.scrollY") < 5, f"scrollY={au.evaluate('window.scrollY')}")
+    verif("21/09", "Pas de scroll-behavior:smooth (double lissage avec Lenis sous Chrome)",
+          au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior") == "auto",
+          au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior"))
     au.evaluate("document.querySelector('.footer-wordmark').scrollIntoView()")   # logo du pied en lazy
     au.wait_for_timeout(800)
     t18 = au.evaluate("""() => ({ desc: [...document.querySelectorAll('.plat-desc')].map(p => p.textContent.trim()),
