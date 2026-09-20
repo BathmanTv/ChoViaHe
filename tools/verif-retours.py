@@ -346,7 +346,7 @@ with sync_playwright() as p:
           au.evaluate("() => getComputedStyle(document.querySelector('.header-cta')).opacity") == "0")
 
     # 5. versionnage des assets
-    vv = au.evaluate("() => [...document.querySelectorAll('link[rel=stylesheet],script[src]')].map(e => e.href||e.src).filter(u => /\.(css|js)(\?|$)/.test(u) && !/cdn\./.test(u))")
+    vv = au.evaluate("() => [...document.querySelectorAll('link[rel=stylesheet],script[src]')].map(e => e.href||e.src).filter(u => /\.(css|js)(\?|$)/.test(u) && !/cdn\.|gc\.zgo\.at|zenchef/.test(u))")
     verif("Audit", "Assets locaux versionnés (?v=)", all("?v=" in u for u in vv), str([u.split('/').pop() for u in vv if "?v=" not in u]))
 
     # 6. cibles tactiles ≥ 44px sur les 3 liens signalés
