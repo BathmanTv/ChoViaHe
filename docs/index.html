@@ -46,6 +46,8 @@
 <link rel="stylesheet" href="./fonts/fonts.css?v=20260918" />
 <link rel="stylesheet" href="./home.css?v=20260918" />
 
+<link rel="icon" href="./icon-192.png?v=20260922" type="image/png" sizes="192x192" />
+<link rel="icon" href="./icon-96.png?v=20260922" type="image/png" sizes="96x96" />
 <link rel="icon" href="./favicon-32.png" type="image/png" sizes="32x32" />
 <link rel="icon" href="./favicon-16.png" type="image/png" sizes="16x16" />
 <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
@@ -267,12 +269,14 @@
         <p>Pour vous embarquer dans cette aventure sensorielle et immersive, nous avons arpenté les marchés vietnamiens, déambulé de ruelle en ruelle, flâné au milieu des étals grouillants de vie, nous laissant happer par les couleurs, les odeurs et les saveurs.</p>
         <p>Chaque étape fut l'occasion de chiner un élément de décoration&nbsp;: la vaisselle venue du village de céramique de Bát Tràng, les fleurs artisanales façonnées par les grand-mères de Thanh Tiên, les lanternes lumineuses rapportées d'Hội An, les chapeaux coniques de Huế, les tissus soyeux de Vạn Phúc, et mille trouvailles marchandes négociées à Hà Nội… (en nous arrêtant régulièrement pour grignoter et nourrir notre inspiration pour la carte, évidemment&nbsp;!).</p>
       </div>
-      <figure class="dip-media">
+      <!-- Photo verticale : dip-media--portrait la montre ENTIÈRE (2/3, le ratio
+           exact du fichier), au lieu du 3/2 recadré des autres diptyques. -->
+      <figure class="dip-media dip-media--portrait">
         <picture>
-          <source type="image/avif" srcset="./assets/photos/patron-480.avif 480w, ./assets/photos/patron-960.avif 960w, ./assets/photos/patron-1600.avif 1600w" sizes="(max-width: 899px) min(92vw, 320px), 560px" />
-          <source type="image/webp" srcset="./assets/photos/patron-480.webp 480w, ./assets/photos/patron-960.webp 960w, ./assets/photos/patron-1600.webp 1600w" sizes="(max-width: 899px) min(92vw, 320px), 560px" />
-          <img loading="lazy" decoding="async" src="./assets/photos/patron-960.webp" width="960" height="640" style="object-position: center 26%"
-               alt="Le patron du Chợ Vỉa Hè en cuisine, derrière les marmites de bouillon fumant." />
+          <source type="image/avif" srcset="./assets/photos/bol-pho-480.avif 480w, ./assets/photos/bol-pho-960.avif 960w, ./assets/photos/bol-pho-1600.avif 1600w" sizes="(max-width: 899px) min(80vw, 300px), 380px" />
+          <source type="image/webp" srcset="./assets/photos/bol-pho-480.webp 480w, ./assets/photos/bol-pho-960.webp 960w, ./assets/photos/bol-pho-1600.webp 1600w" sizes="(max-width: 899px) min(80vw, 300px), 380px" />
+          <img loading="lazy" decoding="async" src="./assets/photos/bol-pho-960.webp" width="960" height="1439"
+               alt="Des mains parsèment un bol de phở d'herbes fraîches ciselées, dans la cuisine du Chợ Vỉa Hè." />
         </picture>
       </figure>
     </div>

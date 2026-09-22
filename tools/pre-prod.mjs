@@ -26,8 +26,7 @@ const OUT = join(RACINE, 'dist-ovh');
 // ouvert dessus verrouille le dossier lui-même
 if (existsSync(OUT)) for (const f of readdirSync(OUT)) rmSync(join(OUT, f), { recursive: true, force: true });
 // fichiers propres à git / GitHub Pages : inutiles chez OVH
-// + icon-512.png : 278 Ko, référencé nulle part (pas de manifest)
-const HORS_PROD = ['.gitignore', '.ignore', '.nojekyll', 'icon-512.png'];
+const HORS_PROD = ['.gitignore', '.ignore', '.nojekyll'];
 cpSync(SRC, OUT, { recursive: true, filter: (f) => !HORS_PROD.some((n) => f.endsWith(n)) });
 console.log(`copie       docs/ -> dist-ovh/`);
 

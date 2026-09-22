@@ -371,6 +371,20 @@ with sync_playwright() as p:
     verif("21/09", "Pas de scroll-behavior:smooth (double lissage avec Lenis sous Chrome)",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior") == "auto",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior"))
+    # 22/09 : la photo verticale doit être ENTIÈRE (ratio affiché = ratio du fichier),
+    # et l'icône doit exister en multiple de 48 px, sinon Google n'affiche rien.
+    au.evaluate("document.querySelector('.dip-media--portrait').scrollIntoView()")
+    au.wait_for_timeout(1200)
+    ph = au.evaluate("""() => { const i = document.querySelector('.dip-media--portrait img');
+      const b = i.getBoundingClientRect();
+      return { affiche: b.width / b.height, fichier: i.naturalWidth / i.naturalHeight, ok: i.complete && i.naturalWidth > 0 }; }""")
+    verif("22/09", "Photo verticale affichée en entier (aucun recadrage)",
+          ph["ok"] and abs(ph["affiche"] - ph["fichier"]) < 0.02, f"{ph['affiche']:.3f} vs {ph['fichier']:.3f}")
+    ico = au.evaluate("""() => [...document.querySelectorAll('link[rel="icon"]')].map(l => l.getAttribute('sizes'))""")
+    gros = [t for t in ico if t and t.split('x')[0].isdigit() and int(t.split('x')[0]) >= 48 and int(t.split('x')[0]) % 48 == 0]
+    verif("22/09", "Icône déclarée en multiple de 48 px (exigence Google)", bool(gros), str(ico))
+    r192 = au.request.get(BASE + "/icon-192.png")
+    verif("22/09", "icon-192.png servi", r192.status == 200, str(r192.status))
     au.evaluate("document.querySelector('.footer-wordmark').scrollIntoView()")   # logo du pied en lazy
     au.wait_for_timeout(800)
     t18 = au.evaluate("""() => ({ desc: [...document.querySelectorAll('.plat-desc')].map(p => p.textContent.trim()),
