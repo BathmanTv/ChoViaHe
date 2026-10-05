@@ -199,34 +199,8 @@
   })();
 
   /* =======================================================
-     4. ZENCHEF — overlay chargé À LA DEMANDE (RGPD + perf).
-     Rien ne charge avant le premier clic; fallback lien direct à 4s.
+     4. ZENCHEF — lien direct, un seul clic (module retiré le 05/10/2026).
+     Voir le détail dans home.js : le SDK n'exposait pas de méthode
+     d'ouverture, il n'affichait qu'une pastille à recliquer.
      ======================================================= */
-  (function initZenchefLazy() {
-    /* MOBILE : pas d'overlay (il masque la barre Appeler / Itinéraire et ne se
-       referme pas programmatiquement) — on ouvre la page de réservation en
-       plein écran dans un nouvel onglet. Voir home.js pour le détail. */
-    if (window.matchMedia('(max-width: 780px), (pointer: coarse)').matches) return;
-
-    function openWhenReady(fallbackHref, deadline) {
-      if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
-        window.ZenchefWidget.open();
-        return;
-      }
-      if (Date.now() > deadline) { window.open(fallbackHref, '_blank', 'noopener'); return; }
-      setTimeout(function () { openWhenReady(fallbackHref, deadline); }, 120);
-    }
-    document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (!document.getElementById('zenchef-sdk')) {
-          var js = document.createElement('script');
-          js.id = 'zenchef-sdk';
-          js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';
-          document.head.appendChild(js);
-        }
-        openWhenReady(a.href, Date.now() + 4000);
-      });
-    });
-  })();
 })();

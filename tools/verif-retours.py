@@ -371,6 +371,18 @@ with sync_playwright() as p:
     verif("21/09", "Pas de scroll-behavior:smooth (double lissage avec Lenis sous Chrome)",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior") == "auto",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior"))
+    # 05/10 : un seul clic pour réserver (le module Zenchef en demandait deux),
+    # et les logos des deux autres adresses doivent s'afficher entiers.
+    verif("05/10", "Aucun module Zenchef chargé (lien direct)",
+          "sdk.zenchef.com" not in au.content(), "")
+    # les logos du bloc contact sont en chargement différé : il faut y aller
+    au.evaluate("document.querySelector('.info-block--autres').scrollIntoView()")
+    au.wait_for_timeout(1200)
+    lg = au.evaluate("""() => [...document.querySelectorAll('.autres-logo, .autres-ligne img')]
+          .map(i => i.complete && i.naturalWidth > 0 && i.getBoundingClientRect().width > 40)""")
+    verif("05/10", "Logos Café Bống et Bếp Chay affichés (histoire + contact)",
+          len(lg) == 4 and all(lg), str(lg))
+
     # 22/09 : la photo verticale doit être ENTIÈRE (ratio affiché = ratio du fichier),
     # et l'icône doit exister en multiple de 48 px, sinon Google n'affiche rien.
     au.evaluate("document.querySelector('.dip-media--portrait').scrollIntoView()")

@@ -620,7 +620,26 @@ h3 {
 .autres-adresses { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
 /* nom au-dessus, description dessous : sinon un nom tient sur la ligne et
    l'autre passe à la ligne selon la largeur, et les deux ne se ressemblent plus */
-.autres-adresses li { display: grid; gap: 0; }
+.autres-adresses li {
+  display: grid;
+  gap: 0 0.75rem;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "logo nom" "logo desc";
+  align-items: center;
+}
+.autres-nom { grid-area: nom; }
+.autres-desc { grid-area: desc; }
+/* Boîte commune aux deux logos : l'un est large (Bếp Chay), l'autre haut
+   (Café Bống). Sans boîte fixe, le second écrase la ligne. `contain` les
+   montre entiers, jamais rognés. */
+.autres-logo, .autres-ligne img {
+  grid-area: logo;
+  inline-size: 72px;
+  block-size: 58px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+.autres-ligne { display: flex; align-items: center; gap: 0.75rem; }
 .info-block--autres p { text-align: left; }   /* colonne étroite : pas de justification */
 .info-block--autres strong { font-weight: 600; color: var(--encre); }
 .autres-nom { font-family: var(--f-titre); font-weight: 600; font-size: 1.1em; }

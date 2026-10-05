@@ -53,8 +53,7 @@
     if (LIBELLES[quoi]) track(quoi + '-clic', LIBELLES[quoi]);
   }, { passive: true });
 
-  // Réservation FINALISÉE dans le module Zenchef (la vraie conversion)
-  window.addEventListener('zc-widget-booking-completed', function () {
-    track('resa-completee', 'Réservation complétée (widget)');
-  });
+  /* Le module Zenchef a été retiré le 05/10/2026 (il demandait deux clics) :
+     l'événement « réservation terminée » qu'il émettait ne peut plus arriver.
+     Le décompte réel des réservations est dans le tableau de bord Zenchef. */
 })();

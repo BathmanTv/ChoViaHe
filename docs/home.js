@@ -529,58 +529,18 @@
   })();
 
   /* =======================================================
-     8. ZENCHEF — overlay chargé À LA DEMANDE
-     Le SDK (et l'iframe bookings + ses trackers) ne charge RIEN
-     avant le premier clic Réserver: RGPD propre sans bandeau,
-     et ~15 requêtes de moins à chaque visite.
-     Fallback: si le SDK ne répond pas en 4s, on suit le lien direct.
-     Sans JS: les liens fonctionnent tels quels.
+     8. ZENCHEF — lien direct, un seul clic, partout
+     Le module (SDK) a été RETIRÉ le 05/10/2026 après reproduction du
+     défaut signalé par le client : sur ordinateur, le clic « Réserver »
+     n'affichait qu'une pastille en bas à droite, qu'il fallait recliquer.
+     Cause : le SDK n'expose pas `ZenchefWidget.open()` (seulement
+     `iframeBuilder`), donc notre attente expirait et le repli
+     `window.open()` était bloqué par le navigateur — il ne venait plus
+     d'un geste de l'utilisateur.
+     Le lien natif (_blank) part du clic réel : jamais bloqué, un seul clic,
+     même comportement sur mobile et sur ordinateur. En prime : plus aucun
+     appel à sdk.zenchef.com tant que personne ne réserve.
+     Contrepartie assumée : l'événement « réservation terminée » du module
+     ne peut plus être compté ; le vrai chiffre est dans Zenchef.
      ======================================================= */
-  (function initZenchefLazy() {
-    /* MOBILE : PAS d'overlay. Vérifié en navigateur — le module Zenchef pose
-       son propre élément par-dessus notre barre et masque « Appeler » et
-       « Itinéraire » ; ni ZenchefWidget.close() ni #zc-action-close ne le
-       referment (le seul recours est sa croix interne). Sur petit écran on
-       ouvre donc la page de réservation dans un nouvel onglet : plein écran,
-       natif, et notre barre d'actions reste intacte au retour.
-       (Demande cliente : les boutons Appeler / Itinéraire doivent rester
-       visibles et utilisables en toutes circonstances.) */
-    var petitEcran = window.matchMedia('(max-width: 780px), (pointer: coarse)').matches;
-    if (petitEcran) return;   // les liens gardent leur comportement natif (_blank)
-
-    /* Un seul chemin d'ouverture à la fois : sans ce verrou, un SDK lent
-       pouvait ouvrir l'onglet de repli PUIS le module — deux fois la même
-       réservation. Le repli à 1,2 s : un bloqueur ou un réseau d'entreprise
-       qui filtre sdk.zenchef.com ne doit pas donner 4 s d'écran mort. */
-    var enCours = false;
-    function openWhenReady(bouton, fallbackHref, deadline) {
-      if (!enCours) return;
-      if (window.ZenchefWidget && typeof window.ZenchefWidget.open === 'function') {
-        enCours = false; bouton.classList.remove('is-loading');
-        window.ZenchefWidget.open();
-        return;
-      }
-      if (Date.now() > deadline) {
-        enCours = false; bouton.classList.remove('is-loading');
-        window.open(fallbackHref, '_blank', 'noopener');
-        return;
-      }
-      setTimeout(function () { openWhenReady(bouton, fallbackHref, deadline); }, 100);
-    }
-    document.querySelectorAll('a[href*="bookings.zenchef.com"]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        if (enCours) return;
-        enCours = true;
-        a.classList.add('is-loading');
-        if (!document.getElementById('zenchef-sdk')) {
-          var js = document.createElement('script');
-          js.id = 'zenchef-sdk';
-          js.src = 'https://sdk.zenchef.com/v1/sdk.min.js';
-          document.head.appendChild(js);
-        }
-        openWhenReady(a, a.href, Date.now() + 1200);
-      });
-    });
-  })();
 })();
