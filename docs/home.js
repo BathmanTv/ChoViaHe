@@ -293,7 +293,16 @@
       scrollTrigger: {
         trigger: track,
         start: 'top 78%',      // commence quand la piste entre bien dans le champ
-        end: 'bottom 45%',     // ~1 viewport de course, se termine avant de sortir
+        /* Fin de course BORNÉE au défilement réellement disponible.
+           Avec 'bottom 45%' en dur, la fin tombait à 8689 px alors que la page
+           s'arrête avant : la progression plafonnait à 0,88 et le scooter se
+           figeait avant Sài Gòn (signalé par le client, mesuré en navigateur).
+           On garde la course voulue, sauf si la page est trop courte. */
+        end: function (self) {
+          var voulu = track.offsetHeight + window.innerHeight * 0.33;
+          var dispo = (document.documentElement.scrollHeight - window.innerHeight) - self.start - 8;
+          return '+=' + Math.max(240, Math.min(voulu, dispo));
+        },
         scrub: 0.6,            // scrub quasi-linéaire, léger lissage
         invalidateOnRefresh: true, // relit travel() (cible droite) au resize
         // will-change posé pendant la course seulement, retiré sinon (perf).

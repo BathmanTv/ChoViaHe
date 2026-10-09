@@ -374,6 +374,23 @@ with sync_playwright() as p:
     verif("21/09", "Pas de scroll-behavior:smooth (double lissage avec Lenis sous Chrome)",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior") == "auto",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior"))
+    # 09/10 : le scooter doit ARRIVER. Sa plage de défilement finissait au-delà
+    # de ce que la page permet : la progression plafonnait à 0,88 et il se
+    # figeait avant « Sài Gòn » (signalé par le client).
+    au.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+    au.wait_for_timeout(1800)
+    sc = au.evaluate("""() => { const tr = document.querySelector('[data-scooter]');
+      if (!tr || !window.ScrollTrigger) return null;
+      const st = ScrollTrigger.getAll().find(s => s.trigger && s.trigger.hasAttribute('data-scooter'));
+      const s = tr.querySelector('.scooter');
+      const m = getComputedStyle(s).transform;
+      const x = m === 'none' ? 0 : parseFloat(m.split(',')[4]);
+      const cible = tr.clientWidth - s.offsetWidth - tr.clientWidth * 0.04;
+      return { progression: +st.progress.toFixed(2), ecart: Math.round(cible - x) }; }""")
+    verif("09/10", "Le scooter va jusqu'au bout de sa piste",
+          bool(sc) and sc["progression"] >= 0.99 and abs(sc["ecart"]) <= 3, str(sc))
+    au.evaluate("window.scrollTo(0, 0)"); au.wait_for_timeout(600)
+
     # 09/10 : corrections de l'audit SEO/GEO.
     s09 = au.evaluate("""() => ({
       vignettes: [...document.querySelectorAll('.plat-nom a')].map(a => a.getAttribute('href')),
