@@ -335,7 +335,10 @@ with sync_playwright() as p:
     verif("Audit", "Polices : Lora 400 italique retirée", not any("lora-400i" in f for f in fonts), str([f for f in fonts if "lora" in f]))
     pre = au.evaluate("() => [...document.querySelectorAll('link[rel=preload][as=font]')].length")
     verif("Audit", "Polices : 3 préchargées (accueil)", pre == 3, str(pre))
-    verif("Audit", "CDN pré-connecté", au.evaluate("() => !!document.querySelector('link[rel=preconnect][href*=jsdelivr]')"))
+    # 09/10 : GSAP/ScrollTrigger/Lenis sont hébergés chez nous, il n'y a plus de
+    # CDN à pré-connecter — le contrôle vérifie maintenant l'inverse.
+    verif("Audit", "Aucun CDN tiers pour les scripts",
+          au.evaluate("() => !document.querySelector('link[rel=preconnect][href*=jsdelivr], script[src*=jsdelivr]')"))
     og = au.evaluate("""() => { const g=n=>{const m=document.querySelector('meta[property=\"'+n+'\"]'); return m?m.content:null;};
       return {img:g('og:image'), w:g('og:image:width'), h:g('og:image:height'), alt:!!g('og:image:alt'), site:!!g('og:site_name')}; }""")
     verif("Audit", "Partage social : image paysage 1200×630 en JPEG + alt + site_name",
@@ -371,6 +374,29 @@ with sync_playwright() as p:
     verif("21/09", "Pas de scroll-behavior:smooth (double lissage avec Lenis sous Chrome)",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior") == "auto",
           au.evaluate("() => getComputedStyle(document.documentElement).scrollBehavior"))
+    # 09/10 : corrections de l'audit SEO/GEO.
+    s09 = au.evaluate("""() => ({
+      vignettes: [...document.querySelectorAll('.plat-nom a')].map(a => a.getAttribute('href')),
+      infos: (() => { const p = document.querySelector('.cover-infos');
+        if (!p) return null;
+        const r = p.getBoundingClientRect();
+        return { texte: p.innerText.replace(/\s+/g, ' ').trim(),
+                 hauteur_page: Math.round(100 * (r.top + scrollY) / document.body.scrollHeight) }; })(),
+      facebook: document.querySelectorAll('a[href*="facebook.com"]').length,
+      tiers: [...document.querySelectorAll('script[src], link[rel=stylesheet], link[rel=preload], link[rel=preconnect]')]
+               .map(e => e.src || e.href).filter(u => !u.startsWith(location.origin)).length
+    })""")
+    verif("09/10", "Vignettes de plats liées aux rubriques de la carte",
+          len(s09["vignettes"]) == 4 and all("/carte/#" in h for h in s09["vignettes"]), str(s09["vignettes"]))
+    inf = s09["infos"]
+    verif("09/10", "Infos pratiques sous la couverture (adresse, téléphone, horaires)",
+          bool(inf) and "rue de Metz" in inf["texte"] and "05 62" in inf["texte"] and "12h" in inf["texte"]
+          and inf["hauteur_page"] < 10, str(inf))
+    verif("09/10", "Lien Facebook (pied de page + contact)", s09["facebook"] >= 2, str(s09["facebook"]))
+    verif("09/10", "Aucun script ni style chargé depuis un tiers", s09["tiers"] == 0, str(s09["tiers"]))
+    rb = au.request.get(BASE + "/robots.txt")
+    verif("09/10", "robots.txt signale llms.txt", "llms.txt" in rb.text(), str(rb.status))
+
     # 05/10 : un seul clic pour réserver (le module Zenchef en demandait deux),
     # et les logos des deux autres adresses doivent s'afficher entiers.
     verif("05/10", "Aucun module Zenchef chargé (lien direct)",

@@ -555,6 +555,34 @@ h3 {
   gap: 1rem 1.4rem;
   margin: 0;
 }
+/* Ligne pratique sous la couverture : discrète par construction — taille de
+   corps réduite, encre douce, séparateurs en points. Elle informe sans
+   concurrencer le titre ni le bouton Réserver. */
+.cover-infos {
+  margin: 1.1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--encre-doux);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.55rem;
+  max-width: var(--measure);
+}
+.cover-infos a {
+  color: var(--encre);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
+  text-underline-offset: 0.18em;
+  /* cible tactile confortable sans grossir la ligne */
+  padding-block: 0.35rem;
+}
+.cover-infos a:hover, .cover-infos a:focus-visible { color: var(--framboise); }
+.cover-infos span[aria-hidden] { opacity: 0.45; }
+@media (max-width: 560px) {
+  /* sur petit écran, les points de séparation sautent : une info par ligne */
+  .cover-infos { flex-direction: column; align-items: flex-start; gap: 0; }
+  .cover-infos span[aria-hidden] { display: none; }
+}
 .cover-scroll {
   font-family: var(--f-hand);
   color: var(--encre-doux);
@@ -875,6 +903,18 @@ h3 {
   font-size: clamp(1.5rem, 1.2rem + 2vw, 2.1rem);
   margin: 0 0 0.2rem;
   line-height: 1.1;
+}
+/* Le nom du plat mène à sa rubrique sur la carte. Il reste un titre à l'oeil :
+   pas de soulignement permanent, un filet discret seulement au survol. */
+.plat-nom a {
+  color: inherit;
+  text-decoration: none;
+}
+.plat-nom a:hover, .plat-nom a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+  color: var(--framboise-fonce);
 }
 .plat-desc { margin: 0; color: var(--encre-doux); font-size: 1rem; }
 .carte-cta { margin-top: 1.5rem; }

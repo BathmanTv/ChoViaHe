@@ -39,7 +39,6 @@
      fonts.css -> home.css, trois allers-retours, et se peint en Georgia avant
      de se recomposer. Le CDN de GSAP/Lenis est pré-connecté pour la même
      raison : quelques centaines de ms sur mobile. -->
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="./fonts/lora-600-latin.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="./fonts/lora-600-vietnamese.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="./fonts/be-vietnam-pro-400-latin.woff2" />
@@ -105,7 +104,8 @@
     }
   ],
   "sameAs": [
-    "https://www.instagram.com/choviahe.toulouse"
+    "https://www.instagram.com/choviahe.toulouse",
+    "https://www.facebook.com/p/Cho-Via-He-61567188893417/"
   ]
 }
 </script>
@@ -199,6 +199,16 @@
       <p class="cover-actions">
         <a class="btn-cta" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver une table</a>
         <a class="ink-link cover-scroll" href="#histoire" data-ink>Feuilleter le carnet ↓</a>
+      </p>
+      <!-- Ligne pratique : l'adresse était à 82 % de la page, le téléphone à
+           84 %, les horaires à 92 %. Un visiteur pressé — et un robot d'IA —
+           ne descendait pas jusque-là. Une seule ligne, pas une section. -->
+      <p class="cover-infos">
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=8+rue+de+Metz+31000+Toulouse" target="_blank" rel="noopener" data-track="itineraire">8 rue de Metz, Toulouse</a>
+        <span aria-hidden="true">·</span>
+        <a href="tel:+33562858392" data-track="tel">05 62 85 83 92</a>
+        <span aria-hidden="true">·</span>
+        <span>Mardi au samedi, 12h–14h30 et 19h–22h30</span>
       </p>
     </div>
 
@@ -372,7 +382,7 @@
         <img loading="lazy" decoding="async" src="./assets/illus/nouilles-480.webp" width="480" height="422" alt="Bol de phở fumant illustré au crayon de couleur."
              srcset="./assets/illus/nouilles-480.webp 480w, ./assets/illus/nouilles-960.webp 960w" sizes="30vw" />
         <figcaption>
-          <p class="plat-nom viet" lang="vi">Phở</p>
+          <p class="plat-nom viet" lang="vi"><a href="./carte/#pho">Phở</a></p>
           <p class="plat-desc">Le bouillon du matin : le pho mijoté des heures, nouilles de riz et herbes fraîches.</p>
         </figcaption>
       </figure>
@@ -384,7 +394,7 @@
         <img loading="lazy" decoding="async" src="./assets/illus/nems-480.webp" width="480" height="437" alt="Nems croustillants illustrés au crayon de couleur."
              srcset="./assets/illus/nems-480.webp 480w, ./assets/illus/nems-960.webp 960w" sizes="30vw" />
         <figcaption>
-          <p class="plat-nom viet" lang="vi">Nems</p>
+          <p class="plat-nom viet" lang="vi"><a href="./carte/#tapas">Nems</a></p>
           <p class="plat-desc">Les nems croustillants, roulés à la main, à tremper dans la sauce.</p>
         </figcaption>
       </figure>
@@ -393,7 +403,7 @@
         <img loading="lazy" decoding="async" src="./assets/illus/cafe-480.webp" width="480" height="743" alt="Café vietnamien illustré, filtre phin sur un verre."
              srcset="./assets/illus/cafe-480.webp 480w, ./assets/illus/cafe-960.webp 960w" sizes="30vw" />
         <figcaption>
-          <p class="plat-nom viet" lang="vi">Cà phê</p>
+          <p class="plat-nom viet" lang="vi"><a href="./carte/#boissons">Cà phê</a></p>
           <p class="plat-desc">Le café filtre vietnamien, intense, avec ou sans lait concentré.</p>
         </figcaption>
       </figure>
@@ -403,7 +413,7 @@
         <img loading="lazy" decoding="async" src="./assets/illus/feuille-coriandre-480.webp" width="480" height="478" alt="Feuilles de coriandre illustrées au crayon de couleur."
              srcset="./assets/illus/feuille-coriandre-480.webp 480w, ./assets/illus/feuille-coriandre-960.webp 960w" sizes="30vw" />
         <figcaption>
-          <p class="plat-nom viet" lang="vi">Rau thơm</p>
+          <p class="plat-nom viet" lang="vi"><a href="./carte/#plats">Rau thơm</a></p>
           <p class="plat-desc">Les herbes viet donnent vie à chaque plat vietnamien. Fraîches. Parfumées. Pleines de caractère.</p>
         </figcaption>
       </figure>
@@ -569,6 +579,7 @@
         <h3>Nous joindre</h3>
         <p><a href="tel:+33562858392">05 62 85 83 92</a></p>
         <p><a href="https://www.instagram.com/choviahe.toulouse" target="_blank" rel="noopener">@choviahe.toulouse</a></p>
+        <p><a href="https://www.facebook.com/p/Cho-Via-He-61567188893417/" target="_blank" rel="noopener" data-track="facebook">Cho Via He sur Facebook</a></p>
       </div>
 
       <div class="info-block info-block--autres">
@@ -634,6 +645,7 @@
         <address>8 rue de Metz — 31000 Toulouse</address>
         <p><a href="tel:+33562858392">05 62 85 83 92</a></p>
         <p><a href="https://www.instagram.com/choviahe.toulouse" target="_blank" rel="noopener">@choviahe.toulouse</a></p>
+        <p><a href="https://www.facebook.com/p/Cho-Via-He-61567188893417/" target="_blank" rel="noopener" data-track="facebook">Cho Via He sur Facebook</a></p>
         <p class="footer-cta">
           <a class="btn-cta btn-cta--ink" href="https://bookings.zenchef.com/results?rid=377642&amp;utm_source=site&amp;utm_medium=cta&amp;utm_campaign=resa" target="_blank" rel="noopener">Réserver une table</a>
         </p>
@@ -667,9 +679,9 @@
 
 <!-- Motion layer : GSAP core + ScrollTrigger + Lenis (CDN épinglé, defer).
      home.js dégrade proprement si l'un manque (fallback IntersectionObserver). -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js" defer></script>
+<script src="./vendor/gsap.min.js?v=20260918" defer></script>
+<script src="./vendor/ScrollTrigger.min.js?v=20260918" defer></script>
+<script src="./vendor/lenis.min.js?v=20260918" defer></script>
 <script src="./home.js?v=20260918" defer></script>
 
 <!-- Zenchef SDK — chargé À LA DEMANDE au premier clic Réserver (home.js):

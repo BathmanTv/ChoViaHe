@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.choviahe.fr/sitemap.xml
+
+# Présentation du restaurant en clair, pour les agents IA
+# (llms.txt n'est pas un standard : aucun moteur ne s'engage à le lire)
+LLM-Content: https://www.choviahe.fr/llms.txt

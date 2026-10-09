@@ -35,7 +35,6 @@
      fonts.css -> home.css, trois allers-retours, et se peint en Georgia avant
      de se recomposer. Le CDN de GSAP/Lenis est pré-connecté pour la même
      raison : quelques centaines de ms sur mobile. -->
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/lora-600-latin.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/lora-600-vietnamese.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/be-vietnam-pro-400-latin.woff2" />
@@ -660,8 +659,8 @@
 </div>
 
 <!-- Motion layer (CDN épinglé, defer). carte.js dégrade proprement (fallback IO). -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="../vendor/gsap.min.js?v=20260918" defer></script>
+<script src="../vendor/ScrollTrigger.min.js?v=20260918" defer></script>
 <script src="./carte.js?v=20260918" defer></script>
 
 <!-- Zenchef SDK — chargé À LA DEMANDE au premier clic Réserver (carte.js). Fallback = lien direct. -->

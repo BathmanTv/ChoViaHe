@@ -65,6 +65,21 @@ const jeton = new Date().toISOString().slice(0, 16).replace(/\D/g, '');   // AAA
 for (const rel of PAGES) ecrire(rel, lire(rel).replace(/\.(css|js|svg)\?v=\d{8,12}/g, `.$1?v=${jeton}`));
 console.log(`jeton       ?v=${jeton}`);
 
+// Commentaires HTML : utiles dans la source (ils disent POURQUOI une règle
+// existe), inutiles chez le visiteur — mesuré à 18 % du poids compressé.
+// On ne touche ni aux commentaires conditionnels <!--[if ...]--> ni au
+// contenu des <script>/<style>, où « <!-- » peut être du code.
+let gagne = 0;
+for (const rel of PAGES) {
+  const avant = lire(rel);
+  const morceaux = avant.split(/(<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>)/i);
+  const COMMENTAIRE = /[ \t]*<!--(?!\[if)[\s\S]*?-->\n?/g;
+  const apres = morceaux.map((m, i) => (i % 2 ? m : m.replace(COMMENTAIRE, ''))).join('');
+  ecrire(rel, apres);
+  gagne += avant.length - apres.length;
+}
+console.log(`allègement  ${Math.round(gagne / 1024)} Ko de commentaires retirés des pages livrées`);
+
 ecrire('sitemap.xml', lire('sitemap.xml').replace(/<lastmod>[\d-]+<\/lastmod>/g, `<lastmod>${jour}</lastmod>`));
 console.log(`sitemap     lastmod -> ${jour}`);
 

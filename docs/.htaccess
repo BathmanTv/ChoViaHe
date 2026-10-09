@@ -120,7 +120,7 @@ Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), 
 # zéro violation. Le module Zenchef charge sa feuille de style depuis
 # sdk.zenchef.com : sans elle dans style-src, il disparaît. Tout nouveau service
 # tiers (carte Google intégrée, widget Instagram...) devra être ajouté ici.
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://choviahe.goatcounter.com; font-src 'self'; connect-src 'self' https://choviahe.goatcounter.com; form-action 'self' https://bookings.zenchef.com; base-uri 'self'; object-src 'none'"
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://gc.zgo.at; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://choviahe.goatcounter.com; font-src 'self'; connect-src 'self' https://choviahe.goatcounter.com; form-action 'self' https://bookings.zenchef.com; base-uri 'self'; object-src 'none'"
 # HSTS : à garder commenté jusqu'à ce que le HTTPS soit confirmé stable sur
 # les deux adresses (sans www et avec www). Ensuite, décommenter.
 # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
