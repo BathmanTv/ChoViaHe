@@ -573,8 +573,18 @@ h3 {
   text-decoration: underline;
   text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
   text-underline-offset: 0.18em;
-  /* cible tactile confortable sans grossir la ligne */
+  display: inline-block;
   padding-block: 0.35rem;
+}
+/* Zone tactile de 44px UNIQUEMENT au doigt. À la souris, un rembourrage
+   compensé par une marge négative faisait se chevaucher les liens empilés —
+   deux cibles qui se recouvrent sont pires qu'une cible un peu petite. */
+@media (pointer: coarse) {
+  /* on remonte seulement par le haut : une marge négative en bas ferait
+     mordre la zone du titre sur la description juste en dessous. */
+  .plat-nom a { display: inline-block; padding-block: 0.5rem; margin-top: -0.5rem; }
+  .cover-infos a { padding-block: 0.72rem; }
+  .cover-infos { gap: 0.1rem 0.55rem; }
 }
 .cover-infos a:hover, .cover-infos a:focus-visible { color: var(--framboise); }
 .cover-infos span[aria-hidden] { opacity: 0.45; }

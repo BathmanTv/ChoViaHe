@@ -588,6 +588,19 @@ with sync_playwright() as p:
         op = mo.eval_on_selector(".marg-cafe", "e => getComputedStyle(e).opacity")
         verif("Bug", f"Le verre reste stable (mobile {w})", float(op) > 0.5, f"opacité={op}")
         controle_structure(mo, f"accueil mobile {w}")
+        # 09/10 : les liens ajoutés (noms de plats, ligne infos) doivent offrir
+        # une vraie cible au doigt — 44px, la règle du site — sans se recouvrir.
+        tap = mo.evaluate("""() => { const l = [...document.querySelectorAll('.plat-nom a, .cover-infos a')];
+          const b = l.map(a => a.getBoundingClientRect());
+          let chevauche = false;
+          for (let i = 0; i < b.length; i++) for (let j = i + 1; j < b.length; j++)
+            if (Math.min(b[i].right,b[j].right) - Math.max(b[i].left,b[j].left) > 2 &&
+                Math.min(b[i].bottom,b[j].bottom) - Math.max(b[i].top,b[j].top) > 2) chevauche = true;
+          const d = document.querySelector('.plat-desc').getBoundingClientRect();
+          return { min: Math.round(Math.min(...b.map(r => r.height))), chevauche,
+                   mord: b[0].bottom > d.top + 1 }; }""")
+        verif("09/10", f"Liens ajoutés : cible tactile 44px, sans recouvrement (mobile {w})",
+              tap["min"] >= 44 and not tap["chevauche"] and not tap["mord"], str(tap))
         mo.close()
 
         # page carte en mobile
