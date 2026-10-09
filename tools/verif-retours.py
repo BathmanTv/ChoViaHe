@@ -383,8 +383,11 @@ with sync_playwright() as p:
         return { texte: p.innerText.replace(/\s+/g, ' ').trim(),
                  hauteur_page: Math.round(100 * (r.top + scrollY) / document.body.scrollHeight) }; })(),
       facebook: document.querySelectorAll('a[href*="facebook.com"]').length,
+      /* Seule exception admise : la mesure d'audience (sans cookie, hébergée
+         dans l'UE), qui ne se charge que sur le vrai domaine. */
       tiers: [...document.querySelectorAll('script[src], link[rel=stylesheet], link[rel=preload], link[rel=preconnect]')]
-               .map(e => e.src || e.href).filter(u => !u.startsWith(location.origin)).length
+               .map(e => e.src || e.href)
+               .filter(u => !u.startsWith(location.origin) && !/gc\.zgo\.at|goatcounter/.test(u))
     })""")
     verif("09/10", "Vignettes de plats liées aux rubriques de la carte",
           len(s09["vignettes"]) == 4 and all("/carte/#" in h for h in s09["vignettes"]), str(s09["vignettes"]))
@@ -393,7 +396,8 @@ with sync_playwright() as p:
           bool(inf) and "rue de Metz" in inf["texte"] and "05 62" in inf["texte"] and "12h" in inf["texte"]
           and inf["hauteur_page"] < 10, str(inf))
     verif("09/10", "Lien Facebook (pied de page + contact)", s09["facebook"] >= 2, str(s09["facebook"]))
-    verif("09/10", "Aucun script ni style chargé depuis un tiers", s09["tiers"] == 0, str(s09["tiers"]))
+    verif("09/10", "Aucun tiers chargé hors mesure d'audience (jsDelivr retiré)",
+          s09["tiers"] == [], str(s09["tiers"]))
     rb = au.request.get(BASE + "/robots.txt")
     verif("09/10", "robots.txt signale llms.txt", "llms.txt" in rb.text(), str(rb.status))
 
